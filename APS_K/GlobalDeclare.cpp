@@ -1673,10 +1673,10 @@ bool ChartCenterPatternMatching()
     double dAngle = 0.0;
 
     CRect rcArea;
-    rcArea.left = (int)(gMIUDevice.nWidth / 2 - 25);//500);
-    rcArea.top = (int)(gMIUDevice.nHeight / 2 - 25);//500);
-    rcArea.right = (int)(gMIUDevice.nWidth / 2 + 25);// 500);
-    rcArea.bottom = (int)(gMIUDevice.nHeight / 2 + 25);//500);
+    rcArea.left = (int)(gMIUDevice.nWidth / 2 - 100);//500);
+    rcArea.top = (int)(gMIUDevice.nHeight / 2 - 100);//500);
+    rcArea.right = (int)(gMIUDevice.nWidth / 2 + 100);// 500);
+    rcArea.bottom = (int)(gMIUDevice.nHeight / 2 + 100);//500);
 
     if (vision.ChartCenterPatternResult)
     {

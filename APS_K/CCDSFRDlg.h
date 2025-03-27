@@ -40,7 +40,7 @@ public:
 
 protected:
 	//! 그래프 컨트롤 배열
-	CGraph2DWnd *m_apGraphWnd[iBufSize_Graph_2D];	
+	CGraph2DWnd *m_apGraphWnd[iBufSize_Graph_2D];
 	bool MakeGraphWnd();
 	void ReleaseGraphWnd();
 
@@ -48,7 +48,7 @@ protected:
 	int m_aiIndex_Overlap_Cursor[iBufSize_Graph_2D];
 
 	//! 프로그램 다운 방지용, 그래프 컨트롤 동시 접근 차단
-	CCriticalSection m_acsGraph[iBufSize_Graph_2D];	
+	CCriticalSection m_acsGraph[iBufSize_Graph_2D];
 
 	//! 그래프를 눈에 보이거나 숨길 때
 	void Proc_GraphVisible(int iIndex_Plot, int iIndex_Overlap);
@@ -62,7 +62,7 @@ protected:
 	void MoveCursor_Right_Graph(int iIndex_Plot);
 
 	//! 그래프의 커서 이벤트를 받을 때
-	LRESULT OnCursorEventMsgInPlot(WPARAM wParam, LPARAM lParam);	
+	LRESULT OnCursorEventMsgInPlot(WPARAM wParam, LPARAM lParam);
 
 	//! GUI 처리 함수
 	void SetGUI_Graph_Visible_Chk();
@@ -72,12 +72,12 @@ protected:
 	void SetTempData(int iIndex_Plot);
 
 	//! 그래프를 그리고, 그래프 커서값을 표시한다.
-	int DrawGraph(int iIndex_Plot);	
+	int DrawGraph(int iIndex_Plot);
 	int SetCursorValue(int iIndex_Plot, int iIndex_Overlap, int iDataIndex, int iCursorIndex = 0);
 
 public:
 	//! =========================================================================================================
-	//! 그래프 입력 데이터 버퍼	
+	//! 그래프 입력 데이터 버퍼
 	double m_adDataX        [iBufSize_Graph_2D][iBufSize_Graph_Overlap][iBufSize_Pixel_Graph];
 	double m_adDataY        [iBufSize_Graph_2D][iBufSize_Graph_Overlap][iBufSize_Pixel_Graph];
 	int    m_aiDataSize     [iBufSize_Graph_2D][iBufSize_Graph_Overlap];
@@ -101,7 +101,7 @@ protected:
 
 public:
 	void	drawROI();
-	
+
     void    Raw_ImageSave(BYTE* rawImg, int index);
     void    CCARawImageLoad(BYTE* LoadImg, int index , bool autoRun = false);
 	void	drawRectSFR(int iRectNo = 999);
@@ -134,8 +134,8 @@ public:
 
 	CRect	m_rcFixedBox[COMMON_LAST_MARK_CNT];//LAST_MARK_CNT];
 	CRect	m_rcRoiBox[4];						// 원형 마크 검색 영역
-	
-    
+
+
 	int		m_iMoveSpeed;
 
 	int		m_iCurNo_SFR;
@@ -190,11 +190,11 @@ public:
 	afx_msg void OnBnClickedButtonSfrTest();
 
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
-	
+
 
 
 	afx_msg void OnBnClickedButtonAlignTest();
-	
+
 
 	int m_i_graph_disp_mode ;
 
@@ -265,4 +265,5 @@ public:
 	afx_msg void OnStnClickedEditSfrDic();
 	afx_msg void OnBnClickedButtonChartSetView();
 	afx_msg void OnBnClickedPatternView2();
+	afx_msg void OnBnClickedPatternCircle();
 };

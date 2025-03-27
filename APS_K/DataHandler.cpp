@@ -3628,8 +3628,9 @@ bool CTask::getROI_SFR(int mode)
 	{
 		Task.m_dShift_IMG_X = theApp.MainDlg->ChartCenterOffsetX*(model.m_dSize_CCD_Cell / 1000.0f) * 1.0f;
 		Task.m_dShift_IMG_Y = theApp.MainDlg->ChartCenterOffsetY*(model.m_dSize_CCD_Cell / 1000.0f) * 1.0f;
+		Task.m_dShift_IMG_TH = theApp.MainDlg->ChartCenterOffsetTh;
 
-		sLog.Format("Center x:%.3lf , y:%.3lf", Task.m_dShift_IMG_X, Task.m_dShift_IMG_Y);
+		sLog.Format("Center x:%.3lf , y:%.3lf, Th:%.3lf" , Task.m_dShift_IMG_X , Task.m_dShift_IMG_Y, Task.m_dShift_IMG_TH);
 		theApp.MainDlg->putListLog(sLog);
 
 

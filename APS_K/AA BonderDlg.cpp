@@ -1926,6 +1926,11 @@ CAABonderDlg::CAABonderDlg(CWnd* pParent /*=NULL*/)
 	modelDlg = NULL;
 	autodispDlg = NULL;
 	InspSpecSet = NULL;
+
+
+	ChartCenterOffsetX = 0.0;
+	ChartCenterOffsetY = 0.0;
+	ChartCenterOffsetTh = 0.0;
 }
 
 void CAABonderDlg::DoDataExchange(CDataExchange* pDX)
@@ -7184,7 +7189,7 @@ bool CAABonderDlg::_calcImageAlignment()
 #ifdef NO_CIRCLE_MODEL
 	dShiftX = Task.m_dShift_IMG_X;
 	dShiftY = Task.m_dShift_IMG_Y;
-	dAng = 0.0;
+	dAng = Task.m_dShift_IMG_TH;
 #else
 	dShiftX = ((Task.m_CircleP[0].x+Task.m_CircleP[1].x+Task.m_CircleP[2].x+Task.m_CircleP[3].x)/4.0) - dCenterX;
 	dShiftY = (((Task.m_CircleP[0].y + Task.m_CircleP[1].y + Task.m_CircleP[2].y + Task.m_CircleP[3].y) / 4.0) - dCenterY);
@@ -7201,7 +7206,7 @@ bool CAABonderDlg::_calcImageAlignment()
 	dAng = dRad * 180.0f / M_PI;
 #endif
 
-	if(fabs(dShiftX) > 2.0 || fabs(dShiftY) > 2.0 || fabs(dAng) > 10.0)//3.0)		// 임의값...
+	if(fabs(dShiftX) > 2.0 || fabs(dShiftY) > 2.0 || fabs(dAng) > 5.0)//3.0)		// 임의값...
 	{
 
 		if(!Task.bInsCenter)

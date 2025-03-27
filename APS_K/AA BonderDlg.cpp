@@ -2439,7 +2439,9 @@ void CAABonderDlg::Rs232Init()
 		//조명 2 TOP CHART
 		LightControlSecond.myNum = 1;
 		sCommPort.Format("COM%d", sysData.iCommPort[COMM_LIGHT2]);
+
 		LightControlSecond.SetReceiveProcPtr(this);
+
 		bRet_Con_RS232C = LightControlSecond.Connect_Device(sCommPort, 0);
 
 
@@ -2454,6 +2456,23 @@ void CAABonderDlg::Rs232Init()
 
 
 
+	//1호기 M1_TANGERING_5M 모델 이물광원 1채널 
+	sCommPort.Format("COM%d", sysData.iCommPort[COMM_LIGHTOC_1ST]);
+	OcLight_Dms50v52.SetReceiveProcPtr(this);
+	bRet_Con_RS232C = OcLight_Dms50v52.Connect_Device(sCommPort, 10, 19200);
+	if (bRet_Con_RS232C == true)
+	{
+		logStr.Format("	[Serial]DMS-50V5-2 연결 완료 COM%d", sysData.iCommPort[COMM_LIGHTOC_1ST]);
+
+		Sleep(100);
+
+		OcLight_Dms50v52.DMS_50V5_2_OnOff(1, true);
+	}
+	else
+	{
+		logStr.Format("	[Serial]DMS-50V5-2 연결 실패 COM%d", sysData.iCommPort[COMM_LIGHTOC_1ST]);
+	}
+	putListLog(logStr);
 #ifdef FURONTEER_OC
 	//----------------------------------------------------------------------------------------------------------------
 	//
@@ -2480,6 +2499,8 @@ void CAABonderDlg::Rs232Init()
 	putListLog(logStr);
 
 #endif
+
+
 #else
 	bool bRet_Con_RS232C = false;
 	CString sCommPort = _T("");

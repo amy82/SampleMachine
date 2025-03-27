@@ -98,7 +98,7 @@ void CLightControl::PostProcRecvData()
 
 //! 조명 컨트롤러에 연결
 //! [주의 사항] 수신 데이터가 있을 경우에는, 반드시, SetReceiveProcPtr 함수로 수신 처리를 할 Dialog나 GUI 클래스를 설정하고, 이 함수를 호출한다. 
-bool CLightControl::Connect_Device(CString sPort, int iNoMachine)
+bool CLightControl::Connect_Device(CString sPort, int iNoMachine, int BaudRate)
 {
 	if ( iNoMachine < 0 )
 	{
@@ -115,7 +115,7 @@ bool CLightControl::Connect_Device(CString sPort, int iNoMachine)
 
 	strSetupInfo_RS232C strSerial;
 	strSerial.InitInfo();
-	strSerial.dwBaudRate   = CBR_19200;
+	strSerial.dwBaudRate = BaudRate;// CBR_19200;
 	strSerial.byDataBit    = 8;
 	strSerial.byStopBit = ONESTOPBIT;
 	strSerial.byParityBit  = NOPARITY;
@@ -235,6 +235,82 @@ int CLightControl::SetChannel_OnOff(int iNoChannel, bool bSwitch_On)
 	return 1;
 }
 
+
+bool CLightControl::DMS_50V5_2_Value(int channel, int data)
+{
+	unsigned char sSendBuff[100];
+	int nSendSize = 0;
+	char mch = 0x1 + channel;
+	memset(sSendBuff, 0x00, sizeof(sSendBuff));
+
+
+
+	sSendBuff[0] = 0x02;			//STX
+	sSendBuff[1] = 0x1B;			//Add-0
+	sSendBuff[2] = 0x80;			//Add-1
+	//
+	sSendBuff[3] = 0x30 + channel;	//Command 1채널 : 0x31  2ch : 0x32
+
+	sSendBuff[4] = data;			//Status 채널 밝기 최대 0xFF
+	sSendBuff[5] = 0x03;			//ETX
+
+
+	for (int i = 0; i < 6; i++)
+	{
+		sSendBuff[6] ^= sSendBuff[i];		//BCC - Add-0 ~ Status 모든값의 XOR
+	}
+	nSendSize = 7;
+
+	Sleep(100);
+
+	int nRetVal = SendData_Light_Controller(sSendBuff, nSendSize);
+	if (nRetVal != nSendSize)
+	{
+		return false;
+	}
+	return true;
+}
+bool CLightControl::DMS_50V5_2_OnOff(int channel, bool onoff)
+{
+	unsigned char sSendBuff[100];
+	int nSendSize = 0;
+	char mch = 0x1 + channel;
+	memset(sSendBuff, 0x00, sizeof(sSendBuff));
+	
+	
+	
+	sSendBuff[0] = 0x02;			//STX
+	sSendBuff[1] = 0x1B;			//Add-0
+	sSendBuff[2] = 0x80;			//Add-1
+	//
+	sSendBuff[3] = 0x37;			//Command On/Off 일때는 0x37 고정
+
+	if (onoff)
+	{
+		sSendBuff[4] = 0x11;		//Status 1채널 Off
+	}
+	else
+	{
+		sSendBuff[4] = 0x10;		//Status 1채널 On
+	}
+	sSendBuff[5] = 0x03;			//ETX
+	
+	
+	for (int i = 0; i < 6; i++)
+	{
+		sSendBuff[6]^= sSendBuff[i];		//BCC - Add-0 ~ Status 모든값의 XOR
+	}
+	nSendSize = 7;
+
+	Sleep(100);
+
+	int nRetVal = SendData_Light_Controller(sSendBuff, nSendSize);
+	if (nRetVal != nSendSize)
+	{
+		return false;
+	}
+	return true;
+}
 //! 각 Channel의 밝기값(PWM값) 조절
 //! [주의 사항] 'iNoChannel' 값은 조명 컨트롤러의 실제 채널 입력값이다. 
 int CLightControl::SetChannel_Value(int iNoChannel, int iValue)
@@ -279,7 +355,9 @@ int CLightControl::DPS_SetChannel_Value(int iNoChannel, int iValue)
 	memset(sSendBuff, 0x00, sizeof(sSendBuff));
 	sSendBuff[0] = 0x59;		//ASCII 'Y'  Hex Code 0x59 로 고정
 	sSendBuff[1] = 0x07;		//Header ~ Checksum까지의 byte수 , 7로 고정
+
 	sSendBuff[2] = iNoChannel;			//채널 0x01 ~ 0x08 , 1채널모델의 경우 0x01로 고정
+
 	sSendBuff[3] = 0x31;			//On = 0x31 , Off = 0x30 , Ready Check = 0x3F
 	sSendBuff[4] = (char)((iValue >> 8) & 0x00FF);		//Value-0 , MSB, OFF인경우 값의미없음, 1024 Level의 경우 0ㅌ0000 ~ 0x03ff까지 사용가능
 	sSendBuff[5] = (char)(iValue & 0x00FF);;		//Value-1 , LSB, OFF인경우 값의미없음

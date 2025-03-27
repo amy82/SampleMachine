@@ -267,20 +267,34 @@ void CLightDlg::OnClickedOc(UINT nID)
 	 m_bDefectOc.Invalidate();
 
 #if (__MACHINE_MODEL == MACHINE_1ST)
+	 //1호기
+	 //
 	 if (sysData.m_iIrChartUse == 1)
 	 {
 		 IrvAlignLed.Irv_Light_SetValue(model.m_iLedValue[(m_OcData_Sel_Index)], IR_OC);
 	 }
 	 else
 	 {
+
 #ifdef FURONTEER_OC
 		 //OCControl.SendLightChange(0);
 		 OCControl.SendLightLxStep(model.m_iLedValue[(m_OcData_Sel_Index)]);
 #else
-		 LightControlthird.ctrlLedVolume(m_Oc_Sel_Index, model.m_iLedValue[(m_OcData_Sel_Index)]);
+		 if (LGIT_MODEL_INDEX == M1_TANGERING_5M)
+		 {
+			 OcLight_Dms50v52.DMS_50V5_2_Value(1, model.m_iLedValue[(m_OcData_Sel_Index)]);
+		 }
+		 else
+		 {
+			 LightControlthird.ctrlLedVolume(m_Oc_Sel_Index, model.m_iLedValue[(m_OcData_Sel_Index)]);
+		 }
+		 
 #endif
+
 	 }
 #else
+	 //2호기
+	 //
 	 if (sysData.m_iIrChartUse == 1)
 	 {
 		 LightControlthird.ctrlLedVolume(IR_OC, model.m_iLedValue[(m_OcData_Sel_Index)]);
@@ -728,14 +742,26 @@ void CLightDlg::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 			strTemp.Format("%d", m_sliderCam2Led.GetPos());
 			GetDlgItem(IDC_EDIT_CAM2_LED)->SetWindowText(strTemp);
 #if (__MACHINE_MODEL == MACHINE_1ST)
-			int ndata = m_sliderCam2Led.GetPos();
+			//1호기
 #ifdef FURONTEER_OC
+			int ndata = m_sliderCam2Led.GetPos();
 			OCControl.SendLightLxStep(ndata);
 #else
-			LightControlthird.ctrlLedVolume(LIGHT_OC_6500K, m_sliderCam2Led.GetPos());
+			if (LGIT_MODEL_INDEX == M1_TANGERING_5M)
+			{
+				OcLight_Dms50v52.DMS_50V5_2_Value(1, m_sliderCam2Led.GetPos());
+			}
+			else
+			{
+				LightControlthird.ctrlLedVolume(LIGHT_OC_6500K, m_sliderCam2Led.GetPos());
+			}
+			
 #endif
-#else
 
+
+
+#else
+			//2호기
 			LightControlthird.ctrlLedVolume(4 , m_sliderCam2Led.GetPos());
 #endif
 		}
@@ -897,16 +923,29 @@ void CLightDlg::OnStnClickedEditOcLed()
 		else
 		{
 #if (__MACHINE_MODEL == MACHINE_1ST)
+			//1호기
 #ifdef FURONTEER_OC
-			//OCControl.SendLightChange(0);
 			OCControl.SendLightLxStep(m_sliderCam2Led.GetPos());
 #else
-			LightControlthird.ctrlLedVolume(m_Oc_Sel_Index, m_sliderCam2Led.GetPos());
+			if (LGIT_MODEL_INDEX == M1_TANGERING_5M)
+			{
+				OcLight_Dms50v52.DMS_50V5_2_Value(1, m_sliderCam2Led.GetPos());
+			}
+			else
+			{
+				LightControlthird.ctrlLedVolume(m_Oc_Sel_Index, m_sliderCam2Led.GetPos());
+			}
+			
+
 #endif
+
+
+
+
 #else
+			//2호기
 			LightControlthird.ctrlLedVolume(m_Oc_Sel_Index, m_sliderCam2Led.GetPos());
 #endif
-			//
 		}
 		
 	}

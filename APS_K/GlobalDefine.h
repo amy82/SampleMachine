@@ -5,6 +5,7 @@
 
 //#define		NORINDA_MODE
 
+#define		NO_CIRCLE_MODEL			//TENGERING_M5
 //=======================================================================
 #define	PCB_TILT_AA				0
 #define LENS_TILT_AA			1
@@ -44,7 +45,7 @@ static int LGIT_MODEL_INDEX = M2_OX01H1B;
 //#define					VER_STR		"250325_2"			//
 //#define					VER_STR		"250324_3"			//Line Pulse 0.125
 //#define					VER_STR		"250324_2"			//IR CHART, CCD OPEN
-//#define					VER_STR		"250324_1"			//
+//#define					VER_STR		"250324_1"			//1호기 원형마크 없는 텐저링 모델 수정중 lee
 //#define					VER_STR		"250320_1"			// win7, Mil9 재설치 Okey? Okey Okey
 //#define					VER_STR		"250318_1"			// CCD OPEN 
 //#define					VER_STR		"250317_1"			// 1호기 Tengring

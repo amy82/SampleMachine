@@ -3602,7 +3602,8 @@ bool CTask::getROI_SFR(int mode)
 	vision.clearOverlay(CCD);
 	bool bRtn = false;
 
-#if (____MODEL_NAME == M_TRINITY_B4)
+//#if (____MODEL_NAME == M_TRINITY_B4)
+#ifdef NO_CIRCLE_MODEL
 	double shiftLimit = 1.5;
 	m_CircleP[0].x = (gMIUDevice.nWidth / 2) - 500;
 	m_CircleP[0].y = (gMIUDevice.nHeight / 2) - 500;
@@ -3613,6 +3614,7 @@ bool CTask::getROI_SFR(int mode)
 	m_CircleP[2].y = (gMIUDevice.nHeight / 2) + 500;
 	m_CircleP[3].x = (gMIUDevice.nWidth / 2) + 500;
 	m_CircleP[3].y = (gMIUDevice.nHeight / 2) + 500;
+
 	m_CirclePos_x[0] = m_CircleP[0].x;
 	m_CirclePos_y[0] = m_CircleP[0].y;
 	m_CirclePos_x[1] = m_CircleP[1].x;
@@ -3621,45 +3623,51 @@ bool CTask::getROI_SFR(int mode)
 	m_CirclePos_y[2] = m_CircleP[2].y;
 	m_CirclePos_x[3] = m_CircleP[3].x;
 	m_CirclePos_y[3] = m_CircleP[3].y;
+
 	if (ChartCenterPatternMatching())
 	{
-		Task.m_dShift_IMG_X = theApp.MainDlg->ChartCenterOffsetX*(model.m_dSize_CCD_Cell / 1000.0f)*1.0f;
-		Task.m_dShift_IMG_Y = theApp.MainDlg->ChartCenterOffsetY*(model.m_dSize_CCD_Cell / 1000.0f)*1.0f;
-		sLog.Format("x:%.3lf , y:%.3lf  보정 진행?" , Task.m_dShift_IMG_X , Task.m_dShift_IMG_Y);
-		/*if (askMsg(sLog) == false)
-		{
-			return false;
-		}*/
-		if (fabs(Task.m_dShift_IMG_X) < shiftLimit &&fabs(Task.m_dShift_IMG_Y) < shiftLimit)
-		{
-			if (fabs(Task.m_dShift_IMG_X) > 0.002 || fabs(Task.m_dShift_IMG_Y)  > 0.002)
-			{
-				theApp.MainDlg->_MotorMove_IMG_Align();
-				Sleep(500);
-			
+		Task.m_dShift_IMG_X = theApp.MainDlg->ChartCenterOffsetX*(model.m_dSize_CCD_Cell / 1000.0f) * 1.0f;
+		Task.m_dShift_IMG_Y = theApp.MainDlg->ChartCenterOffsetY*(model.m_dSize_CCD_Cell / 1000.0f) * 1.0f;
 
-		
-		
-				vision.clearOverlay(CCD);
-				vision.MilBufferUpdate();
-				Task.getROI();
-				Sleep(10);
-				//bRtn = ChartCenterPatternMatching();// _findCirclePos(vision.MilImageBuffer[4], pitch, width, Height, SFR.rcROI);
-				//if (!bRtn)
-				//{
-				//	return false;
-				//}
+		sLog.Format("Center x:%.3lf , y:%.3lf", Task.m_dShift_IMG_X, Task.m_dShift_IMG_Y);
+		theApp.MainDlg->putListLog(sLog);
 
-				/*bRtn = _Trinity_findCirclePos(vision.MilImageBuffer[4], pitch, width, Height, SFR.rcROI);
-				if (!bRtn)
-				{
-					return false;
-				}*/
-			}
+
+		if (fabs(Task.m_dShift_IMG_X) < shiftLimit && fabs(Task.m_dShift_IMG_Y) < shiftLimit)
+		{
+			/*theApp.MainDlg->_MotorMove_IMG_Align();
+			Sleep(500);
+
+			vision.clearOverlay(CCD);
+			vision.MilBufferUpdate();
+			Task.getROI();
+			Sleep(10);*/
+
+			//if (fabs(Task.m_dShift_IMG_X) > 0.002 || fabs(Task.m_dShift_IMG_Y)  > 0.002)
+
+			//if (fabs(Task.m_dShift_IMG_X) > sysData.m_dOcSpec.x || fabs(Task.m_dShift_IMG_Y)  > sysData.m_dOcSpec.y)
+			//{
+			//	//if (fabs(Task.m_dShift_IMG_X) <= sysData.m_dOcSpec.x &&fabs(Task.m_dShift_IMG_Y) <= sysData.m_dOcSpec.y)
+			//	
+			//	//bRtn = ChartCenterPatternMatching();// _findCirclePos(vision.MilImageBuffer[4], pitch, width, Height, SFR.rcROI);
+			//	//if (!bRtn)
+			//	//{
+			//	//	return false;
+			//	//}
+
+			//	/*bRtn = _Trinity_findCirclePos(vision.MilImageBuffer[4], pitch, width, Height, SFR.rcROI);
+			//	if (!bRtn)
+			//	{
+			//		return false;
+			//	}*/
+			//}
 		}
 	}
 	else
 	{
+
+		sLog.Format("Center Find Fail");
+		theApp.MainDlg->putListLog(sLog);
 		return false;
 	}
 #else

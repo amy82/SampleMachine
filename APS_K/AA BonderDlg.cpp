@@ -156,7 +156,7 @@ UINT Thread_ServoAlarm(LPVOID parm)
 	bThreadServoAlarmRun = true;
 
 	int   i = 0;
-	long  lAxisNo; 
+	long  lAxisNo;
 	DWORD dwRet = 0;
 
 	long  BoardNo, ModulePos;
@@ -172,7 +172,7 @@ UINT Thread_ServoAlarm(LPVOID parm)
 	{
 		asAlarm[i] = _T("");
 	}
-			
+
 	while (bThreadServoAlarm)
 	{
 		for ( i = 0; i < MAX_MOTOR_NO; i++ )
@@ -216,9 +216,9 @@ UINT Thread_ServoAlarm(LPVOID parm)
 			}
 
 			//! 지정축의 알람 코드를 사용하여 알람 내용에 대한 문자열 값을 확인한다.
-			//! 알람 코드에 대한 문자열을 올바르게 표시하기 위해서는 라이브러리와 같이 배포되는 알람 문자열 일람 파일이 
-			//! Axl.dll와 같은 폴더에 있거나 OS 설치 디렉토리 내의 System32 폴더내에 존재하여야 한다. 
-			//! 그렇지 않을 경우 함수 실행 결과가 ‘AXT_RT_MOTION_READ_ALARM_FILES’로 리턴된다. 
+			//! 알람 코드에 대한 문자열을 올바르게 표시하기 위해서는 라이브러리와 같이 배포되는 알람 문자열 일람 파일이
+			//! Axl.dll와 같은 폴더에 있거나 OS 설치 디렉토리 내의 System32 폴더내에 존재하여야 한다.
+			//! 그렇지 않을 경우 함수 실행 결과가 ‘AXT_RT_MOTION_READ_ALARM_FILES’로 리턴된다.
 			//! 알람 코드에 대한 문자열 파일은 EzSoftwre 설치 폴더내의 ‘AXL(Library)\Library\DefFile’에 있다.
 			//!  (Alarm-A4N.def, Alarm-A5N.def)
 			dwRet = AxmStatusGetServoAlarmString(lAxisNo, upAlarmCode, iBufSize_GetAlarm, szGetAlarm);
@@ -290,7 +290,7 @@ UINT Thread_Ccm_Grab(LPVOID parm)
 		errMsg2(Task.AutoFlag,"MIL 영상 버퍼 생성 실패.");
 		return 1;
 	}
-	
+
 
 	int tmpCnt = 0;
 
@@ -301,7 +301,7 @@ UINT Thread_Ccm_Grab(LPVOID parm)
 	bThreadCcmGrabRun = true;
 
 	bool saveFlag = false;
-		
+
 	try
 	{
 		while(bThreadCcmGrab)
@@ -362,7 +362,7 @@ UINT Thread_Ccm_Grab(LPVOID parm)
 			}
 
 
-			//! 영상 취득 버퍼의 상태값 임시 저장 
+			//! 영상 취득 버퍼의 상태값 임시 저장
 			//! [주의 사항] 1 Frame만 찍어서 정지 영상 Display하는 기능에 필요, Process용 버퍼 관리에 중요하다.
 			if ( gMIUDevice.CurrentState == 3)
 			{
@@ -380,9 +380,9 @@ UINT Thread_Ccm_Grab(LPVOID parm)
 				//! 영상 취득
 				if (MIU.m_pBoard->GetFrame(MIU.m_pFrameRawBuffer, MIU.m_pFrameBMPBuffer))
 				{
-					//gMIUDevice.imageGrayItp->imageData = (char*)MIU.m_pFrameBMPBuffer; 
+					//gMIUDevice.imageGrayItp->imageData = (char*)MIU.m_pFrameBMPBuffer;
 					gMIUDevice.imageItp->imageData = (char*)MIU.m_pFrameBMPBuffer;
-					//cvSaveImage("D:\\m_pFrameBMPBuffer.bmp", gMIUDevice.imageGrayItp);	 
+					//cvSaveImage("D:\\m_pFrameBMPBuffer.bmp", gMIUDevice.imageGrayItp);
 					MIU.Grab_StopImage();
 
 					//! 영상 취득 관련 Thread간 경과 시간 측정
@@ -392,7 +392,7 @@ UINT Thread_Ccm_Grab(LPVOID parm)
 					MIU.Init_Grab_Time(1);
 					MIU.Start_Grab_Time(1);
 
-					//! 영상 취득을 마치고, 해당 영상의 버퍼 index를 알려준 후에, 
+					//! 영상 취득을 마치고, 해당 영상의 버퍼 index를 알려준 후에,
 					MIU.m_iIndex_Grab_Ready = MIU.m_iIndex_Grab_Working;
 					//! 다음 버퍼의 영상을 취득할 수 있도록, index 증가
 					(MIU.m_iIndex_Grab_Working)++;
@@ -441,7 +441,7 @@ UINT Thread_Ccm_CvtColor(LPVOID parm)
 		bThreadCcmGrabRun = false;
 		return 1;
 	}
-	
+
 	bThreadCcmGrab = true;
 	bThreadCcmGrabRun = true;
 
@@ -489,7 +489,7 @@ UINT Thread_Ccm_CvtColor(LPVOID parm)
 			//! [주의 사항] 1 Frame만 찍어서 정지 영상 Display하는 기능에 필요, Process용 버퍼 관리에 중요하다.
 			//MIU.m_aTemp[ MIU.m_iIndex_Cvt_Clr_Working ].CurrentState = MIU.m_aTemp[ MIU.m_iIndex_Grab_Ready ].CurrentState;
 
-			//! 아직 처리하지 못한, 취득된 영상이 있으므로, 
+			//! 아직 처리하지 못한, 취득된 영상이 있으므로,
 
 			//! 영상 취득 관련 Thread간 경과 시간 측정
 			MIU.Measure_Grab_Time(1);
@@ -520,7 +520,7 @@ UINT Thread_Ccm_CvtColor(LPVOID parm)
 		TRACE(_T("Thread_Ccm_CvtColor - CException [%s] \n"), czCause);
 		e->Delete();
 	}
-	
+
 	gMIUDevice.CurrentState = -1;
 
 	bThreadCcmGrab = false;
@@ -544,7 +544,7 @@ UINT Thread_Ccm_CvtMil(LPVOID parm)
 		bThreadCcmGrabRun = false;
 		return 1;
 	}
-		
+
 	bThreadCcmGrab = true;
 	bThreadCcmGrabRun = true;
 
@@ -621,8 +621,8 @@ UINT Thread_Ccm_CvtMil(LPVOID parm)
 			MbufPut(vision.MilProcImageChild[4], MIU.m_acvChildImage[1]->imageData);
 			MbufPut(vision.MilProcImageChild[5], MIU.m_acvChildImage[2]->imageData);*/
 
-			MIU.m_iIndex_Cvt_Mil_Used = MIU.m_iIndex_Cvt_Mil_Working;			
-			
+			MIU.m_iIndex_Cvt_Mil_Used = MIU.m_iIndex_Cvt_Mil_Working;
+
 			Sleep(5);
 		}
 	}
@@ -633,7 +633,7 @@ UINT Thread_Ccm_CvtMil(LPVOID parm)
 		TRACE(_T("Thread_Ccm_CvtMil - CException [%s] \n"), czCause);
 		e->Delete();
 	}
-	
+
 	gMIUDevice.CurrentState = -1;
 
 	bThreadCcmGrab = false;
@@ -703,7 +703,7 @@ UINT Thread_Ccm_Mil_CvtColor(LPVOID parm)
 				Sleep(100);
 				continue;
 			}
-			if( iOldImgFrame == vision.m_iIndex_Cvt_Clr_Ready ) 
+			if( iOldImgFrame == vision.m_iIndex_Cvt_Clr_Ready )
 			{
 				Sleep(5);
 				continue;
@@ -727,12 +727,12 @@ UINT Thread_Ccm_Mil_CvtColor(LPVOID parm)
 
 			//if ( vision.m_bFlag_Use_WB_Coeff == true )
 			//{
-			//	MbufBayer( vision.MilBayerImage[ vision.m_iIndex_Cvt_Clr_Ready ], vision.MilGrabImage[1], vision.MilWBCoefficients, M_BAYER_RG );				
+			//	MbufBayer( vision.MilBayerImage[ vision.m_iIndex_Cvt_Clr_Ready ], vision.MilGrabImage[1], vision.MilWBCoefficients, M_BAYER_RG );
 			//}
-			//else 
+			//else
 			//{
 			//	//! 'M_ADAPTIVE'를 포함하면, 500 msec의 시간이 걸린다.
-			//	MbufBayer( vision.MilBayerImage[ vision.m_iIndex_Cvt_Clr_Ready ], vision.MilGrabImage[1], M_DEFAULT, M_BAYER_RG );		
+			//	MbufBayer( vision.MilBayerImage[ vision.m_iIndex_Cvt_Clr_Ready ], vision.MilGrabImage[1], M_DEFAULT, M_BAYER_RG );
 			//}
 
 			vision.m_csProcImageCV.Unlock();
@@ -746,7 +746,7 @@ UINT Thread_Ccm_Mil_CvtColor(LPVOID parm)
 
 			vision.m_iIndex_Cvt_Clr_Used = vision.m_iIndex_Cvt_Clr_Ready;
 
-			//! Thread_Ccm_Display를 작동시키기 위해서 필요하다. 
+			//! Thread_Ccm_Display를 작동시키기 위해서 필요하다.
 			MIU.m_iIndex_Cvt_Mil_Used = vision.m_iIndex_Cvt_Clr_Ready;
 
 			Sleep(5);
@@ -781,13 +781,13 @@ UINT Thread_Ccm_Display(LPVOID parm)
 		bThreadCcmGrabRun = false;
 		return 1;
 	}
-	
+
 	bThreadCcmGrab = true;
 	bThreadCcmGrabRun = true;
 
 	double dReduceFactorX = 0.;
 	double dReduceFactorY = 0.;
-	
+
 	try
 	{
 		while(bThreadCcmGrab)
@@ -820,7 +820,7 @@ UINT Thread_Ccm_Display(LPVOID parm)
 				Sleep(100);
 				continue;
 			}
-			
+
 			if ( MIU.m_iIndex_Cvt_Mil_Used == MIU.m_iIndex_Display_Working )
 			{
 				Sleep(5);
@@ -842,7 +842,7 @@ UINT Thread_Ccm_Display(LPVOID parm)
 			//! 영상 취득 버퍼의 상태값 임시 저장
 			//! [주의 사항] 1 Frame만 찍어서 정지 영상 Display하는 기능에 필요, Process용 버퍼 관리에 중요하다.
 
-			//! 아직 처리하지 못한, 취득된 영상이 있으므로, 
+			//! 아직 처리하지 못한, 취득된 영상이 있으므로,
 
 			dReduceFactorX = (double)SMALL_CCD_SIZE_X / gMIUDevice.nWidth;
 			dReduceFactorY = (double)SMALL_CCD_SIZE_Y / gMIUDevice.nHeight;
@@ -853,8 +853,8 @@ UINT Thread_Ccm_Display(LPVOID parm)
 
 			MIU.Measure_Grab_Time(6);
 
-			//! Display용 Frame Rate 계산을 위해 호출한다. 
-			MIU.Add_Display_Count();	
+			//! Display용 Frame Rate 계산을 위해 호출한다.
+			MIU.Add_Display_Count();
 
 			if ( bFlag_First_Grab_Display == false )
 			{
@@ -872,7 +872,7 @@ UINT Thread_Ccm_Display(LPVOID parm)
 		TRACE(_T("Thread_Ccm_Display - CException [%s] \n"), czCause);
 		e->Delete();
 	}
-	
+
 	gMIUDevice.CurrentState = -1;
 
 	bThreadCcmGrab = false;
@@ -882,7 +882,7 @@ UINT Thread_Ccm_Display(LPVOID parm)
 }
 
 //! Auto Exposure Time 본체 Thread
-//! Auto Exposure Time 설정 관련 중요 Flag 설정을 위해서 존재한다. 
+//! Auto Exposure Time 설정 관련 중요 Flag 설정을 위해서 존재한다.
 //! (영상 취득 시작 여부를 확인하기 위한 것이다.)
 UINT Thread_Ccm_Auto_Exposure_Time(LPVOID parm)
 {
@@ -911,14 +911,14 @@ UINT Thread_Ccm_Auto_Exposure_Time(LPVOID parm)
 			{
 				break;
 			}
-			
+
 			if(gMIUDevice.CurrentState<3)
 			{
 				break;
 			}
 
 			if ( bFlag_First_Grab_Display == true )
-			{				
+			{
 				break;
 			}
 
@@ -1028,7 +1028,7 @@ UINT Thread_TaskReady(LPVOID parm)
 		{
 			if ( Task.ReadyTask >= 10000 && Task.ReadyTask <19900 )
 			{
-				Task.ReadyTask = theApp.MainDlg->pcbProcess.Ready_process(Task.ReadyTask);		/* 렌즈 로드 -> 렌즈 얼라인 -> 렌즈 본딩 위치 */	
+				Task.ReadyTask = theApp.MainDlg->pcbProcess.Ready_process(Task.ReadyTask);		/* 렌즈 로드 -> 렌즈 얼라인 -> 렌즈 본딩 위치 */
 			}
 			else
 			{
@@ -1087,7 +1087,7 @@ UINT Thread_MIUCheck(LPVOID parm)
 	CAABonderDlg* pFrame = (CAABonderDlg*)AfxGetApp()->m_pMainWnd;
 	CString logStr="";
 
-	
+
 	bThread_MIUCheckRun=true;
 	if( !pFrame->MIUCheck_process())// || gMIUDevice.CurrentState != 4)
 	{
@@ -1167,7 +1167,7 @@ UINT Thread_Monitor(LPVOID parm)
 
 			pFrame->m_labelThread2.Invalidate();
 		}
-		
+
 ////////////////////////////////////////////////////////////////////////////////
 // 모터 원점 복귀 확인..
 
@@ -1235,7 +1235,7 @@ UINT Thread_Monitor(LPVOID parm)
 		if(iAmpfault != oldAmpFaultFlag){
 			pFrame->	m_labelServo.Invalidate();
 		}
-		Task.iAmpFaultFlag = oldAmpFaultFlag = iAmpfault; 
+		Task.iAmpFaultFlag = oldAmpFaultFlag = iAmpfault;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1250,17 +1250,17 @@ UINT Thread_Monitor(LPVOID parm)
  		//		Task.iLimitErrorFlag =1;
 			//	break;
  		//	}
-			//else 
+			//else
 			//	Task.iLimitErrorFlag =0;
 			//
-			//if ( motor.GetPosiSensor(i) ) 
+			//if ( motor.GetPosiSensor(i) )
  		//	{
 			//	if(i == Motor_Lens_Z)continue;
  		//		Task.iLimitErrorFlag =1;
 			//	break;
  		//	}
 			//else			Task.iLimitErrorFlag =0;
- 
+
 			//if (motor.GetAmpFault(i))
 			//{
 			//	sTempLang.LoadStringA(IDS_STRING152);	//[%s] AMP 알람 감지
@@ -1280,7 +1280,7 @@ UINT Thread_Monitor(LPVOID parm)
 			CString sLog2="";
 			sLog2.Format("%s",sLog);
 			errMsg2(Task.AutoFlag, sLog2);
-			Task.AutoFlag = 0;			//	일시정지시 사용함 0: 일시정지 1: Run	
+			Task.AutoFlag = 0;			//	일시정지시 사용함 0: 일시정지 1: Run
 			pFrame->AutoRunView(Task.AutoFlag);
 			bThreadTaskPcb =0;			//	 정지 할때 사용 0:쓰레드 빠져 나옴
 			bThreadTaskLens =0;			//	 정지 할때 사용 0:쓰레드 빠져 나옴
@@ -1292,7 +1292,7 @@ UINT Thread_Monitor(LPVOID parm)
 			if(Task.iLimitErrorFlag ==1 && Task.AutoFlag)
 			{
 				Dio.setAlarm(ALARM_ON);
-				Task.AutoFlag = 0;			//	일시정지시 사용함 0: 일시정지 1: Run	
+				Task.AutoFlag = 0;			//	일시정지시 사용함 0: 일시정지 1: Run
 				pFrame->AutoRunView(Task.AutoFlag);
 				bThreadTaskPcb =0;			//	 정지 할때 사용 0:쓰레드 빠져 나옴
 				bThreadTaskLens =0;			//	 정지 할때 사용 0:쓰레드 빠져 나옴
@@ -1312,7 +1312,7 @@ UINT Thread_Monitor(LPVOID parm)
         if (curInDio[0] & DIO_IN_DOORSENSOR4)			Task.iDoorFlag += 0x0008;
         if (curInDio[0] & DIO_IN_DOORSENSOR5)			Task.iDoorFlag += 0x0010;*/
         doorFlag = 0x0007;
-		if(iOldDoorOpenFlag != Task.iDoorFlag) 
+		if(iOldDoorOpenFlag != Task.iDoorFlag)
 		{
 			if (Task.iDoorFlag != doorFlag) //0x003F = 63  //0x001F
 			{
@@ -1324,7 +1324,7 @@ UINT Thread_Monitor(LPVOID parm)
 				pFrame->m_LabelDoor.SetBkColor(M_COLOR_GREEN);
 				Task.iDoorFlag2 = 0;
 			}
-			pFrame->m_LabelDoor.Invalidate();	
+			pFrame->m_LabelDoor.Invalidate();
 		}
 		iOldDoorOpenFlag = Task.iDoorFlag;
 
@@ -1355,7 +1355,7 @@ UINT Thread_Monitor(LPVOID parm)
 
 //-- 바코드 Reading
 		CString sBarCode = "";
-		if( barcode.func_Barcode_Read(sBarCode) ) 
+		if( barcode.func_Barcode_Read(sBarCode) )
 		{	//바코드가 읽혀 졌을때...
 			CString sData="";
 			int len = sBarCode.GetLength();
@@ -1364,7 +1364,7 @@ UINT Thread_Monitor(LPVOID parm)
 			//{
 			//	//sData = sBarCode.Mid(0, 12);
 			//}
-			//else	
+			//else
 			//{
 			//	//sData = sBarCode;
 			//}
@@ -1372,16 +1372,16 @@ UINT Thread_Monitor(LPVOID parm)
 			{
 				if( (Task.PCBTask > 10000) &&  (Task.PCBTask < 10180) )
 				{//Loading 부터 모델 인식 확인까지만 Data Task로 Push
-					Task.m_bPBStart = 1;	//바코드 정상적으로 읽혀 졌을때.		 
+					Task.m_bPBStart = 1;	//바코드 정상적으로 읽혀 졌을때.
 					sprintf_s(Task.ChipID, sData, sizeof(sData) );
-					pFrame->func_ChipID_Draw();	
+					pFrame->func_ChipID_Draw();
 				}
 			}
 			else if( Task.AutoFlag == 0 )
 			{//정지(수동)상태에서는 항상 Push
-				Task.m_bPBStart = 1;	//바코드 정상적으로 읽혀 졌을때.		
+				Task.m_bPBStart = 1;	//바코드 정상적으로 읽혀 졌을때.
 				sprintf_s(Task.ChipID, sData, sizeof(sData) );
-				pFrame->func_ChipID_Draw();	
+				pFrame->func_ChipID_Draw();
 			}
 		}
 		Sleep(1);
@@ -1398,7 +1398,7 @@ UINT Thread_TaskOrigin(LPVOID parm)
 {
 	bThreadOriginRun = true;
 	CString sTemp = _T("");
-	
+
 	sTemp.Format("전체 원점 복귀 수행합니다");	//전체 원점 복귀 수행합니다
 	delayMsg(sTemp, 50000, M_COLOR_DARK_GREEN);
 	theApp.MainDlg->putListLog(sTemp);
@@ -1441,11 +1441,11 @@ UINT Thread_TaskPcb(LPVOID parm)
 	CString logStr="";
 	CAABonderDlg* pFrame = (CAABonderDlg*)AfxGetApp()->m_pMainWnd;
 
-	 
+
 	vision.setLiveMode(true);
 
-	pFrame->putListLog(""); 
-	pFrame->putListLog("");  
+	pFrame->putListLog("");
+	pFrame->putListLog("");
 
 
  	pFrame->m_iCurCamNo =  0;
@@ -1453,7 +1453,7 @@ UINT Thread_TaskPcb(LPVOID parm)
 	{
 		pFrame->ctrlSubDlg(MAIN_DLG);
 		pFrame->changeMainBtnColor(MAIN_DLG);
-		pFrame->setCamDisplay(3,1);		
+		pFrame->setCamDisplay(3,1);
 	}
 	else
 	{
@@ -1503,15 +1503,15 @@ UINT Thread_TaskPcb(LPVOID parm)
 
 	while(bThreadTaskPcb && (Task.PCBTask >= Task.m_iStart_Step_PCB) && (Task.PCBTask < Task.m_iEnd_Step_PCB))
 	{
-		if(Task.AutoFlag != 1)			//0:정지 1: 자동 
+		if(Task.AutoFlag != 1)			//0:정지 1: 자동
 		{
 			sLangChange.LoadStringA(IDS_STRING403);
 			logStr.Format(sLangChange);	//AutoRunFlag OFF 상태 . PCB부 step :-1
 			pFrame->putListLog(logStr);
 			break;
 		}
-		
-		
+
+
 		i_alarm_flag = pFrame->checkAutoRunPcbAlarm(Task.PCBTask);
 
 		if(i_alarm_flag != 0)
@@ -1527,7 +1527,7 @@ UINT Thread_TaskPcb(LPVOID parm)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////ㅋㅋㅋ
 		if ( Task.PCBTask >= 10000 && Task.PCBTask < 11000 )
 		{
-			Task.PCBTask = theApp.MainDlg->pcbProcess.RunProc_ProductLoading(Task.PCBTask); //! 사용자 제품 Loading	
+			Task.PCBTask = theApp.MainDlg->pcbProcess.RunProc_ProductLoading(Task.PCBTask); //! 사용자 제품 Loading
 		}
 		else if ( Task.PCBTask >= 11000 && Task.PCBTask < 49000 )
 		{
@@ -1537,7 +1537,7 @@ UINT Thread_TaskPcb(LPVOID parm)
 			}else
 			{
 #if (____AA_WAY == PCB_TILT_AA)
-				if( Task.PCBTask >= 11000 && Task.PCBTask < 15000 )			Task.PCBTask = theApp.MainDlg->pcbProcess.RunProc_PCBOutsideAlign(Task.PCBTask);		//! PCB 외부 Align Step		
+				if( Task.PCBTask >= 11000 && Task.PCBTask < 15000 )			Task.PCBTask = theApp.MainDlg->pcbProcess.RunProc_PCBOutsideAlign(Task.PCBTask);		//! PCB 외부 Align Step
 				else if( Task.PCBTask >= 15000 && Task.PCBTask < 26000 )	Task.PCBTask = theApp.MainDlg->pcbProcess.RunProc_LensNewPassPickup(Task.PCBTask);		//! Lens Pickup에 제품 넘김 Step
 				else if( Task.PCBTask >= 26000 && Task.PCBTask < 27000 )	Task.PCBTask = theApp.MainDlg->pcbProcess.RunProc_SensorAlign(Task.PCBTask);		//! Sensor Align Step + Laser 측정
 				else if (Task.PCBTask >= 27000 && Task.PCBTask < 29000)		Task.PCBTask = theApp.MainDlg->pcbProcess.RunProc_LaserMeasure(Task.PCBTask);			//pcb 레이저 측정
@@ -1572,14 +1572,14 @@ UINT Thread_TaskPcb(LPVOID parm)
 			Task.bFirstAA = true;
 			Task.m_iCnt_1Step_End = Task.m_iCnt_Step_AA_Total;
 			Task.PCBTask = 60200;	//2차AA
-		}		
+		}
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if ( Task.PCBTask >= 110000 && Task.PCBTask <120000 )
 		{
 			Task.PCBTask = theApp.MainDlg->pcbProcess.UV_process(Task.PCBTask);
 		}
 		else if ( Task.PCBTask >= 120000 && Task.PCBTask <130000)
-		{			
+		{
             if (sysData.m_iProductComp == 1)
             {
                 Task.PCBTask = theApp.MainDlg->pcbProcess.Complete_FinalInsp(Task.PCBTask);
@@ -1591,11 +1591,11 @@ UINT Thread_TaskPcb(LPVOID parm)
 		}
 		if (Task.PCBTask >= Task.m_iEnd_Step_PCB)
 		{
-			//if(!bThreadTaskLens)	//Dio.setAlarm(ALARM_OFF);	// Lens  쓰레드 멈추면 Yellow	
+			//if(!bThreadTaskLens)	//Dio.setAlarm(ALARM_OFF);	// Lens  쓰레드 멈추면 Yellow
 			Dio.setAlarm(ALARM_OFF);	// Lens  쓰레드 멈추면 Yellow
 			break;
 		}
-		
+
 
 		Sleep(5);
 
@@ -1617,26 +1617,26 @@ UINT Thread_TaskPcb(LPVOID parm)
 	Task.PcbOnStage = 100;
 	logStr.Format("PCB AA-Bonding 동작 쓰레드 종료.");
 	pFrame->putListLog(logStr);
-	
+
 	Task.m_iHour = Task.m_iMin = Task.m_iSec = 0;
 
 	delayMsg(logStr.GetBuffer(999), 3000, M_COLOR_RED);
 
 	g_bMovingflag = false;
-	
+
 	if (Task.AutoFlag == 0)
 	{
 		MIU.Stop();					// 95 ~ 100 msec
 	}					// 95 ~ 100 msec
 
-	
+
 	logStr.Empty();
 	return 1;
 }
 
 UINT Thread_TaskLens(LPVOID parm)
 {
-	
+
 	CString logStr="";
 	CAABonderDlg* pFrame = (CAABonderDlg*)AfxGetApp()->m_pMainWnd;
 
@@ -1652,7 +1652,7 @@ UINT Thread_TaskLens(LPVOID parm)
 	{
 		pFrame->ctrlSubDlg(MAIN_DLG);
 		pFrame->changeMainBtnColor(MAIN_DLG);
-		pFrame->setCamDisplay(3,1);		
+		pFrame->setCamDisplay(3,1);
 	}
 	else
 	{
@@ -1703,16 +1703,16 @@ UINT Thread_TaskLens(LPVOID parm)
 
 	while(bThreadTaskLens && (Task.LensTask >= Task.m_iStart_Step_LENS) && (Task.LensTask < Task.m_iEnd_Step_LENS))
 	{
-		if(Task.AutoFlag != 1)			//0:정지 1: 자동 
+		if(Task.AutoFlag != 1)			//0:정지 1: 자동
 		{
 			sLangChange.LoadStringA(IDS_STRING403);
 			logStr.Format(sLangChange);	//AutoRunFlag OFF 상태 . Lens부 step :-1
 			pFrame->putListLog(logStr);
 			break;
 		}
-		
+
 		i_alarm_flag = pFrame->checkAutoRunLensAlarm(Task.LensTask);
-		 
+
 		if(i_alarm_flag != 0)
 		{
 			//Dio.setAlarm(ALARM_ON);
@@ -1724,24 +1724,24 @@ UINT Thread_TaskLens(LPVOID parm)
 
 			continue;
 		}
-		
+
 //★★★★///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		
+
 		if(Task.LensTask >= 30000 && Task.LensTask < 50000)
 		{
 #if (__MACHINE_MODEL == MACHINE_1ST)
 			Task.LensTask = theApp.MainDlg->pcbProcess.RunProc_LENS_AlignLaserMeasure(Task.LensTask);		//! LENS Align Step
 #else
 
-		
+
 #if (____AA_WAY == LENS_TILT_AA)
 			Task.LensTask = theApp.MainDlg->pcbProcess.RunProc_LENS_LensLoad(Task.LensTask);		//! LENS Align Step
 #endif
 #endif
-			//theApp.MainDlg->pcbProcess.RunProc_PCBOutsideAlign(Task.PCBTask);	
+			//theApp.MainDlg->pcbProcess.RunProc_PCBOutsideAlign(Task.PCBTask);
 			///Task.LensTask = pFrame->RunProc_LENS_AlignLaserMeasure(Task.LensTask);		//! LENS Align Step
 			//Task.LensTask = pFrame->RunProc_LENS_LensLoad(Task.LensTask);		//! LENS Align Step
-			
+
 		}
 #if(____AA_WAY == PCB_TILT_AA)
 		else if (Task.LensTask >= 50000 && Task.LensTask < 70000)
@@ -1755,8 +1755,8 @@ UINT Thread_TaskLens(LPVOID parm)
 		if (Task.LensTask >= Task.m_iEnd_Step_LENS)
 		{
 			break;
-		} 
-		
+		}
+
 
 		Sleep(5);
 	}
@@ -1779,11 +1779,11 @@ UINT Thread_TaskLens(LPVOID parm)
 	Task.LensOnStage = 100;
 	logStr.Format(_T("Lens AA-Bonding 동작 쓰레드 종료."));//sLangChange);
 	pFrame->putListLog(logStr);
-	
+
 	Task.m_iHour = Task.m_iMin = Task.m_iSec = 0;
 
 	g_bMovingflag = false;
-	
+
 	return 1;
 }
 
@@ -1814,7 +1814,7 @@ UINT Thread_Clock(LPVOID parm)
 		Sleep(200);
 		checkMessage();
 	}
-	 
+
 	bThreadClockRun = false;
 
 	return true;
@@ -1822,14 +1822,14 @@ UINT Thread_Clock(LPVOID parm)
 
 UINT Thread_CheckDate(LPVOID parm)
 {//----- 날짜를 수시로 Check하여 불필요한 데이터를 삭제시킨다...
-	CAABonderDlg *pFrame = (CAABonderDlg *)(AfxGetApp()->m_pMainWnd); 
+	CAABonderDlg *pFrame = (CAABonderDlg *)(AfxGetApp()->m_pMainWnd);
 
 	int year=0, month=0, day=0,hour=0,minute=0,second=0;
 	GetDateAndTime(year, month, day, hour, minute, second);
 
 	while(1)
 	{
-		///if(!g_chkdateTH_flag)	break;		
+		///if(!g_chkdateTH_flag)	break;
 
 		GetDateAndTime(year, month, day, hour, minute, second);
 
@@ -1869,7 +1869,7 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
-	
+
 END_MESSAGE_MAP()
 
 
@@ -1888,10 +1888,10 @@ CAABonderDlg::CAABonderDlg(CWnd* pParent /*=NULL*/)
 
 	//! <---------------------------------------------------------------------------
 	//! Added by LHW (2013/2/5, 2013/3/6)
-	m_iMode_Mouse_Box = 0;	//! Mouse로 사각 영역 설정하는 작업의 종류 값, 0 based	
+	m_iMode_Mouse_Box = 0;	//! Mouse로 사각 영역 설정하는 작업의 종류 값, 0 based
 	dwTickStartRun = false;
 
-	pThread_CCM_Grab = NULL; 
+	pThread_CCM_Grab = NULL;
 	pThread_CCM_Display = NULL;
 	pThread_CCM_CvtColor = NULL;
 	pThread_CCM_CvtMil = NULL;
@@ -1942,7 +1942,7 @@ void CAABonderDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_LABEL_STATUS_HOM, m_labelHom);
 	DDX_Control(pDX, IDC_LABEL_STATUS_SERVO, m_labelServo);
 	DDX_Control(pDX, IDC_LABEL_STATUS_MES, m_labelMes);
-	
+
 	DDX_Control(pDX, IDC_LABEL_STATUS_USB_MODULE, m_labelUsbModule);
 	DDX_Control(pDX, IDC_LABEL_TIME, m_labelTime);
 
@@ -1966,7 +1966,7 @@ void CAABonderDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_BUTTON_STOP, m_btnStop);
 	DDX_Control(pDX, IDC_BUTTON_NG_OUT, m_btnNgOut);
 	DDX_Control(pDX, IDC_AUTORUN_START, m_btnStart);
-	
+
 
 	DDX_Check(pDX, IDC_CHECK_DIST, m_bMeasureDist);
 	DDX_Check(pDX, IDC_CHECK_LOG_VIEW, m_bLogView);
@@ -1989,7 +1989,7 @@ void CAABonderDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_BUTTON_PROCOMP, m_bProCompCheck);
 	DDX_Control(pDX, IDC_BUTTON_SMINI_OQMODE, m_bSminiOQCheck);
 	DDX_Control(pDX, IDC_BUTTON_SET_DLG, m_bSetDlg);
-	
+
 }
 
 BEGIN_MESSAGE_MAP(CAABonderDlg, CDialogEx)
@@ -2063,7 +2063,7 @@ END_MESSAGE_MAP()
 BOOL CAABonderDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
-	
+
 	// IDM_ABOUTBOX는 시스템 명령 범위에 있어야 합니다.
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
 	ASSERT(IDM_ABOUTBOX < 0xF000);
@@ -2150,13 +2150,13 @@ BOOL CAABonderDlg::OnInitDialog()
 		return FALSE;
 	}
 #endif
-	
+
 
 	MIU.setInterface();
 	model.Load();
 	work.Load();
 	model.PatternLoad();
-	
+
     model.AcmisDataLoad();
 
     model.RoiLoad();
@@ -2189,13 +2189,13 @@ BOOL CAABonderDlg::OnInitDialog()
 	MdispSelectWindow(vision.MilDisplay[3], vision.MilSmallImage[1], pWnd->m_hWnd);
 
 	vision.enableOverlay();
-	
+
 #endif
 #ifdef		ON_LINE_MOTOR
 	bool initFlag = motor.Axl_Init();
 	if(!initFlag)
 	{
-		//errMsg2(Task.AutoFlag, msg); 
+		//errMsg2(Task.AutoFlag, msg);
 
 		char logStr[1000];
 		sprintf_s(logStr, "모터 초기화에 실패 하였습니다.");
@@ -2212,9 +2212,9 @@ BOOL CAABonderDlg::OnInitDialog()
 	motor.AmpDisableAll();
 	//Dio.PCBvaccumOn(VACCUM_OFF, true);
 #endif
-	
 
-	
+
+
 	SetInterface();
 
 
@@ -2222,9 +2222,9 @@ BOOL CAABonderDlg::OnInitDialog()
 	bRet = vision.MiuBufferAlloc(gMIUDevice.nWidth, gMIUDevice.nHeight);
 #endif
 	//! <---------------------------------------
-	//! Added by LHW (2013/3/27)	
+	//! Added by LHW (2013/3/27)
 	m_rect_CCD_Zoom.left = 0;
-	m_rect_CCD_Zoom.top = 0; 
+	m_rect_CCD_Zoom.top = 0;
 	m_rect_CCD_Zoom.right = gMIUDevice.nWidth;
 	m_rect_CCD_Zoom.bottom = gMIUDevice.nHeight;
 	//! <---------------------------------------
@@ -2242,9 +2242,9 @@ BOOL CAABonderDlg::OnInitDialog()
 	vision.drawOverlay(CAM2);
 	vision.clearOverlay(CCD);
 	vision.drawOverlay(CCD);
-	 
+
 	//m_mmResult = timeSetEvent(1000, 1, NULL, NULL, TIME_PERIODIC );
-	 
+
 
 #ifdef ON_LINE_MONITOR
 	pThread_Monitor    = ::AfxBeginThread(Thread_Monitor, this);
@@ -2271,7 +2271,7 @@ BOOL CAABonderDlg::OnInitDialog()
 		GetDlgItem(IDC_BUTTON_TIME_CHECK)->SetWindowText(sLangChange);
 		m_EpoxyTimeCheck.m_iStateBtn = 0;
 	}
-	else 
+	else
 	{
 		sLangChange.LoadStringA(IDS_STRING1451);//EPOXY TIME STOP
 		GetDlgItem(IDC_BUTTON_TIME_CHECK)->SetWindowText(sLangChange);
@@ -2283,7 +2283,7 @@ BOOL CAABonderDlg::OnInitDialog()
 	m_oldDlg = -1;
 
 	/////pThread_CheckDate = AfxBeginThread(Thread_CheckDate, this);
-	
+
 	SetTimer(999, 500, NULL);
 	SetTimer(9, 3000, NULL);
 
@@ -2306,7 +2306,7 @@ BOOL CAABonderDlg::OnInitDialog()
 	logStr.Format("%d", work.m_iCoverUpDownCnt);
 	m_labelCcdRetryCnt.SetText(logStr);
 	m_labelCcdRetryCnt.Invalidate();
-	
+
 	Rs232Init();
 
 	if (sysData.m_iIrChartUse == 1)
@@ -2325,9 +2325,9 @@ BOOL CAABonderDlg::OnInitDialog()
 #elif (____AA_WAY == LENS_TILT_AA)
 	putListLog(" [INFO] LENS AA");
 #endif
-	
 
-	
+
+
 	Task.bSfrLogView = true;
 	logStr.Empty();
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
@@ -2426,7 +2426,7 @@ void CAABonderDlg::Rs232Init()
 			IrvAlignLed.IrvLight_Power(1, IR_OC);
 		}
 
-		
+
 	}
 	else
 	{
@@ -2442,7 +2442,7 @@ void CAABonderDlg::Rs232Init()
 		LightControlSecond.SetReceiveProcPtr(this);
 		bRet_Con_RS232C = LightControlSecond.Connect_Device(sCommPort, 0);
 
-		
+
 
 	}
 
@@ -2546,9 +2546,9 @@ void CAABonderDlg::Rs232Init()
 #endif
 
 
-	
-	
-	
+
+
+
 
 #ifdef ON_LINE_KEYENCE
 
@@ -2572,10 +2572,10 @@ void CAABonderDlg::Rs232Init()
 			logStr.Format("[변위 측정기] 통신 연결 성공 : COM%d", sysData.iCommPort[COMM_LASER]);
 			putListLog(logStr);
 		}
-		
+
 	}
 #endif
-	
+
 
 
 }
@@ -2859,7 +2859,7 @@ void CAABonderDlg::SetInterface()
 	CamPosY = wndpl.rcNormalPosition.top + baseGap;
 	int cent = wndpl.rcNormalPosition.right + 1; //(wndpl.rcNormalPosition.right + MAIN_DLG_SIZE_X) / 2;
 
-	
+
 
 	m_rectCamDispPos1.left = cent;
 	m_rectCamDispPos1.right = m_rectCamDispPos1.left + SMALL_CAM_SIZE_X + 2;
@@ -2874,14 +2874,14 @@ void CAABonderDlg::SetInterface()
 	m_rectCcdDispPos.right = ccdPosRight;
 	m_rectCcdDispPos.top = CamPosY;
 	m_rectCcdDispPos.bottom = CamPosY + SMALL_CCD_SIZE_Y;
-	
+
 	m_rectCamDispPos2.top = wndpl.rcNormalPosition.top;
 	m_rectCamDispPos2.bottom = wndpl.rcNormalPosition.top + SMALL_CAM_SIZE_Y;
-	
+
 	m_rectCamDispPos2.left = ccdPosRight;
 	m_rectCamDispPos2.right = m_rectCamDispPos2.left + SMALL_CCD_SIZE_X + 1;
 
-	
+
 
 	g_iCCDCamView = 5;		// 화면 크기 설정
 							/* ListBox */
@@ -2934,7 +2934,7 @@ void CAABonderDlg::SetInterface()
 	m_bSminiOQCheck.m_iStateBtn = 0;
 	m_bSminiOQCheck.Invalidate();
 
-	
+
 	font.CreateFont(18, 0, 0, 0, FW_NORMAL, FALSE, FALSE, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, _T("Arial"));
 	m_listLog.SetFont(&font, 1);
 	font.DeleteObject();
@@ -2979,7 +2979,7 @@ void	CAABonderDlg::SetInterface_Button()
 	GetDlgItem(IDC_BUTTON_CCD)->SetWindowText(sLangChange);
 	sLangChange.LoadStringA(IDS_STRING1407);
 	GetDlgItem(IDC_BUTTON_EXIT)->SetWindowText(sLangChange);
-	//----------------------------------------------------------------------------------------- 
+	//-----------------------------------------------------------------------------------------
 	//-----------------------------------------------------------------------------------------
 	/* 버튼 배경 */
 	wndpl.rcNormalPosition.left		= 0;
@@ -3010,7 +3010,7 @@ void	CAABonderDlg::SetInterface_Button()
 	for (int i = 0; i < 9; i++) {
 		if (i != 0) {
 			wndpl.rcNormalPosition.left = wndpl.rcNormalPosition.right + 3;
-			wndpl.rcNormalPosition.right += btnSize_w; ;// btnSize_w;//125; 
+			wndpl.rcNormalPosition.right += btnSize_w; ;// btnSize_w;//125;
 		}
 		pbutton[i]->MoveWindow(&wndpl.rcNormalPosition);
 	}
@@ -3018,11 +3018,11 @@ void	CAABonderDlg::SetInterface_Button()
 	//--------------------------------------------------------------------------
 	//--------------------------------------------------------------------------상단 메뉴 정렬
 	CRect posRect;
-	
+
 	int baseGap = 1;
 	GetDlgItem(IDC_LABEL_TITLE)->GetWindowPlacement(&wndpl);
 
-	
+
 
 	int topClock_W = 220;
 	int topDoor_W = 100;
@@ -3033,7 +3033,7 @@ void	CAABonderDlg::SetInterface_Button()
 	int top_H = 68;
 	//=================================================================
 	//시간
-	
+
 	wndpl.rcNormalPosition.right	= MAIN_DLG_SIZE_X-baseGap;
 	wndpl.rcNormalPosition.left		= wndpl.rcNormalPosition.right - topClock_W;
 	wndpl.rcNormalPosition.top		= baseGap;
@@ -3047,7 +3047,7 @@ void	CAABonderDlg::SetInterface_Button()
 	wndpl.rcNormalPosition.bottom	= top_H;
 	m_LabelDoor.MoveWindow(&wndpl.rcNormalPosition);
 	//mes
-	
+
 	wndpl.rcNormalPosition.right = wndpl.rcNormalPosition.left - baseGap;
 	wndpl.rcNormalPosition.left = wndpl.rcNormalPosition.right - topMes_W;
 	wndpl.rcNormalPosition.top = baseGap;
@@ -3073,7 +3073,7 @@ void	CAABonderDlg::SetInterface_Button()
 	wndpl.rcNormalPosition.top		= baseGap;
 	wndpl.rcNormalPosition.bottom	= top_H;
 	m_labelUsbLive.MoveWindow(&wndpl.rcNormalPosition);
-	
+
 	//Title
 	wndpl.rcNormalPosition.right	= wndpl.rcNormalPosition.left - baseGap;
 	wndpl.rcNormalPosition.left		= 1;
@@ -3143,8 +3143,8 @@ void CAABonderDlg::SetInterface_Label()
 		ModelSelect = true;
 	}
 #endif
-	
-	
+
+
 	if (ModelSelect == false)
 	{
 		temp.Format(_T("EMPTY"));
@@ -3161,7 +3161,7 @@ void CAABonderDlg::SetInterface_Label()
 #else
 	sTemp.Format("[%s] Active Alignment.%s", temp, VER_STR);
 #endif
-	
+
 //
 	//DEF_VER_DAY
 	m_labelTitle
@@ -3171,7 +3171,7 @@ void CAABonderDlg::SetInterface_Label()
 		.SetText(sTemp)
 		.SetFontSize(24);
 
-	
+
 
 	sLangChange.LoadStringA(IDS_STRING1328);
 	m_labelHom
@@ -3188,7 +3188,7 @@ void CAABonderDlg::SetInterface_Label()
 		.SetFontBold(TRUE)
 		.SetText(sLangChange)
 		.SetFontSize(12);
-		
+
 	sLangChange.LoadStringA(IDS_STRING1450);
 	m_labelThread1
 		.SetBkColor(M_COLOR_GRAY)
@@ -3225,9 +3225,9 @@ void CAABonderDlg::SetInterface_Label()
 		.SetFontSize(12);
 
 
-	sLangChange.LoadStringA(IDS_STRING441);//"CCD 동영상" 
-	m_labelUsbLive  
-		.SetBkColor(M_COLOR_RED) 
+	sLangChange.LoadStringA(IDS_STRING441);//"CCD 동영상"
+	m_labelUsbLive
+		.SetBkColor(M_COLOR_RED)
 		.SetTextColor(M_COLOR_BLACK)
 		.SetFontBold(TRUE)
 		.SetText(sLangChange)
@@ -3307,7 +3307,7 @@ void CAABonderDlg::SetInterface_CreateDlg()
 		chartSetDlg->Create(IDD_DIALOG_CHART_SET);
 		chartSetDlg->ShowWindow(SW_HIDE);
 	}
-	
+
 	if(modelDlg == NULL){
 		modelDlg = new CModelDlg;
 		modelDlg->Create(IDD_DIALOG_MODEL);
@@ -3338,13 +3338,13 @@ void CAABonderDlg::SetInterface_CreateDlg()
  		ccdDlg->Create(IDD_DIALOG_CCD);
  		ccdDlg->ShowWindow(SW_HIDE);
 	}
- 
+
 	if(motorDlg == NULL){
  		motorDlg = new CMotorDlg;
  		motorDlg->Create(IDD_DIALOG_LENS_TEACHING);
  		motorDlg->ShowWindow(SW_HIDE);
 	}
- 
+
 	if(motorDlg2 == NULL){
 		motorDlg2 = new CMotorDlg2;
 		motorDlg2->Create(IDD_DIALOG_PCB_TEACHING);
@@ -3369,7 +3369,7 @@ void CAABonderDlg::SetInterface_CreateDlg()
 		lightDlg->ShowWindow(SW_HIDE);
 	}*/
 
-	
+
 // 	DataSet = new CDataSet;
 // 	DataSet->Create(IDD_DIALOG_DATASET);
 // 	DataSet->ShowWindow(SW_HIDE);
@@ -3421,7 +3421,7 @@ int CAABonderDlg::Update_CCD_Display()
 	double dReduceFactorX = 0.;
 	double dReduceFactorY = 0.;
 
-    dReduceFactorX = (double)SMALL_CCD_SIZE_X / gMIUDevice.nWidth; 
+    dReduceFactorX = (double)SMALL_CCD_SIZE_X / gMIUDevice.nWidth;
 	dReduceFactorY = (double)SMALL_CCD_SIZE_Y / gMIUDevice.nHeight;
 
 	//bool   bBox_CCD_Zoom = m_bBox_CCD_Zoom;
@@ -3484,7 +3484,7 @@ int CAABonderDlg::Update_CCD_Display()
 			m_ViewPos.x = gMIUDevice.nWidth/2 - SMALL_CCD_SIZE_X /2;
 			m_ViewPos.y = gMIUDevice.nHeight/2 - SMALL_CCD_SIZE_Y /2;
 		}
-	}			
+	}
 
 
 	if(vision.m_iDispMode==1 && !Task.AutoFlag)
@@ -3712,7 +3712,7 @@ void CAABonderDlg::OnBnClickedButtonExit()
 			delete chartSetDlg;
 			chartSetDlg = NULL;
 		}
-		
+
 		if (modelDlg!=NULL)
 		{
 			modelDlg->DestroyWindow();
@@ -3805,12 +3805,12 @@ void CAABonderDlg::OnBnClickedButtonExit()
 			alarmDlg = NULL;
 		}
 
-		
+
 		destoryStandardCursor();
 		sTempLang.Empty();
 		sLangChange.Empty();
 		theApp.MainDlg = NULL;
-		
+
 
 		CDialogEx::OnOK();
 	}
@@ -3857,7 +3857,7 @@ void CAABonderDlg::ctrlSubDlg(int iDlgNo)
 
 	if (motorDlg3->IsWindowVisible())
 		motorDlg3->ShowWindow(SW_HIDE);
-	
+
 	if (motorDlg4->IsWindowVisible())
 		motorDlg4->ShowWindow(SW_HIDE);
 
@@ -4018,7 +4018,7 @@ void CAABonderDlg::OnBnClickedButtonLens()
 	else if(m_bIsLensMode == 1)	ctrlSubDlg(PCB_DLG);
 	else						ctrlSubDlg(LENS_EDGE_DLG);
 
-	changeMainBtnColor(PCB_DLG);			
+	changeMainBtnColor(PCB_DLG);
 }
 
 
@@ -4030,7 +4030,7 @@ void CAABonderDlg::OnBnClickedButtonCcd()
 
 
 void CAABonderDlg::OnBnClickedButtonMotor()
-{ 
+{
 	if (m_bisMotorBtn)	m_bisMotorBtn = false;
 	else				m_bisMotorBtn = true;
 
@@ -4065,7 +4065,7 @@ void CAABonderDlg::dispStepOnButton(int iCtrlNo, int iState)
 //! 현재 화면에 표시되어 있는 사각 영역의 색상을 변경
 void CAABonderDlg::Change_Mode_Mouse_Box(int iMode_Mouse_Box)
 {
-	//! 현재 선택된 값에 따라 사각 영역 표시를 하는 색상을 결정한다. 
+	//! 현재 선택된 값에 따라 사각 영역 표시를 하는 색상을 결정한다.
 	COLORREF clrBoxArea = GetColor_Mouse_Box(iMode_Mouse_Box);
 
 	vision.ChangeColor_Box(m_iCurCamNo, clrBoxArea);
@@ -4104,7 +4104,7 @@ COLORREF CAABonderDlg::GetColor_Mouse_Box(int iMode_Mouse_Box)
 		{
 			clrRet = RGB(255, 128, 0);
 		}
-		break;		
+		break;
 	}
 
 	return clrRet;
@@ -4121,8 +4121,8 @@ void CAABonderDlg::OnLButtonUp(UINT nFlags, CPoint point)
 	//! Added by LHW (2013/3/27)
 	if ( m_bPan_CCD_Zoom == true )
 	{
-		::SetCursor(m_hCursor_Standard);		
-	}	
+		::SetCursor(m_hCursor_Standard);
+	}
 	if ( m_bBox_CCD_Zoom == true )
 	{
 		if ( m_bBox_Acting_CCD_Zoom == true && m_bState_CCD_Zoom == false )
@@ -4170,7 +4170,7 @@ void CAABonderDlg::OnLButtonUp(UINT nFlags, CPoint point)
 
 	if (m_iCurCamNo==CAM1)
 	{
-		lensDlg->m_rMarkBox = lensDlg->m_rcFixedBox = m_rBox;		
+		lensDlg->m_rMarkBox = lensDlg->m_rcFixedBox = m_rBox;
 		pcbDlg->m_rMarkBox = pcbDlg->m_rcFixedBox =m_rBox;
 
 		lensEdgeDlg->m_rMarkBox = lensEdgeDlg->m_rcFixedBox = m_rBox;
@@ -4186,7 +4186,7 @@ void CAABonderDlg::OnLButtonUp(UINT nFlags, CPoint point)
 		point.y>m_rectCamDispPos1.top	&&
 		point.y<m_rectCamDispPos1.bottom)
 	{
-		if (motorDlg->m_bCalcResol) 
+		if (motorDlg->m_bCalcResol)
 		{
 			motorDlg->registPatMark(m_iCurCamNo, m_rBox);
 			motorDlg->m_bFindTop = motorDlg->m_bFindBottom = motorDlg->m_bFindLeft = motorDlg->m_bFindRight = false;
@@ -4281,10 +4281,10 @@ void CAABonderDlg::OnMouseMove(UINT nFlags, CPoint point)
 		point.y<m_rectCamDispPos1.top   ||
 		point.y>m_rectCamDispPos1.bottom  && !m_bMeasureDist )
 	{
-		m_iMoveType = checkMousePos(point, m_rBox);	
+		m_iMoveType = checkMousePos(point, m_rBox);
 	}*/
-	
-	//! if ( ccdDlg->m_pDefectDlg->IsWindowVisible() )	
+
+	//! if ( ccdDlg->m_pDefectDlg->IsWindowVisible() )
 
 	if ( m_bMeasureDist && !m_bDrawMeasureLine )
 	{
@@ -4430,10 +4430,10 @@ void CAABonderDlg::OnMouseMove(UINT nFlags, CPoint point)
 			{
 				//! Added by LHW (2013/3/27)
 
-				//! 현재 선택된 값에 따라 사각 영역 표시를 하는 색상을 결정한다. 
+				//! 현재 선택된 값에 따라 사각 영역 표시를 하는 색상을 결정한다.
 				COLORREF clrBoxArea = GetColor_Mouse_Box(m_iMode_Mouse_Box);
 
-				//! 사각 영역을 그린다. 
+				//! 사각 영역을 그린다.
 				vision.clearOverlay(m_iCurCamNo);
 				vision.boxlist[m_iCurCamNo].addList(m_rBox, PS_SOLID, clrBoxArea);
 
@@ -4447,10 +4447,10 @@ void CAABonderDlg::OnMouseMove(UINT nFlags, CPoint point)
 				//vision.boxlist[m_iCurCamNo].addList(m_rBox, PS_DOT, M_COLOR_GREEN);
 				//vision.drawOverlay(m_iCurCamNo);
 
-				//! 현재 선택된 값에 따라 사각 영역 표시를 하는 색상을 결정한다. 
+				//! 현재 선택된 값에 따라 사각 영역 표시를 하는 색상을 결정한다.
 				COLORREF clrBoxArea = GetColor_Mouse_Box(m_iMode_Mouse_Box);
 
-				//! 사각 영역을 그린다. 
+				//! 사각 영역을 그린다.
 				vision.clearOverlay(m_iCurCamNo);
 				vision.boxlist[m_iCurCamNo].addList(m_rBox, PS_SOLID, clrBoxArea);
 
@@ -4578,8 +4578,8 @@ void CAABonderDlg::OnMouseMove(UINT nFlags, CPoint point)
 					iTemp=m_rBox.bottom;
 					m_rBox.bottom=m_rBox.top;
 					m_rBox.top=iTemp;
-				}				
-				
+				}
+
 				ccdDlg->m_pSFRDlg->m_iOffsetX_SFR[m_iNo_SFR]	= m_rBox.left;
 				ccdDlg->m_pSFRDlg->m_iOffsetY_SFR[m_iNo_SFR]	= m_rBox.top;
 
@@ -4808,7 +4808,7 @@ void CAABonderDlg::changeCursor(CPoint p, CRect rcTemp)
 	{
 		dExpandFactorX = (double)gMIUDevice.nWidth/SMALL_CCD_SIZE_X;
 		dExpandFactorY = (double)gMIUDevice.nHeight/SMALL_CCD_SIZE_Y;
-		
+
 		// 20140905 Overlay Box 위치 이동 시 Box 선에서 얼마나 가까이 있어야 마우스 커서 모양 변경 거리 확인 용..
 		//iGap = 50;
 		iGap = int(dExpandFactorX * 5);
@@ -4969,7 +4969,7 @@ void CAABonderDlg::OnBnClickedButtonOrigin()
 {
 	CString sTemp="";
 
-	if(Task.AutoFlag == 1) 
+	if(Task.AutoFlag == 1)
 	{
 		sLangChange.LoadStringA(IDS_STRING1395);	//"전체 원점 복귀 실패 - 자동운전 중
 		sTemp.Format(sLangChange);
@@ -4995,7 +4995,7 @@ void CAABonderDlg::OnBnClickedButtonOrigin()
 		pThread_TaskOrigin = ::AfxBeginThread(Thread_TaskOrigin, this);
 	}
 
-	
+
 }
 
 
@@ -5043,12 +5043,12 @@ BOOL CAABonderDlg::PreTranslateMessage(MSG* pMsg)
 //! Modified by LHW (2013/2/25, 2013/3/13)
 void CAABonderDlg::CcmThreadStart()
 {
-	pThread_CCM_Grab = NULL; 
+	pThread_CCM_Grab = NULL;
 	pThread_CCM_Display = NULL;
 
 	pThread_CCM_CvtColor = NULL;
 	pThread_CCM_CvtMil = NULL;
-	
+
 	bFlag_First_Grab_Display = false;
 
 	pThread_CCM_Grab = ::AfxBeginThread(Thread_Ccm_Grab, this);
@@ -5100,7 +5100,7 @@ int CAABonderDlg::AlignLimitCheck(int Insptype, double dOffsetX, double dOffsetY
 {																					// Return	0:NG,  1:Retry,  2:OK
 	if(Insptype ==1)
 	{
-		if(fabs(dOffsetX)  > model.axis[Motor_Lens_X].m_dLimit_Err 
+		if(fabs(dOffsetX)  > model.axis[Motor_Lens_X].m_dLimit_Err
 			|| fabs(dOffsetY)  > model.axis[Motor_Lens_Y].m_dLimit_Err)
 		{
 			putListLog("Lens부 X, Y 보정값 이동 Limit를 초과 하였습니다.");
@@ -5109,8 +5109,8 @@ int CAABonderDlg::AlignLimitCheck(int Insptype, double dOffsetX, double dOffsetY
 	}
 	else if(Insptype ==0)
 	{
-		if(fabs(dOffsetX)  > model.axis[Motor_PCB_X].m_dLimit_Err 
-			|| fabs(dOffsetY)  > model.axis[Motor_PCB_Y].m_dLimit_Err 
+		if(fabs(dOffsetX)  > model.axis[Motor_PCB_X].m_dLimit_Err
+			|| fabs(dOffsetY)  > model.axis[Motor_PCB_Y].m_dLimit_Err
 			|| fabs(dOffsetTh)  > model.axis[Motor_PCB_TH].m_dLimit_Err)
 			return 0;
 	}
@@ -5118,14 +5118,14 @@ int CAABonderDlg::AlignLimitCheck(int Insptype, double dOffsetX, double dOffsetY
 
 	if(Insptype ==1)
 	{
-		if(fabs(dOffsetX)  > model.axis[Motor_Lens_X].m_dLimit_OK 
+		if(fabs(dOffsetX)  > model.axis[Motor_Lens_X].m_dLimit_OK
 			|| fabs(dOffsetY)  > model.axis[Motor_Lens_Y].m_dLimit_OK
 			|| fabs(dOffsetTh)  > model.axis[Motor_PCB_TH].m_dLimit_OK)
 			return 1;
 	}
 	else if(Insptype ==0)
 	{
-		if(fabs(dOffsetX)  > model.axis[Motor_PCB_X].m_dLimit_OK 
+		if(fabs(dOffsetX)  > model.axis[Motor_PCB_X].m_dLimit_OK
 			|| fabs(dOffsetY)  > model.axis[Motor_PCB_Y].m_dLimit_OK
 			|| fabs(dOffsetTh)  > model.axis[Motor_PCB_TH].m_dLimit_OK)
 			return 1;
@@ -5141,7 +5141,7 @@ int CAABonderDlg::procCamComAlign(int camNo, int iMarkType, bool liveMode, doubl
 	int iMarkNo;
 	CString sTemp;
 	dOffsetTh = 0.0f;
-	
+
 	vision.clearOverlay(camNo);
 	double ep1;
 	MappTimer(M_TIMER_RESET, &ep1);
@@ -5206,9 +5206,9 @@ int CAABonderDlg::procCamAlign(int camNo, int iMarkType, bool liveMode, double &
 
 	if(liveMode)
 		vision.setLiveMode(true);
-	
+
 	iMarkNo = vision.findMark(camNo, iMarkType);
-	
+
 	sTemp.Format(_T(" %.0f msec"), (ep2 - ep1)*1000);
 	vision.textlist[camNo].addList((CAM_SIZE_X-140), (CAM_SIZE_Y-60), sTemp, M_COLOR_WHITE, 24, 10, _T("arialuni"));
 
@@ -5272,7 +5272,7 @@ int CAABonderDlg::_findOpticalCenter()
 	{
 		vision.crosslist[3].addList((int)fShiftX, (int)fShiftY, 500, M_COLOR_RED);
 		vision.drawOverlay(CCD);
-	
+
 		sLangChange.LoadStringA(IDS_STRING1162);	//광축 Shift (%.01f, %.01f) 검사 완료. %.01lf msec
 		sTmpLog.Format(sLangChange, fShiftX, fShiftY, eTime-ep);
 		putListLog(sTmpLog);
@@ -5402,7 +5402,7 @@ int CAABonderDlg::checkAutoRunLensAlarm(int fi_step)					// 0:정상, 1:정지 할지 
 		_stprintf_s(sz_PCB_Error_Msg, sLangChange);
 		return 2;
 	}
-	
+
 	//motor.InDIO(0, curInDio[0]);
 	return 0;
 }
@@ -5518,7 +5518,7 @@ int CAABonderDlg::_getMTF(int Mode, bool LogView)
 	bool bRtn = false;
 	//CString sLog="";
 	//CString logStr="";
-	int iCnt_Focus = 0; 
+	int iCnt_Focus = 0;
 	int i = 0;
 	int j = 0;
 	TCHAR szLog[SIZE_OF_1K];
@@ -5543,7 +5543,7 @@ int CAABonderDlg::_getMTF(int Mode, bool LogView)
 
 	Task.getROI();				// 원형 마크 위치 인식..
 	for(int i=0; i<COMMON_MTF_INSP_CNT; i++)
-	{ 
+	{
 		fMax_SFR_N4[i] = 0.0;
 		Task.SFR.dMaxSfr_StepLog[i] = 0.0;
 	}
@@ -5557,7 +5557,7 @@ int CAABonderDlg::_getMTF(int Mode, bool LogView)
 	CString strView = "";
 	bool sfrRt = false;
 
-	//double dFrequency[1] = {dSFR_N_8_PositionX}; // Spatial frequency for SFR calculation  
+	//double dFrequency[1] = {dSFR_N_8_PositionX}; // Spatial frequency for SFR calculation
 	//double dSfrFinalResult[COMMON_MTF_INSP_CNT][1] = {{0.0},}; // SFR result
 
 	//if(Mode==SFR_FINAL)
@@ -5589,7 +5589,7 @@ int CAABonderDlg::_getMTF(int Mode, bool LogView)
 	}
 	for (j = 0; j < iCnt_Focus; j++)		//for (j = 0; j < 1; j++)//
     {
-        if (j == 0)  
+        if (j == 0)
 		{
             bRtn = Task.getROI_SFR(Mode);				// 사각형 Box 위치 인식..
 			if (bRtn == false)
@@ -5697,7 +5697,7 @@ int CAABonderDlg::_getMTF(int Mode, bool LogView)
 			m_stSFRSpec.tROI.ROICount = model.mGlobalSmallChartCount;// MTF_INSP_CNT;
 			m_stSFRSpec.tDelataSpec = NULL;
 
-        }// 1번 실행	
+        }// 1번 실행
 
 
 
@@ -5716,7 +5716,7 @@ int CAABonderDlg::_getMTF(int Mode, bool LogView)
 				gMIUDevice.dTDATASPEC_n.eSensorType,
 				nBlackLevel, false, false, gMIUDevice.dTDATASPEC_n.eDemosaicMethod);
 		}
-		
+
 
         int sfrMax = m_pSFRProc->GetMaxResolutionCount();
         float sfrValue = 0.0;
@@ -5761,7 +5761,7 @@ int CAABonderDlg::_getMTF(int Mode, bool LogView)
 					fMax_SFR_N4[i] += Task.SFR._64_fSfrN4[i];
 				}
 //#else
-                //fMax_SFR_N4[i] += Task.SFR._64_fSfrN4[i]; 
+                //fMax_SFR_N4[i] += Task.SFR._64_fSfrN4[i];
 
 //#endif
 				//Task.SFR.dMaxSfr_StepLog[i] = fMax_SFR_N4[i];
@@ -5769,7 +5769,7 @@ int CAABonderDlg::_getMTF(int Mode, bool LogView)
         }
     }
 
-	// SFR계산을 평균으로 할지 최대치로 할지 
+	// SFR계산을 평균으로 할지 최대치로 할지
 	// 평균은 SONY1
 //#ifndef SFR_COMP_MAX
 	if (bSfrMaxTest == false)
@@ -5785,11 +5785,11 @@ int CAABonderDlg::_getMTF(int Mode, bool LogView)
 			Task.SFR.dMaxSfr_StepLog[i] = fMax_SFR_N4[i];
 		}
 
-		
+
 	}
 //#endif
 
-	//Plus 형 
+	//Plus 형
 	//[0]CENTER
 	//[1]TOP , [2]BOTTOM , [3]LEFT , [5]RIGHT
 	//
@@ -5831,7 +5831,7 @@ int CAABonderDlg::_getMTF(int Mode, bool LogView)
 		}
 		mAvrSfrPosX = mTempPosX / mAvrIndex;
 		mAvrSfrPosY = mTempPosY / mAvrIndex;
-		Task.SFR.fSfrN4[Task.m_iCnt_Step_AA_Total][i] = mAvrSfrData / mAvrIndex; 
+		Task.SFR.fSfrN4[Task.m_iCnt_Step_AA_Total][i] = mAvrSfrData / mAvrIndex;
 		Task.SFR.Sfr_pos[Task.m_iCnt_Step_AA_Total][i].x = mAvrSfrPosX;
 		Task.SFR.Sfr_pos[Task.m_iCnt_Step_AA_Total][i].y = mAvrSfrPosY;
 		/*if (Task.bSfrLogView)
@@ -5890,12 +5890,12 @@ int CAABonderDlg::_getMTF(int Mode, bool LogView)
 	if(!saveSfrLog(Mode))
 	{
 		return -1;
-	} 
+	}
 
 	if (Task.SFR.fSfrN4[Task.m_iCnt_Step_AA_Total][0] > model.strInfo_AF1.m_fLimit_MTF || //0.25
-		Task.SFR.fSfrN4[Task.m_iCnt_Step_AA_Total][1] > model.strInfo_AF1.m_fLimit_MTF || 
-		Task.SFR.fSfrN4[Task.m_iCnt_Step_AA_Total][2] > model.strInfo_AF1.m_fLimit_MTF || 
-		Task.SFR.fSfrN4[Task.m_iCnt_Step_AA_Total][3] > model.strInfo_AF1.m_fLimit_MTF || 
+		Task.SFR.fSfrN4[Task.m_iCnt_Step_AA_Total][1] > model.strInfo_AF1.m_fLimit_MTF ||
+		Task.SFR.fSfrN4[Task.m_iCnt_Step_AA_Total][2] > model.strInfo_AF1.m_fLimit_MTF ||
+		Task.SFR.fSfrN4[Task.m_iCnt_Step_AA_Total][3] > model.strInfo_AF1.m_fLimit_MTF ||
 		Task.SFR.fSfrN4[Task.m_iCnt_Step_AA_Total][4] > model.strInfo_AF1.m_fLimit_MTF )	/* 센터 MTF 값이 리미트 이상이면 fine pitch 이동 */
 	{
 		Task.m_bFlag_Fine_Move = true;
@@ -5903,7 +5903,7 @@ int CAABonderDlg::_getMTF(int Mode, bool LogView)
 	Task.m_iCnt_Step_AA_Total++;
 
 
-	
+
 	if ( Mode != SFR_FINAL )
 	{
 		autodispDlg->DrawGraph(2);		/* 현재 위치 SFR 데이터 그래프 그리기 */
@@ -5912,7 +5912,7 @@ int CAABonderDlg::_getMTF(int Mode, bool LogView)
 	return 1;
 }
 
-int CAABonderDlg::_checkMaxSfrPos(int iMode) 
+int CAABonderDlg::_checkMaxSfrPos(int iMode)
 {
 	double dMaxSFR[5] = {-1.0, -1.0, -1.0, -1.0, -1.0};
 
@@ -5939,7 +5939,7 @@ int CAABonderDlg::_checkMaxSfrPos(int iMode)
 
 	if ( Task.bFirstAA ){
 		iStartIndex = Task.m_iCnt_Second_AA_Start;
-	}else if ( Task.m_bFlag_Decrease_SFR == true ){ 
+	}else if ( Task.m_bFlag_Decrease_SFR == true ){
 		iStartIndex = 3;
 	}
 
@@ -6024,18 +6024,18 @@ int CAABonderDlg::_checkMaxSfrPos(int iMode)
 					Task.SFR.dMaxPos[i] = d_max_Z_pos;
 				else
 				{
-					Task.SFR.dMaxPos[i] = Task.SFR.fMotorPos[i_max_index][TITLE_MOTOR_Z]; 
+					Task.SFR.dMaxPos[i] = Task.SFR.fMotorPos[i_max_index][TITLE_MOTOR_Z];
 					//LogSave("ERROR ==========> 포커스 동작 최소 자승법 계산 결과 이상.");
 				}
 			}
 		}
 	}
-	
+
 
 	return 1;
 }
 
-//--Laser 변위측정후 Tilting각도 얻기 - 
+//--Laser 변위측정후 Tilting각도 얻기 -
 //-- 모터 방향과 순서는 4사분면 기준으로 2사분면->1사분면->4사분면->3사분면으로 계산
 bool CAABonderDlg::_calcLaserTilt(CDPoint dMotorPos[4], double dLaser[4], double &TX, double &TY)
 {
@@ -6046,11 +6046,11 @@ bool CAABonderDlg::_calcLaserTilt(CDPoint dMotorPos[4], double dLaser[4], double
 	double Length[4];
 	// ======================= 계산
 	//모터간 거리(밑변)
-	Length[0] = abs(dMotorPos[0].y - dMotorPos[3].y);  // left  
+	Length[0] = abs(dMotorPos[0].y - dMotorPos[3].y);  // left
 	Length[1] = abs(dMotorPos[0].x - dMotorPos[1].x);  // top
-	Length[2] = abs(dMotorPos[1].y - dMotorPos[2].y);  // Right 
+	Length[2] = abs(dMotorPos[1].y - dMotorPos[2].y);  // Right
 	Length[3] = abs(dMotorPos[2].x - dMotorPos[3].x);  // bottom
-	
+
 	// ======================= X,Y 평균( 중심 레이저)
 	double AvgTop, AvgBottom;
 	double AvgLeft, AvgRight;
@@ -6064,8 +6064,22 @@ bool CAABonderDlg::_calcLaserTilt(CDPoint dMotorPos[4], double dLaser[4], double
 
 	//-------------------------------------------------------
 	Width = Length[1];                   // top
-	Height = AvgLeft - AvgRight;
-	//Height = AvgRight - AvgLeft;   //+ - 부호 안맞으면 순서 바꾸기
+#if (____AA_WAY == PCB_TILT_AA)
+	if (sysData.m_iProductComp == 1)
+	{
+		Height = AvgRight - AvgLeft;   //+ - 부호 안맞으면 순서 바꾸기
+	}
+	else
+	{
+		Height = AvgLeft - AvgRight;
+	}
+#elif (____AA_WAY == LENS_TILT_AA)
+	Height = AvgRight - AvgLeft;   //+ - 부호 안맞으면 순서 바꾸기
+	//Height = AvgLeft - AvgRight;
+#endif
+
+
+
 	radian = atan(Height / Width);
 	theta = radian * 180 / M_PI;
 	//-------------------------------------------------------
@@ -6094,10 +6108,20 @@ bool CAABonderDlg::_calcLaserTilt(CDPoint dMotorPos[4], double dLaser[4], double
 	Task.oldLaserTy = TY;
 	// ======================= 세로 각도 계산 (TX)
 	Width = Length[0];                   // left
+#if (____AA_WAY == PCB_TILT_AA)
+	if (sysData.m_iProductComp == 1)
+	{
+		Height = AvgBottom - AvgTop;		//+ - 부호 안맞으면 순서 바꾸기
+	}
+	else
+	{
+		Height = AvgTop - AvgBottom;
+	}
 
-    Height = AvgTop - AvgBottom;
-	//Height = AvgBottom - AvgTop;		//+ - 부호 안맞으면 순서 바꾸기
-	
+#elif (____AA_WAY == LENS_TILT_AA)
+	Height = AvgBottom - AvgTop;		//+ - 부호 안맞으면 순서 바꾸기
+	//Height = AvgTop - AvgBottom;
+#endif
 	radian = atan(Height / Width);
 	theta = radian * 180 / M_PI;
 	//-------------------------------------------------------
@@ -6242,7 +6266,7 @@ int CAABonderDlg::_procTiltY()
 #endif
 	logStr.Format("[procTiltY] TiltY : %.03lf", Task.SFR.dTilt_Y);
 	putListLog(logStr);
-	
+
 	motor.MoveAxis(TITLE_MOTOR_TY, 1, dMovePos, sysData.fMotorSpeed[TITLE_MOTOR_TY], sysData.fMotorAccTime[TITLE_MOTOR_TY]);
 
 	logStr.Format("[procTiltY] MovePos %.03lf", dMovePos);
@@ -6273,7 +6297,7 @@ int CAABonderDlg::_procTiltY()
 				logStr.Format("[procTiltY] EpTime : %.01lf", myTimer(true)-ep);
 				putListLog(logStr);
 				dCurPos = motor.GetCommandPos(TITLE_MOTOR_TY);
-#endif	
+#endif
 
 				if (fabs(dCurPos-dMovePos)<=0.01)
 				{
@@ -6289,7 +6313,7 @@ int CAABonderDlg::_procTiltY()
 		}
 		else
 		{
-			putListLog("Tilting PCB Yt Motor 이동 시간 초과.");	
+			putListLog("Tilting PCB Yt Motor 이동 시간 초과.");
 			return -1;
 		}
 	}
@@ -6443,7 +6467,7 @@ int CAABonderDlg::_moveXYMotor()
 		checkMessage();
 	}
 
-	
+
 	return 1;
 }
 
@@ -6453,9 +6477,9 @@ bool CAABonderDlg::Bonding_Pos_Ckeck()
 #if (__MACHINE_MODEL == MACHINE_1ST)
 	if ((motor.IsStopAxis(Motor_Lens_X) && motor.GetInposition(Motor_Lens_X)) &&
 		(motor.IsStopAxis(Motor_Lens_Y) && motor.GetInposition(Motor_Lens_Y)) &&
-		(motor.IsStopAxis(Motor_Lens_Z)) && //motor.GetInposition(Motor_Lens_Z) ) && 
+		(motor.IsStopAxis(Motor_Lens_Z)) && //motor.GetInposition(Motor_Lens_Z) ) &&
 		(motor.IsStopAxis(Motor_Lens_Xt)) &&
-		(motor.IsStopAxis(Motor_Lens_Yt)) && //motor.GetInposition(Motor_Lens_Yt) ) && 
+		(motor.IsStopAxis(Motor_Lens_Yt)) && //motor.GetInposition(Motor_Lens_Yt) ) &&
 		(motor.IsStopAxis(Motor_PCB_X) && motor.GetInposition(Motor_PCB_X)) &&
 		(motor.IsStopAxis(Motor_PCB_Y) && motor.GetInposition(Motor_PCB_Y)) &&
 		(motor.IsStopAxis(Motor_PCB_TH)) &&// motor.GetInposition(Motor_PCB_TH) ) &&
@@ -6469,16 +6493,16 @@ bool CAABonderDlg::Bonding_Pos_Ckeck()
 		return false;
 	}
 #else
-	if ( ( motor.IsStopAxis(Motor_Lens_X) && motor.GetInposition(Motor_Lens_X) ) && 
-		 ( motor.IsStopAxis(Motor_Lens_Y) && motor.GetInposition(Motor_Lens_Y) ) && 
-		 ( motor.IsStopAxis(Motor_Lens_Z)) && //motor.GetInposition(Motor_Lens_Z) ) && 
-		 ( motor.IsStopAxis(Motor_Lens_Xt) )&& 
-		 ( motor.IsStopAxis(Motor_Lens_Yt) ) && 
-		 (motor.IsStopAxis(Motor_Lens_TH) ) &&//motor.GetInposition(Motor_Lens_Yt) ) && 
-		 ( motor.IsStopAxis(Motor_PCB_X) && motor.GetInposition(Motor_PCB_X) ) && 
-		 ( motor.IsStopAxis(Motor_PCB_Y) && motor.GetInposition(Motor_PCB_Y) ) && 
+	if ( ( motor.IsStopAxis(Motor_Lens_X) && motor.GetInposition(Motor_Lens_X) ) &&
+		 ( motor.IsStopAxis(Motor_Lens_Y) && motor.GetInposition(Motor_Lens_Y) ) &&
+		 ( motor.IsStopAxis(Motor_Lens_Z)) && //motor.GetInposition(Motor_Lens_Z) ) &&
+		 ( motor.IsStopAxis(Motor_Lens_Xt) )&&
+		 ( motor.IsStopAxis(Motor_Lens_Yt) ) &&
+		 (motor.IsStopAxis(Motor_Lens_TH) ) &&//motor.GetInposition(Motor_Lens_Yt) ) &&
+		 ( motor.IsStopAxis(Motor_PCB_X) && motor.GetInposition(Motor_PCB_X) ) &&
+		 ( motor.IsStopAxis(Motor_PCB_Y) && motor.GetInposition(Motor_PCB_Y) ) &&
 		 ( motor.IsStopAxis(Motor_PCB_TH)) &&// motor.GetInposition(Motor_PCB_TH) ) &&
-		 ( motor.IsStopAxis(Motor_PCB_Xt) ) && 
+		 ( motor.IsStopAxis(Motor_PCB_Xt) ) &&
 		 ( motor.IsStopAxis(Motor_PCB_Yt) )  )
 	{
 		return true;
@@ -6549,7 +6573,7 @@ bool CAABonderDlg::_GetOpticAxis(int fi_scale, int fi_thVal, double &fo_dOffsetX
 
 	int centAvg, upperAvg, inspAvg;
 	int x, y, pos, sum;
-	
+
 
 	int sx = centRoi.left;
 	int ex = centRoi.right;
@@ -6729,7 +6753,7 @@ void CAABonderDlg::Make_Child_Dialog()
 		return ;
 	}
 	m_pDisplacementDlg->ShowWindow(SW_HIDE);*/
-	
+
 	return;
 }
 
@@ -6749,12 +6773,12 @@ void CAABonderDlg::OnBnClickedButtonPause()
 
 	//if(sysData.m_FreeRun == 1)
 	//{
-	//	Task.AutoFlag		= 0;			//	// 0:정지 1:자동 2: 일시정지 20130405	
+	//	Task.AutoFlag		= 0;			//	// 0:정지 1:자동 2: 일시정지 20130405
 	//	Task.PausePCBStep	= 0;
 	//}
 	//else
 	//{
-		Task.AutoFlag		= 2;			//	// 0:정지 1:자동 2: 일시정지 20130405	
+		Task.AutoFlag		= 2;			//	// 0:정지 1:자동 2: 일시정지 20130405
 		Task.PausePCBStep	= Task.PCBTask;
 		//Task.PauseLensStep	= Task.LensTask;
 	//}
@@ -6802,12 +6826,12 @@ void CAABonderDlg::OnBnClickedButtonStop()
 	m_btnStart.m_iStateBtn = 0;
 	m_btnStart.Invalidate();
 	//UVCommand.ReadyDevice();
-	
+
 	//if (g_pFoceDlg->IsWindowVisible())
 	//	g_pFoceDlg->ShowWindow(SW_HIDE);
 
 	vision.clearOverlay(CCD);
-	
+
 	if(!bThread_MIUCheckRun)
 	{
 		putListLog("MIU Stop 시작.");
@@ -6861,7 +6885,7 @@ void CAABonderDlg::OnBnClickedButtonAutorun()
 
 	if(Task.AutoFlag ==0 )
 	{// 0:정지 1:자동 2: 일시정지 20130405
-		Task.LensTask	= 10000;		
+		Task.LensTask	= 10000;
 		Task.PCBTask	= 10000;
 	}
 	else if(Task.AutoFlag ==2)
@@ -6880,14 +6904,14 @@ void CAABonderDlg::OnBnClickedButtonAutorun()
 	#ifdef ON_LINE_VISION
 		if(!m_bMiuRun && Task.AutoFlag)
 		{
-			
+
 			if(!bThread_MIUCheckRun)
 			{
 				bThread_MIUCheckRun = true;
 				MIUCheck_process();
 				bThread_MIUCheckRun = false;
 			}
-			
+
 		}
 	#endif
 
@@ -6909,7 +6933,7 @@ void CAABonderDlg::OnBnClickedButtonAutorun()
 }
 
 
-void CAABonderDlg::OnBnClickedButtonReady()		
+void CAABonderDlg::OnBnClickedButtonReady()
 {
 	if(g_bMovingflag){
 		return;
@@ -6963,7 +6987,7 @@ void CAABonderDlg::DispCurModelName(CString sName)
 }
 
 void CAABonderDlg::initInspResGrid()
-{//만도 차량용 Camer 검사 결과 
+{//만도 차량용 Camer 검사 결과
 	dispInspResGrid();
 }
 
@@ -6975,7 +6999,7 @@ void CAABonderDlg::dispInspResGrid()
 void CAABonderDlg::InitGridCtrl_Result()
 {
 	CRect rect;
-	CWnd *pWnd= (CWnd*)GetDlgItem(IDC_STATIC_RESULT_GRID); 
+	CWnd *pWnd= (CWnd*)GetDlgItem(IDC_STATIC_RESULT_GRID);
 	ResultRow = 8;//아래
 	ResultCol = 2;//옆
 	int margin = 4;
@@ -7022,7 +7046,7 @@ void CAABonderDlg::InitGridCtrl_Result()
 	for (i = 0; i < ResultRow; i++)
 	{
 		m_clGridResult.SetRowHeight(i, gridHeight);
-		
+
 		for (j = 0; j < ResultCol; j++)
 		{
 			m_clGridResult.SetItemFormat(i, j, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
@@ -7035,7 +7059,7 @@ void CAABonderDlg::InitGridCtrl_Result()
 				}else{
 					m_clGridResult.SetColumnWidth(j, gridWidth2);
 				}
-			}			
+			}
 		}
 	}
 	m_clGridResult.Invalidate();
@@ -7066,7 +7090,7 @@ void CAABonderDlg::OnDBClickedGridResult(NMHDR* pNMHDR, LRESULT* pResult)
 		sTemp.Format("생산량을 초기화 하시겠습니까?");
 		if ( askMsg(sTemp.GetBuffer()) == IDOK )
 		{
-	
+
 			work.m_iCnt_Output = 0;
 			work.m_iCnt_NG_Output = 0;
 			// 20141103 LHC - 생산량 초기화시 T/T 초기화
@@ -7077,13 +7101,13 @@ void CAABonderDlg::OnDBClickedGridResult(NMHDR* pNMHDR, LRESULT* pResult)
 			Task.m_dTime_TotalAA = 0;
 		}
 	}
-	
+
 	dispGrid();
 
 }
 void CAABonderDlg::initGrid()
 {
-	
+
 }
 bool CAABonderDlg::g_CalcImageAlign(bool bRotationUse)
 {
@@ -7122,8 +7146,8 @@ bool CAABonderDlg::g_CalcImageAlign(bool bRotationUse)
 		sLog.Format("[YUV] oc x: %.2lf , oc y:%.2lf", MESCommunication.m_dMesOC[0], MESCommunication.m_dMesOC[1]);
 		putListLog(sLog);
 	}
-	
-	
+
+
 
     sLog.Format("oc x: %.2lf , oc y:%.2lf", model.m_oc_x, model.m_oc_y);
     putListLog(sLog);
@@ -7149,7 +7173,7 @@ void CAABonderDlg::dispGrid()
 	if ( Task.m_dTime_Total < 0 )		sTemp = "-";
 	else								sTemp.Format("%.1lf", Task.m_dTime_Total/1000);
 	m_clGridResult.SetItemText(3, 1, sTemp);
-	
+
 	if ( Task.m_dTime_Epoxy < 0 )		sTemp = "-";
 	else								sTemp.Format("%.1lf", Task.m_dTime_Epoxy/1000);
 	m_clGridResult.SetItemText(4, 1, sTemp);
@@ -7184,7 +7208,7 @@ bool CAABonderDlg::_calcImageAlignment()
 	double dWidth, dHeight;
 	double dCenterX = gMIUDevice.nWidth/2;
 	double dCenterY = gMIUDevice.nHeight/2;
-	CString sLog; 
+	CString sLog;
 
 #ifdef NO_CIRCLE_MODEL
 	dShiftX = Task.m_dShift_IMG_X;
@@ -7196,12 +7220,12 @@ bool CAABonderDlg::_calcImageAlignment()
 
     MandoInspLog.dOCResult[0] = dShiftX;
 	MandoInspLog.dOCResult[1] = dShiftY;
-	dShiftX *= dSize_Cell/1000.0f; 
-	dShiftY *= dSize_Cell/1000.0f; 
+	dShiftX *= dSize_Cell/1000.0f;
+	dShiftY *= dSize_Cell/1000.0f;
 
 	dWidth = (Task.m_CircleP[3].x - Task.m_CircleP[2].x) * (dSize_Cell / 1000);
 	dHeight = (Task.m_CircleP[3].y - Task.m_CircleP[2].y) * (dSize_Cell / 1000);
-	 
+
 	dRad = atan(dHeight/dWidth);
 	dAng = dRad * 180.0f / M_PI;
 #endif
@@ -7221,7 +7245,7 @@ bool CAABonderDlg::_calcImageAlignment()
 		}
 
 	}
-	 
+
 	if(!Task.bInsCenter)
 	{
 		Task.m_dShift_IMG_X = dShiftX;
@@ -7230,7 +7254,7 @@ bool CAABonderDlg::_calcImageAlignment()
 	}
 	else
 	{
-		               
+
 		int CX  = (Task.m_CircleP[0].x + Task.m_CircleP[1].x + Task.m_CircleP[2].x + Task.m_CircleP[3].x)/4;
 		int CY  = (Task.m_CircleP[0].y + Task.m_CircleP[1].y + Task.m_CircleP[2].y + Task.m_CircleP[3].y)/4;
 		dWidth  = (Task.m_CircleP[3].x - Task.m_CircleP[2].x);
@@ -7244,13 +7268,13 @@ bool CAABonderDlg::_calcImageAlignment()
 	Task.m_dShift_IMG_X = dShiftX;
 	Task.m_dShift_IMG_Y = dShiftY;
 	sLog.Empty();
-	
+
 	return true;
 }
 
 
 bool CAABonderDlg::_MotorMove_IMG_Align()//수동 sfr
-{ 
+{
 	double ep = myTimer(true);
 	int dicX = 1;
 	int dicY = 1;
@@ -7275,14 +7299,14 @@ bool CAABonderDlg::_MotorMove_IMG_Align()//수동 sfr
 		motor.MoveAxis(TITLE_MOTOR_X, REL, Task.m_dShift_IMG_Y*dicY, sysData.fMotorSpeed[TITLE_MOTOR_X], sysData.fMotorAccTime[TITLE_MOTOR_X]);
 		motor.MoveAxis(TITLE_MOTOR_Y, REL, Task.m_dShift_IMG_X*dicX, sysData.fMotorSpeed[TITLE_MOTOR_Y], sysData.fMotorAccTime[TITLE_MOTOR_Y]);
 	}
-	
- 
-	
+
+
+
 	Sleep(10);
 
 	while (1)
 	{
-		if ( ( motor.IsStopAxis(TITLE_MOTOR_X) && motor.GetInposition(TITLE_MOTOR_X) ) && 
+		if ( ( motor.IsStopAxis(TITLE_MOTOR_X) && motor.GetInposition(TITLE_MOTOR_X) ) &&
 			 ( motor.IsStopAxis(TITLE_MOTOR_Y) && motor.GetInposition(TITLE_MOTOR_Y) ) )
 		{
 			break;
@@ -7301,7 +7325,7 @@ bool CAABonderDlg::_MotorMove_IMG_Align()//수동 sfr
 bool CAABonderDlg::_MotorMove_IMG_AlignTheta()
 {
 	double ep = myTimer(true);
-	int dicTH = 1;  
+	int dicTH = 1;
 
 	if (model.Tilt_Diretion[4] < 0)
 	{
@@ -7355,7 +7379,7 @@ void CAABonderDlg::OnStnClickedLabelStatusUsbLive()
 		delayMsg(sLangChange, 1000, M_COLOR_RED);
 		return;
 	}
-	
+
 	pThread_MIUCheck = ::AfxBeginThread(Thread_MIUCheck, this);
 	return;
 }
@@ -7562,7 +7586,7 @@ void CAABonderDlg::DisableButton(bool AutorunFlag)
 
 
 // readMode에 따라 8M (Y475A), 13M (Y472A) 구분.
-// 0 : 13M CCD. Address 0x3B02 - 0으로, 0x3B00 -1로 Write 후 0x3B24부터 Read.. 
+// 0 : 13M CCD. Address 0x3B02 - 0으로, 0x3B00 -1로 Write 후 0x3B24부터 Read..
 // 1 :  8M CCD. Address 0x01번부터 0x09까지 순서대로 Read.. (0x05 제외)
 
 bool	CAABonderDlg::ReadSensorID(int readMode, CString strID)
@@ -7572,7 +7596,7 @@ bool	CAABonderDlg::ReadSensorID(int readMode, CString strID)
 	bool rtnFlag = true;
 
 	/*CString tmpStr="";
-	
+
 
 	if(readMode == 0)
 	{
@@ -7600,7 +7624,7 @@ bool	CAABonderDlg::ReadSensorID(int readMode, CString strID)
 		errorCode = MIUWriteRegister(0, (MIU_REG_TYPE)1, (unsigned short)nAddress, (unsigned short)0x01);
 		if(errorCode)
 		{
-			tmpStr.Format("Error [0x3B00]: %d", errorCode);		
+			tmpStr.Format("Error [0x3B00]: %d", errorCode);
 			putListLog(tmpStr);
 
 			rtnFlag = false;
@@ -7613,7 +7637,7 @@ bool	CAABonderDlg::ReadSensorID(int readMode, CString strID)
 		errorCode = MIUReadRegister(0, (MIU_REG_TYPE)1, (unsigned short)nAddress, (unsigned short*)&nData);
 		if(errorCode)
 		{
-			tmpStr.Format("Error [0x3B24]: %d", errorCode);		
+			tmpStr.Format("Error [0x3B24]: %d", errorCode);
 			putListLog(tmpStr);
 
 			rtnFlag = false;
@@ -7621,86 +7645,86 @@ bool	CAABonderDlg::ReadSensorID(int readMode, CString strID)
 		else
 		{
 			ID_Data[0] = nData & 0xFF;
-		}	
+		}
 
 
 		nAddress = 0x3B25;
 		errorCode = MIUReadRegister(0, (MIU_REG_TYPE)1, (unsigned short)nAddress, (unsigned short*)&nData);
 		if(errorCode)
 		{
-			tmpStr.Format("Error [0x3B25]: %d", errorCode);		
+			tmpStr.Format("Error [0x3B25]: %d", errorCode);
 			putListLog(tmpStr);
 		}
 		else
 		{
 			ID_Data[1] = nData & 0xFF;
-		}	
+		}
 
 		nAddress = 0x3B26;
 		errorCode = MIUReadRegister(0, (MIU_REG_TYPE)1, (unsigned short)nAddress, (unsigned short*)&nData);
 		if(errorCode)
 		{
-			tmpStr.Format("Error [0x3B26]: %d", errorCode);		
+			tmpStr.Format("Error [0x3B26]: %d", errorCode);
 			putListLog(tmpStr);
 		}
 		else
 		{
 			ID_Data[2] = nData & 0xFF;
-		}	
+		}
 
 		nAddress = 0x3B27;
 		errorCode = MIUReadRegister(0, (MIU_REG_TYPE)1, (unsigned short)nAddress, (unsigned short*)&nData);
 		if(errorCode)
 		{
-			tmpStr.Format("Error [0x3B27]: %d", errorCode);		
+			tmpStr.Format("Error [0x3B27]: %d", errorCode);
 			putListLog(tmpStr);
 		}
 		else
 		{
 			ID_Data[3] = nData & 0xFF;
-		}	
+		}
 
 		nAddress = 0x3B28;
 		errorCode = MIUReadRegister(0, (MIU_REG_TYPE)1, (unsigned short)nAddress, (unsigned short*)&nData);
 		if(errorCode)
 		{
-			tmpStr.Format("Error [0x3B28]: %d", errorCode);		
+			tmpStr.Format("Error [0x3B28]: %d", errorCode);
 			putListLog(tmpStr);
 		}
 		else
 		{
 			ID_Data[4] = nData & 0xFF;
-		}	
+		}
 
 		nAddress = 0x3B29;
 		errorCode = MIUReadRegister(0, (MIU_REG_TYPE)1, (unsigned short)nAddress, (unsigned short*)&nData);
 		if(errorCode)
 		{
-			tmpStr.Format("Error [0x3B29]: %d", errorCode);		
+			tmpStr.Format("Error [0x3B29]: %d", errorCode);
 			putListLog(tmpStr);
 		}
 		else
 		{
 			ID_Data[5] = nData & 0xFF;
-		}	
+		}
 
 		nAddress = 0x3B2A;
 		errorCode = MIUReadRegister(0, (MIU_REG_TYPE)1, (unsigned short)nAddress, (unsigned short*)&nData);
 		if(errorCode)
 		{
-			tmpStr.Format("Error [0x3B2A]: %d", errorCode);		
+			tmpStr.Format("Error [0x3B2A]: %d", errorCode);
 			putListLog(tmpStr);
 		}
 		else
 		{
 			ID_Data[6] = nData & 0xFF;
-		}	
+		}
 
 		nAddress = 0x3B2B;
 		errorCode = MIUReadRegister(0, (MIU_REG_TYPE)1, (unsigned short)nAddress, (unsigned short*)&nData);
 		if(errorCode)
 		{
-			tmpStr.Format("Error [0x3B2B]: %d", errorCode);		
+			tmpStr.Format("Error [0x3B2B]: %d", errorCode);
 			putListLog(tmpStr);
 		}
 		else
@@ -7728,7 +7752,7 @@ bool	CAABonderDlg::ReadSensorID(int readMode, CString strID)
 		//Task.ChipID[16] = 0;
 		//strID.Format("%s", Task.ChipID);
 
-		//m_labelCCD_ID.SetText(Task.ChipID); 
+		//m_labelCCD_ID.SetText(Task.ChipID);
 		//m_labelCCD_ID.Invalidate();
 	//}
 	//else if(readMode == 1)				// 8M CCD. Address 0x01번부터 0x09까지 순서대로 Read.. (0x05 제외)
@@ -7737,13 +7761,13 @@ bool	CAABonderDlg::ReadSensorID(int readMode, CString strID)
 	//	unsigned int	nData = 0;
 
 	//	char ID_Data[256] = {0, };
-	//	
+	//
 	//	int index = 0;
 	//	for (int i=0; i<9; i++)
 	//	{
 	//		if(i==5)
 	//			continue;
-	//		
+	//
 	//		MIUReadRegister(0, REG_IIC1, (unsigned short)nAddress+i, (unsigned short*)&nData);
 
 	//		sprintf_s(ID_Data, "%02X", nData);
@@ -7756,31 +7780,31 @@ bool	CAABonderDlg::ReadSensorID(int readMode, CString strID)
 
 	//	strID.Format("%s", Task.ChipID);
 
-	//	m_labelCCD_ID.SetText(Task.ChipID); 
+	//	m_labelCCD_ID.SetText(Task.ChipID);
 	//	m_labelCCD_ID.Invalidate();
 	//}
 	return rtnFlag;
 }
 
 void CAABonderDlg::AutoRunView(int curstate)		// Display용
-{// 정지:0 자동운전:1 일시정지:2 운전준비:3 
+{// 정지:0 자동운전:1 일시정지:2 운전준비:3
 	m_btnReady.m_iStateBtn = 0;
 	m_btnAutorun.m_iStateBtn = 0;
 	m_btnPause.m_iStateBtn = 0;
 	m_btnStop.m_iStateBtn = 0;
 	m_btnNgOut.m_iStateBtn = 0;
 
-	if(curstate == 0)		
-		m_btnStop.m_iStateBtn = 1;	
-	else if(curstate == 1)		
-		m_btnAutorun.m_iStateBtn = 1;	
-	else if(curstate == 2)		
+	if(curstate == 0)
+		m_btnStop.m_iStateBtn = 1;
+	else if(curstate == 1)
+		m_btnAutorun.m_iStateBtn = 1;
+	else if(curstate == 2)
 	{
-		m_btnAutorun.m_iStateBtn = 1;	
+		m_btnAutorun.m_iStateBtn = 1;
 		m_btnPause.m_iStateBtn = 1;
 	}
 	else if(curstate == 3)
-		m_btnReady.m_iStateBtn = 1;	
+		m_btnReady.m_iStateBtn = 1;
 
 	m_btnReady.Invalidate();
 	m_btnAutorun.Invalidate();
@@ -7807,10 +7831,10 @@ class AFX_EXT_CLASS CSFR
 
 BOOL RAWtoRGB3(UINT32 Width, UINT32 Height, UINT8 Format_Num,LPSTR Image_Buf,COLORREF *C_RGB)
 {
-	
+
 	UINT8				r,g1,g2,g,b;
 	LPSTR Raw_Data = Image_Buf;
-   
+
 	switch(Format_Num)
 	{
 		case 0:
@@ -7818,7 +7842,7 @@ BOOL RAWtoRGB3(UINT32 Width, UINT32 Height, UINT8 Format_Num,LPSTR Image_Buf,COL
 			//GRGR
 			for( UINT32 j=0; j<Height/2; j++)
 			{
-				
+
 				for(UINT32 i=0; i<Width/2;i++)
 				{
 					b = *(Raw_Data);
@@ -7837,7 +7861,7 @@ BOOL RAWtoRGB3(UINT32 Width, UINT32 Height, UINT8 Format_Num,LPSTR Image_Buf,COL
 
 					*(C_RGB+(j*2)*Width+(i*2)) = RGB(b, g, r);
 
-					
+
 					g2 = *(Raw_Data+Width);
 					r = *(Raw_Data+Width+1);
 					b = *(Raw_Data+Width*2);
@@ -7852,31 +7876,31 @@ BOOL RAWtoRGB3(UINT32 Width, UINT32 Height, UINT8 Format_Num,LPSTR Image_Buf,COL
 					if (b >= 255) b = 255;
 
 					*(C_RGB+(j*2+1)*Width+(i*2)) = RGB(b, g, r);
-					
-					
+
+
 					Raw_Data++;
-					
+
 					g1 = *(Raw_Data);
 					b = *(Raw_Data+1);
 					r = *(Raw_Data+Width);
 					g2 = *(Raw_Data+Width+1);
 					g=(g1+g2)/2;
-					
-					
+
+
 					if (r <= 0) r = 0;
 					if (g <= 0) g = 0;
 					if (b <= 0) b = 0;
 					if (r >= 255) r = 255;
 					if (g >= 255) g = 255;
 					if (b >= 255) b = 255;
-					
+
 					*(C_RGB+(j*2)*Width+(i*2+1)) = RGB(b, g, r);
 
 					r = *(Raw_Data+Width);
 					g2 = *(Raw_Data+Width+1);
 					g1 = *(Raw_Data+Width*2);
 					b = *(Raw_Data+Width*2+1);
-					
+
 					g=(g1+g2)/2;
 
 					if (r <= 0) r = 0;
@@ -7891,12 +7915,12 @@ BOOL RAWtoRGB3(UINT32 Width, UINT32 Height, UINT8 Format_Num,LPSTR Image_Buf,COL
 				}
 				if(j!=Height-1)
 				{
-					
+
 					Raw_Data += Width;
 				}
-				
+
 			}
-			
+
 			for( UINT32 j=0; j<Height; j++)
 			{
 				*(C_RGB+(j*Width+Width-1))=*(C_RGB+(j*Width+Width-2));
@@ -7911,7 +7935,7 @@ BOOL RAWtoRGB3(UINT32 Width, UINT32 Height, UINT8 Format_Num,LPSTR Image_Buf,COL
 			//BGBG
 			for( UINT32 j=0; j<Height/2; j++)
 			{
-				
+
 				for(UINT32 i=0; i<Width/2;i++)
 				{
 					g1 = *(Raw_Data);
@@ -7930,7 +7954,7 @@ BOOL RAWtoRGB3(UINT32 Width, UINT32 Height, UINT8 Format_Num,LPSTR Image_Buf,COL
 
 					*(C_RGB+(j*2)*Width+(i*2)) = RGB(b, g, r);
 
-					
+
 					b = *(Raw_Data+Width);
 					g2 = *(Raw_Data+Width+1);
 					g1 = *(Raw_Data+Width*2);
@@ -7945,31 +7969,31 @@ BOOL RAWtoRGB3(UINT32 Width, UINT32 Height, UINT8 Format_Num,LPSTR Image_Buf,COL
 					if (b >= 255) b = 255;
 
 					*(C_RGB+(j*2+1)*Width+(i*2)) = RGB(b, g, r);
-					
-					
+
+
 					Raw_Data++;
-					
+
 					r = *(Raw_Data);
 					g1 = *(Raw_Data+1);
 					g2 = *(Raw_Data+Width);
 					b = *(Raw_Data+Width+1);
 					g=(g1+g2)/2;
-					
-					
+
+
 					if (r <= 0) r = 0;
 					if (g <= 0) g = 0;
 					if (b <= 0) b = 0;
 					if (r >= 255) r = 255;
 					if (g >= 255) g = 255;
 					if (b >= 255) b = 255;
-					
+
 					*(C_RGB+(j*2)*Width+(i*2+1)) = RGB(b, g, r);
 
 					g2 = *(Raw_Data+Width);
 					b = *(Raw_Data+Width+1);
 					r = *(Raw_Data+Width*2);
 					g1 = *(Raw_Data+Width*2+1);
-					
+
 					g=(g1+g2)/2;
 
 					if (r <= 0) r = 0;
@@ -7984,12 +8008,12 @@ BOOL RAWtoRGB3(UINT32 Width, UINT32 Height, UINT8 Format_Num,LPSTR Image_Buf,COL
 				}
 				if(j!=Height-1)
 				{
-					
+
 					Raw_Data += Width;
 				}
-				
+
 			}
-			
+
 			for( UINT32 j=0; j<Height; j++)
 			{
 				*(C_RGB+(j*Width+Width-1))=*(C_RGB+(j*Width+Width-2));
@@ -8004,7 +8028,7 @@ BOOL RAWtoRGB3(UINT32 Width, UINT32 Height, UINT8 Format_Num,LPSTR Image_Buf,COL
 			//RGRG
 			for( UINT32 j=0; j<Height/2; j++)
 			{
-				
+
 				for(UINT32 i=0; i<Width/2;i++)
 				{
 					g1 = *(Raw_Data);
@@ -8023,7 +8047,7 @@ BOOL RAWtoRGB3(UINT32 Width, UINT32 Height, UINT8 Format_Num,LPSTR Image_Buf,COL
 
 					*(C_RGB+(j*2)*Width+(i*2)) = RGB(b, g, r);
 
-					
+
 					r = *(Raw_Data+Width);
 					g2 = *(Raw_Data+Width+1);
 					g1 = *(Raw_Data+Width*2);
@@ -8038,31 +8062,31 @@ BOOL RAWtoRGB3(UINT32 Width, UINT32 Height, UINT8 Format_Num,LPSTR Image_Buf,COL
 					if (b >= 255) b = 255;
 
 					*(C_RGB+(j*2+1)*Width+(i*2)) = RGB(b, g, r);
-					
-					
+
+
 					Raw_Data++;
-					
+
 					b = *(Raw_Data);
 					g1 = *(Raw_Data+1);
 					g2 = *(Raw_Data+Width);
 					r = *(Raw_Data+Width+1);
 					g=(g1+g2)/2;
-					
-					
+
+
 					if (r <= 0) r = 0;
 					if (g <= 0) g = 0;
 					if (b <= 0) b = 0;
 					if (r >= 255) r = 255;
 					if (g >= 255) g = 255;
 					if (b >= 255) b = 255;
-					
+
 					*(C_RGB+(j*2)*Width+(i*2+1)) = RGB(b, g, r);
 
 					g2 = *(Raw_Data+Width);
 					r = *(Raw_Data+Width+1);
 					b = *(Raw_Data+Width*2);
 					g1 = *(Raw_Data+Width*2+1);
-					
+
 					g=(g1+g2)/2;
 
 					if (r <= 0) r = 0;
@@ -8077,12 +8101,12 @@ BOOL RAWtoRGB3(UINT32 Width, UINT32 Height, UINT8 Format_Num,LPSTR Image_Buf,COL
 				}
 				if(j!=Height-1)
 				{
-					
+
 					Raw_Data += Width;
 				}
-				
+
 			}
-			
+
 			for( UINT32 j=0; j<Height; j++)
 			{
 				*(C_RGB+(j*Width+Width-1))=*(C_RGB+(j*Width+Width-2));
@@ -8097,7 +8121,7 @@ BOOL RAWtoRGB3(UINT32 Width, UINT32 Height, UINT8 Format_Num,LPSTR Image_Buf,COL
 			//GBGB
 			for( UINT32 j=0; j<Height/2; j++)
 			{
-				
+
 				for(UINT32 i=0; i<Width/2;i++)
 				{
 					r = *(Raw_Data);
@@ -8116,7 +8140,7 @@ BOOL RAWtoRGB3(UINT32 Width, UINT32 Height, UINT8 Format_Num,LPSTR Image_Buf,COL
 
 					*(C_RGB+(j*2)*Width+(i*2)) = RGB(b, g, r);
 
-					
+
 					g2 = *(Raw_Data+Width);
 					b = *(Raw_Data+Width+1);
 					r = *(Raw_Data+Width*2);
@@ -8131,31 +8155,31 @@ BOOL RAWtoRGB3(UINT32 Width, UINT32 Height, UINT8 Format_Num,LPSTR Image_Buf,COL
 					if (b >= 255) b = 255;
 
 					*(C_RGB+(j*2+1)*Width+(i*2)) = RGB(b, g, r);
-					
-					
+
+
 					Raw_Data++;
-					
+
 					g1 = *(Raw_Data);
 					r = *(Raw_Data+1);
 					b = *(Raw_Data+Width);
 					g2 = *(Raw_Data+Width+1);
 					g=(g1+g2)/2;
-					
-					
+
+
 					if (r <= 0) r = 0;
 					if (g <= 0) g = 0;
 					if (b <= 0) b = 0;
 					if (r >= 255) r = 255;
 					if (g >= 255) g = 255;
 					if (b >= 255) b = 255;
-					
+
 					*(C_RGB+(j*2)*Width+(i*2+1)) = RGB(b, g, r);
 
 					b = *(Raw_Data+Width);
 					g2 = *(Raw_Data+Width+1);
 					g1 = *(Raw_Data+Width*2);
 					r = *(Raw_Data+Width*2+1);
-					
+
 					g=(g1+g2)/2;
 
 					if (r <= 0) r = 0;
@@ -8170,12 +8194,12 @@ BOOL RAWtoRGB3(UINT32 Width, UINT32 Height, UINT8 Format_Num,LPSTR Image_Buf,COL
 				}
 				if(j!=Height-1)
 				{
-					
+
 					Raw_Data += Width;
 				}
-				
+
 			}
-			
+
 			for( UINT32 j=0; j<Height; j++)
 			{
 				*(C_RGB+(j*Width+Width-1))=  *(C_RGB+(j*Width+Width-2));
@@ -8191,9 +8215,9 @@ BOOL RAWtoRGB3(UINT32 Width, UINT32 Height, UINT8 Format_Num,LPSTR Image_Buf,COL
 
 BOOL PCI_Convert_Data(UINT32 Width, UINT32 Height, LPSTR Image_Buf,UINT8 *Rtn_ImageBuf)
 {
-	
+
 	int z=0;
-	
+
 	for( UINT32 i=0; i<	Width *Height/4;  i++)
 	{
 
@@ -8208,7 +8232,7 @@ BOOL PCI_Convert_Data(UINT32 Width, UINT32 Height, LPSTR Image_Buf,UINT8 *Rtn_Im
 
 			Rtn_ImageBuf[z++] = (unsigned char)((unsigned char) Image_Buf[i*5+3]<<2&0xFC|(unsigned char)(Image_Buf[i*5+4])&0x03);
 			Rtn_ImageBuf[z++] =(unsigned char)(Image_Buf[i*5+3]>>6)&0x03;
-			
+
 	}
 
 	return true;
@@ -8227,7 +8251,7 @@ bool CAABonderDlg::checkLightDefect_PreUV()		// 최종 결과 확인용.
 
 
 bool CAABonderDlg::func_MTF(BYTE* ChartRawImage, bool bAutoMode, int dindex)
-{  
+{
 	vision.drawOverlay(CCD);
 	char szTmp[256];
 	double mtfOffset = 0.0;
@@ -8235,10 +8259,10 @@ bool CAABonderDlg::func_MTF(BYTE* ChartRawImage, bool bAutoMode, int dindex)
 
 	if(!bAutoMode)
 	{
-		sTemp.Format(" -------------MTF 수동 검사");	
+		sTemp.Format(" -------------MTF 수동 검사");
 	}else
 	{
-		sTemp.Format(" -------------MTF 검사 [step:%d]", Task.PCBTask);	
+		sTemp.Format(" -------------MTF 검사 [step:%d]", Task.PCBTask);
 	}
 	putListLog(sTemp);
 
@@ -8283,13 +8307,13 @@ bool CAABonderDlg::func_MTF(BYTE* ChartRawImage, bool bAutoMode, int dindex)
 
 
 
-	
+
 	double min = 0.0;
 	double max = 0.0;
 
 	double mDif4F = 0.0;
 	double mDif7F = 0.0;
-	
+
 	vision.clearOverlay(CCD);
 
 	MandoInspLog.sBarcodeID = Task.ChipID;
@@ -8303,7 +8327,7 @@ bool CAABonderDlg::func_MTF(BYTE* ChartRawImage, bool bAutoMode, int dindex)
     CString sLog;
     bool bResult = true;
     double dSFR[COMMON_MTF_INSP_CNT];
-     
+
     CPoint Center;
     int dic = 0;
     bool sfrRt = true;
@@ -8319,12 +8343,12 @@ bool CAABonderDlg::func_MTF(BYTE* ChartRawImage, bool bAutoMode, int dindex)
     }
 
 	g_CalcImageAlign(true);		//func_MTF
-	
+
     Center.x = (Task.m_CircleP[0].x+Task.m_CircleP[1].x+Task.m_CircleP[2].x+Task.m_CircleP[3].x)/4;
-    Center.y =(Task.m_CircleP[0].y+Task.m_CircleP[1].y+Task.m_CircleP[2].y+Task.m_CircleP[3].y)/4; 
+    Center.y =(Task.m_CircleP[0].y+Task.m_CircleP[1].y+Task.m_CircleP[2].y+Task.m_CircleP[3].y)/4;
 
     double m_Centerx = (Task.m_CirclePos_x[0]+Task.m_CirclePos_x[1]+Task.m_CirclePos_x[2]+Task.m_CirclePos_x[3])/4;
-    double m_Centery =(Task.m_CirclePos_y[0]+Task.m_CirclePos_y[1]+Task.m_CirclePos_y[2]+Task.m_CirclePos_y[3])/4; 
+    double m_Centery =(Task.m_CirclePos_y[0]+Task.m_CirclePos_y[1]+Task.m_CirclePos_y[2]+Task.m_CirclePos_y[3])/4;
 
     model.m_oc_x = m_Centerx - (gMIUDevice.nWidth / 2);
 	model.m_oc_y = m_Centery - (gMIUDevice.nHeight / 2);
@@ -8345,7 +8369,7 @@ bool CAABonderDlg::func_MTF(BYTE* ChartRawImage, bool bAutoMode, int dindex)
     int nWidth = gMIUDevice.imageItp->width;
     int nHeight = gMIUDevice.imageItp->height;
     int iSizeX = model.m_iSize_ROI_X + 1;
-    int iSizeY = model.m_iSize_ROI_Y + 1; 
+    int iSizeY = model.m_iSize_ROI_Y + 1;
 
     std::shared_ptr<CACMISResolutionSFR> m_pSFRProc = std::make_shared<CACMISResolutionSFR>();
     POINT ptROICenter[COMMON_MTF_INSP_CNT];
@@ -8374,7 +8398,7 @@ bool CAABonderDlg::func_MTF(BYTE* ChartRawImage, bool bAutoMode, int dindex)
 				Task.m_vROI[i].nROIWidth = model.m_MTF_Direction[i] == 1 ? iSizeX : iSizeY;
 				Task.m_vROI[i].nROIHeight = model.m_MTF_Direction[i] == 0 ? iSizeY : iSizeX;
 			}
-			
+
 			if (MandoSfrSpec.INSP_SfrDeltaAlgorithmType == 0)
 			{
 				m_stSFRSpec.eSFRDeltaAlgorithmType = ESFRDelta_Diff;
@@ -8469,7 +8493,7 @@ bool CAABonderDlg::func_MTF(BYTE* ChartRawImage, bool bAutoMode, int dindex)
 					MIU.func_Set_InspImageCopy(UV_AFTER_CHART, MIU.m_pFrameRawBuffer, j + 1);		//========AA UV AFTER===
 				}
 			}
-			
+
 		}
 
 		bool bRet = false;
@@ -8546,7 +8570,7 @@ bool CAABonderDlg::func_MTF(BYTE* ChartRawImage, bool bAutoMode, int dindex)
 		}
 	}
 
-	
+
 	if (bMtfMaxTest == false)
 	{
 		for (i = 0; i < model.mGlobalSmallChartCount; i++)
@@ -8567,17 +8591,17 @@ bool CAABonderDlg::func_MTF(BYTE* ChartRawImage, bool bAutoMode, int dindex)
 			MESCommunication.m_dMesMTF[i] = model.m_LogSfr[i];
 		}
 
-		
 
-		
+
+
 	}
-	
+
 	vision.drawOverlay(CCD);
 	//CString MtfPos[9] = { "Center" , "04TL" , "04TR" , "04BL" , "04BR" , "08TL" , "08TR" , "08BL" , "08BR" };
 
 	double dMTFTemp = 0;
 	double dMTFSpecTemp = 0;
-	
+
 	double ocMinSpec = 0.0;
 	double ocMaxSpec = 0.0;
 
@@ -8592,7 +8616,7 @@ bool CAABonderDlg::func_MTF(BYTE* ChartRawImage, bool bAutoMode, int dindex)
 	}
 
 	int sfrIndex = 0;
-	
+
 	if (Task.PCBTask == 65000)	// UV전 MTF만 결과 판단★★★★★★★★★★
 	{
 		dMTFTemp = (MandoInspLog.dMTF_PreUV[0] + MandoInspLog.dMTF_PreUV[1] + MandoInspLog.dMTF_PreUV[2] + MandoInspLog.dMTF_PreUV[3]) / 4;
@@ -8719,7 +8743,7 @@ bool CAABonderDlg::func_MTF(BYTE* ChartRawImage, bool bAutoMode, int dindex)
 			// 최솟값 찾기
 			//double minValue = std::min({dEdgeAvr[0], dEdgeAvr[1], dEdgeAvr[2], dEdgeAvr[3]});
 
-			
+
 
 			min = *std::min_element(dEdgeAvr_4F, dEdgeAvr_4F + 4);
 			max = *std::max_element(dEdgeAvr_4F, dEdgeAvr_4F + 4);
@@ -8728,7 +8752,7 @@ bool CAABonderDlg::func_MTF(BYTE* ChartRawImage, bool bAutoMode, int dindex)
 			min = *std::min_element(dEdgeAvr_7F, dEdgeAvr_7F + 4);
 			max = *std::max_element(dEdgeAvr_7F, dEdgeAvr_7F + 4);
 			MandoInspLog.dMtfDiff7F = max - min;
-			
+
 			if (MandoInspLog.dMtfDiff4F > MandoSfrSpec.INSP_Diff_Spec[0])
 			{
 				sTemp.Format("MTF Difference 4F Spec NG: %lf (Spec:%.2f)", MandoInspLog.dMtfDiff4F, MandoSfrSpec.INSP_Diff_Spec[0]);
@@ -8753,7 +8777,7 @@ bool CAABonderDlg::func_MTF(BYTE* ChartRawImage, bool bAutoMode, int dindex)
 				bResult = false;
 				pFrame->putListLog(sTemp);
 				MandoInspLog.sNGList += sTemp;
-				
+
 			}
 			else
 			{
@@ -8761,20 +8785,20 @@ bool CAABonderDlg::func_MTF(BYTE* ChartRawImage, bool bAutoMode, int dindex)
 				pFrame->putListLog(sTemp);
 			}
 
-			
+
 		}
 #endif
 
 	}
-	Task.m_bOkFlag=(bResult)?1:-1;  
+	Task.m_bOkFlag=(bResult)?1:-1;
 	if(Task.m_bOkFlag==-1)
 	{
 		MandoInspLog.bInspRes = false;
 		bResult=false;
 	}
-	
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- 
+
 	cvReleaseImage(&cvImgMtf);
 	vision.drawOverlay(CCD);
 
@@ -8814,7 +8838,7 @@ double CAABonderDlg::calcColorBalance(cv::Mat src, int nColorOrder)
 	double meanColorPlane1 = calcMeanRoI(ColorPlane1, nRoIsize);
 	double meanColorPlane2 = calcMeanRoI(ColorPlane2, nRoIsize);
 	double meanColorPlane3 = calcMeanRoI(ColorPlane3, nRoIsize);
-	
+
 	double R, Gr, Gb, B;
 	switch(nColorOrder)
 	{
@@ -8912,19 +8936,19 @@ double CAABonderDlg::GetFoV(LPBYTE Rgb,int Width, int Height,CPoint Center)
 	const double rows = Height;
 	const double pixelsize = 0.00155;;//0.0025;
 	const double f = 5.018;;//25.21;
-	
+
 	CPoint cross1,cross2;
 	CPoint cpCross1,cpCross2;
 
 	int X=(Width/2)-800;
 	int Y=200;
 	int W=Y*2;
-	
-	cross1=GetCrossPos(Center.x-X-W/2,Center.y-W/2,W,(LPBYTE)rgb_p,Width, Height,Center);		
-	cross2=GetCrossPos(Center.x+X-W/2,Center.y-W/2,W,(LPBYTE)rgb_p,Width, Height,Center);		
 
-	cross1=GetCrossPos2(Center.x-X-W/2,Center.y-W/2,W,(LPBYTE)rgb_p,Width, Height,Center);		
-	cross2=GetCrossPos2(Center.x+X-W/2,Center.y-W/2,W,(LPBYTE)rgb_p,Width, Height,Center);		
+	cross1=GetCrossPos(Center.x-X-W/2,Center.y-W/2,W,(LPBYTE)rgb_p,Width, Height,Center);
+	cross2=GetCrossPos(Center.x+X-W/2,Center.y-W/2,W,(LPBYTE)rgb_p,Width, Height,Center);
+
+	cross1=GetCrossPos2(Center.x-X-W/2,Center.y-W/2,W,(LPBYTE)rgb_p,Width, Height,Center);
+	cross2=GetCrossPos2(Center.x+X-W/2,Center.y-W/2,W,(LPBYTE)rgb_p,Width, Height,Center);
 
 	if(cross1.x	== -1 || cross1.y==-1 || cross2.x==-1 || cross2.y== -1)
 	{
@@ -8975,7 +8999,7 @@ CPoint CAABonderDlg::GetCrossPos(int x,int y,int size,LPBYTE Rgb,int Width, int 
 	int MinXSeq=0;
 	int MinYValue=0;
 	int MinYSeq=0;
-	
+
 	int r,g,b;
 
 	for(LineColor=60;LineColor<220;LineColor+=10)
@@ -9224,7 +9248,7 @@ bool CAABonderDlg::findFiducialMark(LPBYTE Rgb, int sizeX, int sizeY, CPoint* cp
 		int iMaxY2 = -1, iMinY2 = 9999;
 		int iMax_Left2 = -1 , iMax_Right2 = -1, iMax_Up2 = -1, iMax_Down2 = -1;
 
-		int iSum;		
+		int iSum;
 		int iGap;
 
 		int iSum_Left, iSum_Right;
@@ -9545,7 +9569,7 @@ CPoint CAABonderDlg::GetCirclePos(LPBYTE Rgb, int sizeX, int sizeY, CRect crFidu
 	int iMaxY2 = -1, iMinY2 = 9999;
 	int iMax_Left2 = -1 , iMax_Right2 = -1, iMax_Up2 = -1, iMax_Down2 = -1;
 
-	int iSum;		
+	int iSum;
 	int iGap;
 
 	int iSum_Left, iSum_Right;
@@ -9837,7 +9861,7 @@ CPoint CAABonderDlg::GetCirclePos(LPBYTE Rgb, int sizeX, int sizeY, CRect crFidu
 	int iMaxY2 = -1, iMinY2 = 9999;
 	int iMax_Left2 = -1 , iMax_Right2 = -1, iMax_Up2 = -1, iMax_Down2 = -1;
 
-	int iSum;		
+	int iSum;
 	int iGap;
 
 	int iSum_Left, iSum_Right;
@@ -10194,7 +10218,7 @@ BOOL CAABonderDlg::DestroyWindow()
 //! [입력값]
 //!  sRecv : 수신된 문자열, iCnt_Recv : 몇 번째 수신 작업으로 호출되었는지를 나타낸다, iIndex_Machine : UV Lamp 장치의 구분 index
 //! [주의 사항]
-//!  UV Lamp는 RS-232C Command가 적절치 못할 경우, 'ERR' 문자열을 PC로 보낸다. 
+//!  UV Lamp는 RS-232C Command가 적절치 못할 경우, 'ERR' 문자열을 PC로 보낸다.
 
 void CAABonderDlg::ReceiveStop()
 {
@@ -10218,7 +10242,7 @@ void CAABonderDlg::ReceiveStop()
 //
 //		//StopDevice(gDeviceIndex);
 //	}
-//	
+//
 //
 //	MIUSetMCLK(gDeviceIndex, 0.0f);
 //	MIUSetIOPowerChannel(gDeviceIndex, 0.0f, 0);
@@ -10317,7 +10341,7 @@ void CAABonderDlg::func_ChipID_Draw()
 	CString strID="";
 	strID.Format("%s", Task.ChipID);
 
-	m_labelCCD_ID.SetText(Task.ChipID); 
+	m_labelCCD_ID.SetText(Task.ChipID);
 	m_labelCCD_ID.Invalidate();
 }
 
@@ -10403,7 +10427,7 @@ void CAABonderDlg::changeMainBtnColor(int dlg)
 			m_bMainBtn_Light.m_iStateBtn = 0;
 		else
 		{
-			m_bMainBtn_Light.m_iStateBtn = 1;		
+			m_bMainBtn_Light.m_iStateBtn = 1;
 			m_bMainBtn_Main.m_iStateBtn = 0;
 		}
 		break;
@@ -10412,12 +10436,12 @@ void CAABonderDlg::changeMainBtnColor(int dlg)
 			m_bMainBtn_Alarm.m_iStateBtn = 0;
 		else
 		{
-			m_bMainBtn_Alarm.m_iStateBtn = 1;		
+			m_bMainBtn_Alarm.m_iStateBtn = 1;
 			m_bMainBtn_Main.m_iStateBtn = 0;
 		}
 		break;
 
-		
+
 	}
 
 	m_bMainBtn_Main.Invalidate();
@@ -10439,9 +10463,9 @@ void CAABonderDlg::OnStnClickedLabelStatusServo()
 
 bool CAABonderDlg::MIUCheck_process()
 {
-	CString logStr=""; 
+	CString logStr="";
 
-	/*if(gMIUDevice.CurrentState !=0) 
+	/*if(gMIUDevice.CurrentState !=0)
 	{
 		MIU.Stop();
 	}*/
@@ -10466,7 +10490,7 @@ bool CAABonderDlg::MIUCheck_process()
 		return false ;
 	}
 	Sleep(100);
-	if(gMIUDevice.bMIUOpen==0)		//if(!MIU.m_pBoard->IsConnected()) 
+	if(gMIUDevice.bMIUOpen==0)		//if(!MIU.m_pBoard->IsConnected())
 	{
 		if(!MIU.Open())
 		{
@@ -10475,10 +10499,10 @@ bool CAABonderDlg::MIUCheck_process()
 			return false;
 		}
 	}
-	
+
 	double time3 = myTimer(true);
 	if(!MIU.Start())
-	{ 
+	{
 		m_bMiuRun = false;
 		logStr.Format("MIU Start 실패.");
 		putListLog(logStr);
@@ -10541,7 +10565,7 @@ bool CAABonderDlg::MIUCheck_process()
 	//}
 	//else
 	//{
-	//	
+	//
 	//	return true;
 	//	//}
 	//}
@@ -10696,7 +10720,7 @@ void CAABonderDlg::OnBnClickedButtonPcbResult()
 
 int CAABonderDlg::freeRun()
 {
-	
+
 	return true;
 }
 
@@ -10714,7 +10738,7 @@ void CAABonderDlg::OnTimer(UINT_PTR nIDEvent)
 		{
 			sLangChange.LoadStringA(IDS_STRING1403);
 			GetDlgItem(IDC_BUTTON_PCB_RESULT)->SetWindowText(sLangChange);
-			m_bPcbFinish.m_iStateBtn = 0;	
+			m_bPcbFinish.m_iStateBtn = 0;
 		}
 		m_bPcbFinish.Invalidate();
 
@@ -10779,7 +10803,7 @@ void CAABonderDlg::OnTimer(UINT_PTR nIDEvent)
 
 				m_btnReady.m_iStateBtn = 0;
 				m_btnReady.Invalidate();
-			}	
+			}
 		}
 		else if(alarmDlg != NULL)
 		{
@@ -10851,7 +10875,7 @@ bool CAABonderDlg::MoveOffset_Prev_UV()
 #elif (____AA_WAY == LENS_TILT_AA)
 	short axis[6] = {Motor_Lens_X, Motor_Lens_Y, Motor_Lens_Z, Motor_Lens_Xt, Motor_Lens_Yt, Motor_PCB_TH};
 #endif
-	
+
 	double dDes_Pos[6] = {0.0, };
 	double offSetZ=0.0;
 
@@ -10863,13 +10887,13 @@ bool CAABonderDlg::MoveOffset_Prev_UV()
 	}
 
 	offSetZ = Task.SFR.dMaxPos[0]-(offSetZ/4);
-	/*Task.dUvOffset_Aver = offSetZ * model.UV_Weight*-1;  
+	/*Task.dUvOffset_Aver = offSetZ * model.UV_Weight*-1;
 
 	if(Task.dUvOffset_Aver < (sysData.m_dOffset_Prev_UV_Z/2))
 	{
 		Task.dUvOffset_Aver = sysData.m_dOffset_Prev_UV_Z/2;
 	}
-	
+
 	if(Task.dUvOffset_Aver > fabs(sysData.m_dOffset_Prev_UV_Z/2))
 	{
 		Task.dUvOffset_Aver = fabs(sysData.m_dOffset_Prev_UV_Z/2);
@@ -10885,7 +10909,7 @@ bool CAABonderDlg::MoveOffset_Prev_UV()
 
 	dDes_Pos[2] = motor.GetCommandPos(axis[2]) + sysData.m_dOffset_Prev_UV_Z;	// + Task.dUvOffset_Aver;
 
-	
+
 	//
 	dDes_Pos[3] = motor.GetCommandPos(axis[3]) + sysData.m_dOffset_Prev_UV_Tx;
 	dDes_Pos[4] = motor.GetCommandPos(axis[4]) + sysData.m_dOffset_Prev_UV_Ty;
@@ -10918,7 +10942,7 @@ bool CAABonderDlg::MoveOffset_Prev_UV()
 
 void CAABonderDlg::OnClickedLabelTitle()
 {
-	if (Task.AutoFlag == 1) 
+	if (Task.AutoFlag == 1)
 	{
 		sLangChange.LoadStringA(IDS_STRING1368);	//자동 운전 중 입니다.
 		delayMsg(sLangChange, 3000, M_COLOR_RED);
@@ -10927,7 +10951,7 @@ void CAABonderDlg::OnClickedLabelTitle()
 	//UVCommand.Connect_Device(sysData.iCommPort[COMM_UV]);
 	//UVCommand.UV_Shutter_PowerSet(95);//
 	//vision.bmpImageSaveFn(0, 0);
-	
+
 
 #ifdef NORINDA_MODE
 	//CDPoint cpLeftPos;
@@ -10955,7 +10979,7 @@ void CAABonderDlg::OnClickedLabelTitle()
 	}
 
 #endif
-	
+
 
 	//Dio.setAlarm(ALARM_OFF);
 }
@@ -11122,7 +11146,7 @@ void CAABonderDlg::SetDigReference(int iMark)
 {//Bright, Contrast 설정
 
 	long chRef;
-	
+
 	//if(iMark==0)			chRef = M_CH0_REF;
 	//else if(iMark==1)		chRef = M_CH1_REF;
 	if(iMark == PCB_Chip_MARK)				chRef = M_CH0_REF;	//CAM1
@@ -11156,7 +11180,7 @@ void CAABonderDlg::InstantMarkDelete(int iMarkType)
 #ifdef USE_GEOMETRIC
 	MmodFree(vision.ModModel[iMarkType][1]);
 	vision.ModModel[iMarkType][1] = M_NULL;
-	
+
 	if(iMarkType == PCB_Chip_MARK)			sDelFile.Format("%s\\Model\\%s\\LENS_Mark_%d.mod", DATA_DIR, model.mCurModelName, 1);
 	else if(iMarkType == PCB_Holder_MARK)	sDelFile.Format("%s\\Model\\%s\\PCB_Mark_%d.mod", DATA_DIR, model.mCurModelName, 1);
 	else									sDelFile.Format("%s\\Model\\%s\\LENS_Align_MARK_%d.mod", DATA_DIR, model.mCurModelName, 1);
@@ -11232,7 +11256,7 @@ bool CAABonderDlg::MoveOffset_Z()
 }
 
 int CAABonderDlg::TiltAlignLimitCheck(double dOffsetX, double dOffsetY)										// [Insptype] 0:Lens PreAlign 1:PCB PreAlign
-{								
+{
 													// Return	0:NG,  1:Retry,  2:OK
 	if (Task.PCBTask == 27250  || Task.PCBTask == 13100)
 	{
@@ -11252,8 +11276,8 @@ int CAABonderDlg::TiltAlignLimitCheck(double dOffsetX, double dOffsetY)									
 			return 1;
 		}
 	}
-	
-	return 2; 
+
+	return 2;
 }
 
 void CAABonderDlg::OnBnClickedButtonDispenseResult()
@@ -11265,7 +11289,7 @@ void CAABonderDlg::OnBnClickedButtonDispenseResult()
 		delayMsg(sLangChange, 3000, M_COLOR_RED);
 	}
 	else if(Task.AutoFlag==0 || Task.AutoFlag==2)
-	{	
+	{
 		logStr.Format("도포 완료 여부 선택하세요! \n완료 = 예(Y) / 미완료 = 아니오(N)");	//도포 완료 여부를 입력 하세요. \n[완료 선택 Yes / 미완료 선택 No]
 		if(askMsg(logStr)){
 			Task.m_bOkDispense = 1;
@@ -11278,7 +11302,7 @@ void CAABonderDlg::OnBnClickedButtonDispenseResult()
 bool CAABonderDlg::func_MIU_ConnectLiveCheck()
 {
 	if( gMIUDevice.CurrentState != 4)
-	{	
+	{
 		sLangChange.LoadStringA(IDS_STRING1370);	//자동 운전 중 CCD 동영상 영상 획득 실패
 		errMsg2(Task.AutoFlag, sLangChange);
 		return false;
@@ -11332,7 +11356,7 @@ bool CAABonderDlg::ConnectToServer()
 
 	CString sIPAdd;
 	sIPAdd.Format("%s", SOCKET_MAIN);
-	
+
 	if( m_Socket.Connect(sIPAdd, 21000) == FALSE )
 	{
 		sLangChange.LoadStringA(IDS_STRING1276);	//서버와 연결 실패
@@ -11359,8 +11383,8 @@ bool CAABonderDlg::CheckMessage(CString sMsg)
 	CString sTemp, logStr, sSendData ;//&%s$
 	int stxIndex = sMsg.Find("&", 0);
 	int etxIndex = sMsg.Find("%", 0);
-	sTemp		= sMsg.Mid(stxIndex+1, etxIndex - stxIndex -1);	
-	
+	sTemp		= sMsg.Mid(stxIndex+1, etxIndex - stxIndex -1);
+
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	if(stxIndex<0 || etxIndex<0 || stxIndex>etxIndex)
 	{
@@ -11373,7 +11397,7 @@ bool CAABonderDlg::CheckMessage(CString sMsg)
 	startIndex	= sMsg.Find("$", 0);
 	endIndex	= sMsg.Find("_", startIndex+1);
 	sTemp		= sMsg.Mid(startIndex+1, endIndex - startIndex -1);
-	
+
 	//sMsg.Format("[서버 -> 클라이언트] %s", sTemp);
 	//putListLog(sMsg);
 
@@ -11382,7 +11406,7 @@ bool CAABonderDlg::CheckMessage(CString sMsg)
 		startIndex	= sMsg.Find("_", 0);
 		endIndex	= sMsg.Find("%", startIndex+1);
 		sTemp		= sMsg.Mid(startIndex+1, endIndex - startIndex -1);
-		
+
 		if( !g_ADOData.func_Get_RecordData(sTemp) )	//바코드 명으로 DB 검색
 		{
 			sSendData = ("NAK");
@@ -11511,7 +11535,7 @@ void CAABonderDlg::CreateServer()
 			putListLog(sLangChange);
 		}
 		else
-		{		
+		{
 			sLangChange.LoadStringA(IDS_STRING1274);	//서버 접속 대기 실패
 			putListLog(sLangChange);
 		}
@@ -11632,8 +11656,8 @@ void CAABonderDlg::ServerCheckMessage(CSocket* pClient, CString sMsg)
 	CString logStr, sSendData ;//&%s$
 	int stxIndex = sMsg.Find("&", 0);
 	int etxIndex = sMsg.Find("%", 0);
-	sTemp		= sMsg.Mid(stxIndex+1, etxIndex - stxIndex -1);	
-	
+	sTemp		= sMsg.Mid(stxIndex+1, etxIndex - stxIndex -1);
+
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	if(stxIndex<0 || etxIndex<0 || stxIndex>etxIndex)
 	{
@@ -11646,7 +11670,7 @@ void CAABonderDlg::ServerCheckMessage(CSocket* pClient, CString sMsg)
 	startIndex	= sMsg.Find("$", 0);
 	endIndex	= sMsg.Find("%", startIndex+1);
 	sTemp		= sMsg.Mid(startIndex+1, endIndex - startIndex -1);
-	
+
 	startIndex	= sMsg.Find("$", 0);
 	endIndex	= sMsg.Find("_", startIndex+1);
 	sCompair	= sMsg.Mid(startIndex+1, endIndex - startIndex -1);
@@ -11716,7 +11740,7 @@ void CAABonderDlg::ServerCheckMessage(CSocket* pClient, CString sMsg)
 
 void CAABonderDlg::func_Control_StateChange(int iCh)
 {
-	
+
 }
 
 
@@ -11724,12 +11748,12 @@ void CAABonderDlg::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	double dExpandFactorX, dExpandFactorY;
 
-	if( ( lensDlg!=NULL && lensDlg->IsWindowVisible()) || 
-		(lensEdgeDlg!=NULL && lensEdgeDlg->IsWindowVisible()) || 
-		(pcbDlg!=NULL && pcbDlg->IsWindowVisible()) || 
-//		(pcbInspDlg!=NULL && pcbInspDlg->IsWindowVisible()) || 
-		(motorDlg!=NULL && motorDlg->m_bCalcResol) || 
-		(motorDlg2!=NULL && motorDlg2->m_bCalcResol) || 
+	if( ( lensDlg!=NULL && lensDlg->IsWindowVisible()) ||
+		(lensEdgeDlg!=NULL && lensEdgeDlg->IsWindowVisible()) ||
+		(pcbDlg!=NULL && pcbDlg->IsWindowVisible()) ||
+//		(pcbInspDlg!=NULL && pcbInspDlg->IsWindowVisible()) ||
+		(motorDlg!=NULL && motorDlg->m_bCalcResol) ||
+		(motorDlg2!=NULL && motorDlg2->m_bCalcResol) ||
 		(motorDlg3!=NULL && motorDlg3->m_bCalcResol) ||
 		(motorDlg4!= NULL && motorDlg4->m_bCalcResol))
 	{
@@ -11738,7 +11762,7 @@ void CAABonderDlg::OnLButtonDown(UINT nFlags, CPoint point)
 			point.y>m_rectCamDispPos1.top &&
 			point.y<m_rectCamDispPos1.bottom)
 		{
-			if (	lensDlg->IsWindowVisible())				m_iCurCamNo = CAM1; 
+			if (	lensDlg->IsWindowVisible())				m_iCurCamNo = CAM1;
 #if (____AA_WAY == PCB_TILT_AA)
 			else if (lensEdgeDlg->IsWindowVisible())		m_iCurCamNo = CAM1;
 #elif (____AA_WAY == LENS_TILT_AA)
@@ -11747,7 +11771,7 @@ void CAABonderDlg::OnLButtonDown(UINT nFlags, CPoint point)
 			else if (pcbDlg->IsWindowVisible())				m_iCurCamNo = CAM1;
 			else if ( motorDlg->IsWindowVisible())			m_iCurCamNo = motorDlg->m_iSelCam;
 			else if ( motorDlg2->IsWindowVisible())			m_iCurCamNo = motorDlg2->m_iSelCam;
-			else if ( motorDlg3->IsWindowVisible())			m_iCurCamNo = motorDlg3->m_iSelCam;			
+			else if ( motorDlg3->IsWindowVisible())			m_iCurCamNo = motorDlg3->m_iSelCam;
 			else if ( motorDlg4->IsWindowVisible())			m_iCurCamNo = motorDlg4->m_iSelCam;
 			int iGap;
 			if (m_iCurCamNo < 4)
@@ -11796,7 +11820,7 @@ void CAABonderDlg::OnLButtonDown(UINT nFlags, CPoint point)
 	//		point.y<m_rectCamDispPos1.bottom)
 	//	{
 	//		m_bDrawFlag = true;
-	//		
+	//
 	//		m_ClickP.x = point.x - m_rectCamDispPos1.left;
 	//		m_ClickP.y = point.y - m_rectCamDispPos1.top;
 
@@ -11818,7 +11842,7 @@ void CAABonderDlg::OnLButtonDown(UINT nFlags, CPoint point)
 	//					m_ClickP.x * dExpandFactorX<m_rBox.right+iGap	&&
 	//					m_ClickP.y * dExpandFactorY<m_rBox.bottom+iGap)
 	//				{
-	//					m_bBoxMoveFlag = true;							
+	//					m_bBoxMoveFlag = true;
 	//				}
 
 	//				m_bBox_Acting_CCD_Zoom = true;
@@ -11833,7 +11857,7 @@ void CAABonderDlg::OnLButtonDown(UINT nFlags, CPoint point)
 	//					m_PanMoveP = m_ClickP;
 	//					m_bActing_Pan_CCD_Zoom = true;
 	//				}
-	//			}							
+	//			}
 	//		}
 	//		else
 	//		{
@@ -11849,7 +11873,7 @@ void CAABonderDlg::OnLButtonDown(UINT nFlags, CPoint point)
 
 	//			width = MbufInquire(vision.MilGrabImageChild[4], M_PITCH, M_NULL);
 
-	//			//! 확대된 상태에서도 클릭한 지점에 정확하게 십자선을 그린다. 
+	//			//! 확대된 상태에서도 클릭한 지점에 정확하게 십자선을 그린다.
 	//			if ( m_bState_CCD_Zoom == true )
 	//			{
 	//				p.x = m_ViewPos.x + m_ClickP.x;
@@ -11872,15 +11896,15 @@ void CAABonderDlg::OnLButtonDown(UINT nFlags, CPoint point)
 	//			sprintf_s(szTmp, "(%d, %d) ==> RGB %d, %d, %d", p.x, p.y, vision.Image[3][pos], vision.Image[4][pos], vision.Image[5][pos]);
 	//			vision.textlist[m_iCurCamNo].addList(50, 680, szTmp, M_COLOR_RED, 17, 7, "Arial");
 	//			vision.drawOverlay(m_iCurCamNo, true);
-	//		}			
-	//	} 
+	//		}
+	//	}
 
 	//	CDialogEx::OnLButtonDown(nFlags, point);
 	//	return;
 	//}
 	//else if (ccdDlg->m_pOSChkDlg!=NULL && ccdDlg->m_pOSChkDlg->IsWindowVisible() || (ccdDlg->m_pSFRDlg!=NULL && ccdDlg->m_pSFRDlg->IsWindowVisible() ) )
 	else if ((ccdDlg->m_pSFRDlg!=NULL && ccdDlg->m_pSFRDlg->IsWindowVisible() ) )
-	
+
 	{
 		m_iCurCamNo = 3;
 
@@ -11967,7 +11991,7 @@ void CAABonderDlg::OnLButtonDown(UINT nFlags, CPoint point)
 		char szTmp[256];
 		vision.clearOverlay(m_iCurCamNo);
 
-		if(m_iCurCamNo<3) 
+		if(m_iCurCamNo<3)
 		{
 			p.x = (int)(m_ClickP.x * CAM_EXPAND_FACTOR_X + 0.5);
 			p.y = (int)(m_ClickP.y * CAM_EXPAND_FACTOR_Y + 0.5);
@@ -11979,14 +12003,14 @@ void CAABonderDlg::OnLButtonDown(UINT nFlags, CPoint point)
 
 			sprintf_s(szTmp, "(%d, %d) %d", p.x, p.y, val);
 			vision.textlist[m_iCurCamNo].addList(50, 700, szTmp, M_COLOR_RED, 17, 7, "Arial");
-			
+
 			if( Task.bManual_FindEpoxy == true)
 			{
 				Task.cpMEpoxyPos.x = p.x;
 				Task.cpMEpoxyPos.y = p.y;
 			}
 		}
-		else 
+		else
 		{
 			vision.MilBufferUpdate();
 
@@ -11996,7 +12020,7 @@ void CAABonderDlg::OnLButtonDown(UINT nFlags, CPoint point)
 			p.y = m_ClickP.y * gMIUDevice.nHeight / SMALL_CCD_SIZE_Y;
 
 			vision.crosslist[m_iCurCamNo].addList(p, 150, M_COLOR_RED);
-			 
+
 			pos = p.y * width + p.x;
 
 			sprintf_s(szTmp, "(%d, %d) ==> RGB %d, %d, %d", p.x, p.y, vision.MilImageBuffer[3][pos], vision.MilImageBuffer[4][pos], vision.MilImageBuffer[5][pos]);
@@ -12018,7 +12042,7 @@ void CAABonderDlg::OnLButtonDown(UINT nFlags, CPoint point)
             {
                 ccdDlg->m_pSFRDlg->drawRectSFR(m_iNo_SFR);
             }
-            
+
         }
 		vision.drawOverlay(m_iCurCamNo, true);
 	}
@@ -12036,11 +12060,11 @@ void CAABonderDlg::OnBnClickedButtonLensPassResult()
 		delayMsg(sLangChange, 3000, M_COLOR_RED);
 	}
 	else if(Task.AutoFlag==0 || Task.AutoFlag==2)
-	{	
+	{
 		logStr.Format("LENS 넘김 완료 여부를 선택하세요. 제품 유무 확인 하세요..\n 넘김 완료 선택 = Yes / 넘김 미완료 선택 = No");
 		if( askMsg(logStr))
 		{
-			if(!Dio.LensMotorGripCheck(true, false) )//Lens 감지가 안되었을 경우  
+			if(!Dio.LensMotorGripCheck(true, false) )//Lens 감지가 안되었을 경우
 			{
 				sLangChange.Format(_T("Lens Grip 전진상태가 아닙니다."));
 				delayMsg(sLangChange.GetBuffer(99), 3000, M_COLOR_DARK_GREEN);
@@ -12050,11 +12074,11 @@ void CAABonderDlg::OnBnClickedButtonLensPassResult()
 			}
 		}else
 		{
-			if(Dio.LensMotorGripCheck(true, false) )//Lens 감지가 되었을 경우  
+			if(Dio.LensMotorGripCheck(true, false) )//Lens 감지가 되었을 경우
 			{
 				sLangChange.Format(_T("Lens Grip 후진상태가 아닙니다."));
 				delayMsg(sLangChange.GetBuffer(99), 3000, M_COLOR_DARK_GREEN);
-				
+
 			}else
 			{
 				if(Dio.LensMotorGripCheck(false, false) )
@@ -12066,12 +12090,12 @@ void CAABonderDlg::OnBnClickedButtonLensPassResult()
 					delayMsg(sLangChange.GetBuffer(99), 3000, M_COLOR_DARK_GREEN);
 				}
 			}
-			
+
 		}
-			
+
 	}
 }
-// 도포 검사 
+// 도포 검사
 bool CAABonderDlg::_EpoxyFinddispense(int cam)
 {
 	unsigned char *m_Imagebuf;
@@ -12083,7 +12107,7 @@ bool CAABonderDlg::_EpoxyFinddispense(int cam)
 	MbufGet(vision.MilGrabImageChild[CAM1], m_Imagebuf);	// 이미지 전체 픽셀 밝기값 버퍼 담기
 
 	vision.m_csGrab.Unlock();
-	
+
 	bool bRtn = true;
 
 	bool bRtn1 = true;
@@ -12108,7 +12132,7 @@ bool CAABonderDlg::_EpoxyFinddispense(int cam)
 
 	//
 	free(m_Imagebuf);
-	
+
 	return bRtn;
 }
 
@@ -12133,7 +12157,7 @@ bool CAABonderDlg::_inspResign(bool autoMode, int index, int dispMode)				// dis
 		return false;
 	}
 
-		
+
 	Task.m_bResign_Result[index] = false;
 
 	float innerOffsetX	= (float)((model.m_ResinDrawSize.x*0.5) - model.m_dResinInspOffset[0].x);
@@ -12203,7 +12227,7 @@ bool CAABonderDlg::_inspResign(bool autoMode, int index, int dispMode)				// dis
 
 	//////////////////////////////////////////////////////////////////////////////////
 	// 좌측 도포 영역 검사 Start..
-	sx = outRect.left; 
+	sx = outRect.left;
 	ex = inRect.left;
 	sy = (int)(inRect.top + fabs((outRect.top - inRect.top)*0.5));
 	ey = (int)(inRect.bottom - fabs((outRect.bottom - inRect.bottom)*0.5));
@@ -12331,7 +12355,7 @@ bool CAABonderDlg::_inspResign(bool autoMode, int index, int dispMode)				// dis
 		return false;
 	}
 
-	
+
 
 
 	int whiteVal	= (int)(minVal*1.3 + (avgVal * 0.3));//(maxVal*0.4 + avgVal*0.6);        // 값을 최대한 낮게
@@ -12390,7 +12414,7 @@ bool CAABonderDlg::_inspResign(bool autoMode, int index, int dispMode)				// dis
 					inspStartPosX[x]++;
 
 					startPoint[y] = x;
-					
+
 					if(dispMode==2)
 						vision.crosslist[iCh].addList(x, y, 1, M_COLOR_MAGENTA);
 
@@ -12398,7 +12422,7 @@ bool CAABonderDlg::_inspResign(bool autoMode, int index, int dispMode)				// dis
 				}
 			}
 
-			if(	findFlag && 
+			if(	findFlag &&
 				(	vision.MilImageBuffer[iCh][pos]>=(vision.MilImageBuffer[iCh][pos+2]-margine)) && (vision.MilImageBuffer[iCh][pos+1]>=(vision.MilImageBuffer[iCh][pos+3]-margine)) && (vision.MilImageBuffer[iCh][pos+2]>=(vision.MilImageBuffer[iCh][pos+4]-margine)) &&
 				vision.MilImageBuffer[iCh][pos+1]>=whiteVal && vision.MilImageBuffer[iCh][pos]<=whiteVal)
 			{
@@ -12637,7 +12661,7 @@ bool CAABonderDlg::_inspResign(bool autoMode, int index, int dispMode)				// dis
 		return false;
 	}
 
-	if(avgVal>230)	
+	if(avgVal>230)
 	{
 		sTempLang.LoadStringA(IDS_STRING141);
 		sLangChange.Format(sTempLang, avgVal);
@@ -12732,7 +12756,7 @@ bool CAABonderDlg::_inspResign(bool autoMode, int index, int dispMode)				// dis
 				}
 			}
 
-			if(	findFlag && 
+			if(	findFlag &&
 				(	vision.MilImageBuffer[iCh][pos]>=(vision.MilImageBuffer[iCh][pos+2]-margine)) && (vision.MilImageBuffer[iCh][pos+1]>=(vision.MilImageBuffer[iCh][pos+3]-margine)) && (vision.MilImageBuffer[iCh][pos+2]>=(vision.MilImageBuffer[iCh][pos+4]-margine)) &&
 				vision.MilImageBuffer[iCh][pos+1]>=whiteVal && vision.MilImageBuffer[iCh][pos]<=whiteVal)
 			{
@@ -12951,7 +12975,7 @@ bool CAABonderDlg::_inspResign(bool autoMode, int index, int dispMode)				// dis
 		vision.textlist[iCh].addList(50, 140, szDispData, M_COLOR_GREEN, 17, 8, _T("arialuni"));
 	}
 
-	
+
 
 
 	// 밝은 영역과 어두운 영역의 밝기 차가 50 이상이고, 평균 밝기는 200 이하로..
@@ -12974,7 +12998,7 @@ bool CAABonderDlg::_inspResign(bool autoMode, int index, int dispMode)				// dis
 		return false;
 	}
 
-	if(avgVal>230 ) 	
+	if(avgVal>230 )
 	{
 		sTempLang.LoadStringA(IDS_STRING146);
 		sLangChange.Format(sTempLang, avgVal);
@@ -12992,7 +13016,7 @@ bool CAABonderDlg::_inspResign(bool autoMode, int index, int dispMode)				// dis
 		return false;
 	}
 
-	//if(maxVal<190)	
+	//if(maxVal<190)
 	if(minVal > 150)
 	{
 		sTempLang.LoadStringA(IDS_STRING147);
@@ -13073,7 +13097,7 @@ bool CAABonderDlg::_inspResign(bool autoMode, int index, int dispMode)				// dis
 				}
 			}
 
-			if(	findFlag && 
+			if(	findFlag &&
 				(	vision.MilImageBuffer[iCh][pos]>=(vision.MilImageBuffer[iCh][pos+width2]-margine)) && (vision.MilImageBuffer[iCh][pos+width]>=(vision.MilImageBuffer[iCh][pos+width3]-margine)) && (vision.MilImageBuffer[iCh][pos+width2]>=(vision.MilImageBuffer[iCh][pos+width4]-margine)) &&
 				vision.MilImageBuffer[iCh][pos+width]>=whiteVal && vision.MilImageBuffer[iCh][pos]<=whiteVal)
 			{
@@ -13282,7 +13306,7 @@ bool CAABonderDlg::_inspResign(bool autoMode, int index, int dispMode)				// dis
 		sLangChange.Format(sTempLang, minVal, maxVal);
 		_stprintf_s(szDispData, sLangChange);
 		vision.textlist[iCh].addList(50, 690, szDispData, M_COLOR_RED, 17, 8, _T("arialuni"));
-		
+
 		sTempLang.LoadStringA(IDS_STRING360);
 		sLangChange.Format(sTempLang, minVal, maxVal);
 
@@ -13296,7 +13320,7 @@ bool CAABonderDlg::_inspResign(bool autoMode, int index, int dispMode)				// dis
 		return false;
 	}
 
-	if( avgVal>230 ) 	
+	if( avgVal>230 )
 	{
 		sTempLang.LoadStringA(IDS_STRING125);
 		sLangChange.Format(sTempLang, avgVal);
@@ -13315,7 +13339,7 @@ bool CAABonderDlg::_inspResign(bool autoMode, int index, int dispMode)				// dis
 		return false;
 	}
 
-	//if(maxVal<190)	
+	//if(maxVal<190)
 	if(minVal > 150)
 	{
 		sTempLang.LoadStringA(IDS_STRING126);
@@ -13609,7 +13633,7 @@ bool CAABonderDlg::_inspResign(bool autoMode, int index, int dispMode)				// dis
 		return false;
 	}
 
-	return true; 
+	return true;
 }
 bool CAABonderDlg::_inspResignHole(bool autoMode, int index, int dispMode)
 {
@@ -13895,7 +13919,7 @@ bool CAABonderDlg::_inspResignHole(bool autoMode, int index, int dispMode)
 	int iEpoxySize = (outRect.right - inRect.right)*0.6;//outOffsetX -inOffsetX;//(inRect.left - outRect.left) * 1;
 	unsigned char	*imgInsp;
 	imgInsp = (unsigned char *)malloc(iEpoxySize * cpCutSize.y);
-	sx = cpCutSize.x - iEpoxySize;//마지막 폭 outRect.right -iEpoxySize;// 
+	sx = cpCutSize.x - iEpoxySize;//마지막 폭 outRect.right -iEpoxySize;//
 
 	polarImg = cvCreateImage(cvSize(iEpoxySize, cpCutSize.y), 8, 1);
 
@@ -14056,7 +14080,7 @@ bool CAABonderDlg::_inspResignRect(bool autoMode, int index, int iDirection, int
 					{
 						iIsDispense=1;
 						break;
-					}					
+					}
 					else
 					{
 						point.x=x;
@@ -14085,7 +14109,7 @@ bool CAABonderDlg::_inspResignRect(bool autoMode, int index, int iDirection, int
 			}
 		}
 		else	// 가로방향
-		{  
+		{
 			CRect inRect;
 			inRect.left = (int)(centX + model.m_ResingRectStart[iRectCnt].x/sysData.dCamResol[iCh].x );
 			inRect.top = (int)(centY + model.m_ResingRectStart[iRectCnt].y/sysData.dCamResol[iCh].y );
@@ -14115,7 +14139,7 @@ bool CAABonderDlg::_inspResignRect(bool autoMode, int index, int iDirection, int
 					{
 						iIsDispense=1;
 						//break;
-					}					
+					}
 					else
 					{
 						point.x=x;
@@ -14430,7 +14454,7 @@ bool CAABonderDlg::_inspResignRect(bool autoMode, int index, int iDirection, int
 	int iIsDispense=0;
 	int iDispenseSpec=10;
 
-	
+
 	int Ewidth = 0;
 	int Eheight = 0;
 	bool pass = true;
@@ -14448,8 +14472,8 @@ bool CAABonderDlg::_inspResignRect(bool autoMode, int index, int iDirection, int
 		inRect.right = (int)(centX + (model.m_ResingRectStart[iRectCnt].x+ model.m_ResingRectSize[iRectCnt].x)/sysData.dCamResol[iCh].x );
 		inRect.bottom = (int)(centY + (model.m_ResingRectStart[iRectCnt].y+ model.m_ResingRectSize[iRectCnt].y)/sysData.dCamResol[iCh].y );*/
 
-		
-		
+
+
 
 		inRect.left = (int)(centX + model.m_ResingRectStart[iRectCnt].x);
 		inRect.top = (int)(centY + model.m_ResingRectStart[iRectCnt].y);
@@ -14457,7 +14481,7 @@ bool CAABonderDlg::_inspResignRect(bool autoMode, int index, int iDirection, int
 		inRect.bottom = (int)(centY + (model.m_ResingRectStart[iRectCnt].y+ model.m_ResingRectSize[iRectCnt].y));
 		Ewidth = inRect.right - inRect.left;
 		Eheight = inRect.bottom - inRect.top;
-			   
+
 		iDispenseSpec = (model.m_iResinInspRectSpec *  Ewidth) / 100;//길이 대비 백분율
 
 		//! 검사 영역내 픽셀의 밝기 값 구하기
@@ -14478,7 +14502,7 @@ bool CAABonderDlg::_inspResignRect(bool autoMode, int index, int iDirection, int
 					if(m_Imagebuf[pos]>model.m_ResingInspLevel)
 					{
 						iDispenseCnt++;
-					}					
+					}
 					else
 					{
 						point.x=x;
@@ -14489,7 +14513,7 @@ bool CAABonderDlg::_inspResignRect(bool autoMode, int index, int iDirection, int
 				if(iDispenseCnt < iDispenseSpec)//가로로 미도포영역이 평균퍼센트지에 못 미칠때
 				{
 					pass = false;
-					
+
 				}
 
 			}
@@ -14501,7 +14525,7 @@ bool CAABonderDlg::_inspResignRect(bool autoMode, int index, int iDirection, int
 			inRect.bottom = (int)(centY + (model.m_ResingRectStart[iRectCnt].y+ model.m_ResingRectSize[iRectCnt].y));
 			Ewidth = inRect.right - inRect.left;
 			Eheight = inRect.bottom - inRect.top;
-			   
+
 		iDispenseSpec = (model.m_iResinInspRectSpec *  Eheight) / 100;//길이 대비 백분율
 			for(x=inRect.left+1; x<inRect.right-1; x++)
 			{
@@ -14513,7 +14537,7 @@ bool CAABonderDlg::_inspResignRect(bool autoMode, int index, int iDirection, int
 					if(m_Imagebuf[pos]>model.m_ResingInspLevel)
 					{
 						iDispenseCnt++;
-					}					
+					}
 					else
 					{
 						point.x=x;
@@ -14537,7 +14561,7 @@ bool CAABonderDlg::_inspResignRect(bool autoMode, int index, int iDirection, int
 			vision.boxlist[iCh].addList(inRect, PS_SOLID, M_COLOR_RED);				// 도포 검사 영역..
 			return false;
 		}
-	
+
 	return true;
 }
 
@@ -14566,7 +14590,7 @@ bool CAABonderDlg::_inspResignHole(bool autoMode, int index, int iRectCnt,unsign
 	float outOffsetX	= (float)((model.m_ResinDrawSize.x*0.5) + model.m_dResinInspOffset[1].x);	//바깥쪽 Offset
 	float outOffsetY	= (float)((model.m_ResinDrawSize.y*0.5) + model.m_dResinInspOffset[1].y);
 	inRadius.x	= (int)(inOffsetX/ sysData.dCamResol[iCh].x);
-	outRadius.x	= (int)(outOffsetX/ sysData.dCamResol[iCh].x);		
+	outRadius.x	= (int)(outOffsetX/ sysData.dCamResol[iCh].x);
 	int i_limit_rate	= model.m_iResinInspLimit;
 
 	int margine = 5;
@@ -14756,9 +14780,9 @@ bool CAABonderDlg::_inspLine(int sx, int sy, int ex, int ey, unsigned char *m_Im
 	point.x=ex;
 	point.y=ey;
 	vision.pixellist[CAM2].addList(point, M_COLOR_BLUE);
-	 
+
 	bool bSetPoint=true;
-	
+
 	if(w>=h)
 	{
 		for(int i=0;i<w;i++)
@@ -14829,7 +14853,7 @@ void CAABonderDlg::func_Set_SFR_N_Type()
 
 void CAABonderDlg::func_Socket_Barcode()
 {
-	
+
 	//! Data 초기화
 	Task.iRecvLenACK[0] = Task.iRecvLenACK[1] = 0;
 	Task.dTiltingManual[0] = Task.dTiltingManual[1] = 0.0;
@@ -14839,7 +14863,7 @@ void CAABonderDlg::func_Socket_Barcode()
 }
 
 void CAABonderDlg::OnBnClickedButtonTimeCheck()
-{		
+{
 	CString str, strTime;
 	GetDlgItem(IDC_BUTTON_TIME_CHECK)->GetWindowText(str);
 
@@ -14910,7 +14934,7 @@ bool CAABonderDlg::EpoxyTimeCheck(bool TimeFlag)
 			ResultTimeHour = sysData.m_Epoxy_Change_Count / 60;
 			ResultTimeMin = sysData.m_Epoxy_Change_Count % 60;
 		}
-		
+
 		today2 -= CTimeSpan(0, ResultTimeHour, ResultTimeMin,0);
 
 		ChkTime = StartTime - today2;
@@ -14920,7 +14944,7 @@ bool CAABonderDlg::EpoxyTimeCheck(bool TimeFlag)
 			Dio.setAlarm(ALARM_ON);
 			sLangChange.LoadStringA(IDS_STRING540);	//Epoxy 교체한지 %d분이 지났습니다\n 교체 완료 후 YES 버튼을 눌러주세요.\n [YES : 교체 완료 NO : 교체 미완료]
 			str.Format(sLangChange,sysData.m_Epoxy_Change_Count);
-		
+
 			if(askMsg(str))
 			{
 				today = CTime::GetCurrentTime();
@@ -14934,7 +14958,7 @@ bool CAABonderDlg::EpoxyTimeCheck(bool TimeFlag)
 				Dio.setAlarm(ALARM_OFF);
 			}
 			else
-			{			
+			{
 				sLangChange.LoadStringA(IDS_STRING538);
 				GetDlgItem(IDC_BUTTON_TIME_CHECK)->SetWindowText(sLangChange);
 				work.m_Epoxy_Time_Flag = 0;
@@ -15075,7 +15099,7 @@ void CAABonderDlg::MESConnectToServer()
 			sLog.Format(sLangChange);
 			putListLog(sLog);
 			m_labelMes.SetBkColor(M_COLOR_GREEN);
-			
+
 		}
 		m_labelMes.Invalidate();
 	}
@@ -15088,7 +15112,7 @@ void CAABonderDlg::AdjustDisplaySize(unsigned char* pFrameBuffer, unsigned char*
 	{
 		for( int y = pRawImgInfo->nDisplayStartPosY ; y < pRawImgInfo->nDisplayStartPosY+pRawImgInfo->nDisplaySizeY ; y++ )
 		{
-			memcpy( p2byteBuffer + (y-pRawImgInfo->nDisplayStartPosY)*pRawImgInfo->nDisplaySizeX*2, 
+			memcpy( p2byteBuffer + (y-pRawImgInfo->nDisplayStartPosY)*pRawImgInfo->nDisplaySizeX*2,
 				&pFrameBuffer[0]+(y*pRawImgInfo->nSensorWidth*2 + pRawImgInfo->nDisplayStartPosX), pRawImgInfo->nDisplaySizeX*2 );
 		}
 	}
@@ -15118,7 +15142,7 @@ void CAABonderDlg::OnBnClickedButtonProcomp()
 		delayMsg(sLangChange, 3000, M_COLOR_RED);
 	}
 	else if(Task.AutoFlag==0 || Task.AutoFlag==2)
-	{	
+	{
 		if(sysData.m_iProductComp == 0)
 		{
 			sLangChange.LoadStringA(IDS_STRING1308);	//완제품 모드로 변경 하시겠습니까?
@@ -15128,7 +15152,7 @@ void CAABonderDlg::OnBnClickedButtonProcomp()
 				sysData.Save();
 			}
 		}
-		else if(sysData.m_iProductComp == 1)	
+		else if(sysData.m_iProductComp == 1)
 		{
 			sLangChange.LoadStringA(IDS_STRING376);
 			if(askMsg(sLangChange))
@@ -15137,7 +15161,7 @@ void CAABonderDlg::OnBnClickedButtonProcomp()
 				sysData.m_iProductComp = 0;
 				sysData.Save();
 			}
-		} 
+		}
 	}
 }
 
@@ -15199,7 +15223,7 @@ CString CAABonderDlg::getSensorID()
 	sprintf(Spec, "%02X", I2C_Read(0x0A2C));
 
 	sprintf(SensorID, "%s%s%s%s%s", LotID, Wafer, Chip, Fab, Spec);
-	
+
 	CString sValue;
 	sValue=SensorID;
 	return sValue;
@@ -15243,7 +15267,7 @@ void CAABonderDlg::OnStnClickedLabelId()
 			errMsg2(Task.AutoFlag, strTemp);
 			return;
 		}
-		Task.m_bPBStart = 1;	//바코드 정상적으로 읽혀 졌을때.		 
+		Task.m_bPBStart = 1;	//바코드 정상적으로 읽혀 졌을때.
 		sprintf_s(Task.ChipID, strTemp, sizeof(strTemp) );
 		sprintf_s(Task.sNum, strTemp, sizeof(strTemp) );
 
@@ -15269,7 +15293,7 @@ void CAABonderDlg::OnBnClickedDoorOpen()
 {
 	Dio.DoorLift(true, false);
 
-	
+
 }
 bool CAABonderDlg::uart_ThreadFn()
 {
@@ -15359,7 +15383,7 @@ void CAABonderDlg::OnBnClickedButtonSminiOqmode()
 	{
 		m_bSminiOQCheck.m_iStateBtn = 0;
 	}
-	
+
 
 	/*if (sysData.m_iSminiOQMOde == 0)
 	{

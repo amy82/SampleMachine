@@ -7,7 +7,7 @@
 #include "MarkSetDlg.h"
 
 //! ====================================================================================
-//! 그래프 컨트롤 클래스를 포함시킨다. 
+//! 그래프 컨트롤 클래스를 포함시킨다.
 #include "Graph2D/Graph2DWnd/Graph2DWnd.h"
 //! ====================================================================================
 //#include "ChartSetDlg.h"
@@ -31,7 +31,7 @@ IMPLEMENT_DYNAMIC(CCCDSFRDlg, CDialogEx)
 	int i = 0, j = 0;
 	for ( i = 0; i < iBufSize_Graph_2D; i++ )
 	{
-		m_apGraphWnd[i] = NULL;	
+		m_apGraphWnd[i] = NULL;
 
 		m_aiIndex_Overlap_Cursor[i] = 0;
 
@@ -41,8 +41,8 @@ IMPLEMENT_DYNAMIC(CCCDSFRDlg, CDialogEx)
 		{
 			Init_Buffser(i, j);
 
-			m_abFlag_Visible[i][j] = true;					
-		}		
+			m_abFlag_Visible[i][j] = true;
+		}
 	}
 
 	m_iSelMoveType = 0;
@@ -65,7 +65,7 @@ void CCCDSFRDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT_SFR_X, m_SFR_X);
 	DDX_Control(pDX, IDC_EDIT_SFR_Y, m_SFR_Y);
 	DDX_Control(pDX, IDC_EDIT_SFR_DIC, m_SFR_Dic);
-	
+
 
 
 	DDX_Control(pDX, IDC_EDIT_UART1, m_Uart_s);
@@ -136,6 +136,7 @@ BEGIN_MESSAGE_MAP(CCCDSFRDlg, CDialogEx)
 	ON_STN_CLICKED(IDC_EDIT_SFR_DIC, &CCCDSFRDlg::OnStnClickedEditSfrDic)
 	ON_BN_CLICKED(IDC_BUTTON_CHART_SET_VIEW, &CCCDSFRDlg::OnBnClickedButtonChartSetView)
 	ON_BN_CLICKED(IDC_PATTERN_VIEW2, &CCCDSFRDlg::OnBnClickedPatternView2)
+	ON_BN_CLICKED(IDC_PATTERN_CIRCLE, &CCCDSFRDlg::OnBnClickedPatternCircle)
 END_MESSAGE_MAP()
 
 
@@ -151,14 +152,14 @@ BOOL CCCDSFRDlg::OnInitDialog()
 	CDialogEx::OnInitDialog();
 
 	//	setInterface();
-	
+
 	bool bRet = MakeGraphWnd();
 
-	
-		
-		
-		
-		
+
+
+
+
+
 	GetDlgItem(IDC_BUTTON_ZOOX_LINEAR_MODE)->ShowWindow(SW_HIDE);//ZOOX 모델만 사용
 
 	UartSet();
@@ -174,19 +175,19 @@ BOOL CCCDSFRDlg::PreTranslateMessage(MSG* pMsg)
 {
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 
-	//! 'Enter' 키로 Dialog가 닫히지 않도록 차단한다. 
+	//! 'Enter' 키로 Dialog가 닫히지 않도록 차단한다.
 	if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_RETURN )
 	{
 		return TRUE;
 	}
 
-	//! 'Esc' 키로 Dialog가 닫히지 않도록 차단한다. 
+	//! 'Esc' 키로 Dialog가 닫히지 않도록 차단한다.
 	if ( pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_ESCAPE )
-	{		
+	{
 		return TRUE;
 	}
 
-	//! 부모 윈도우에게 메시지를 전달한다. 
+	//! 부모 윈도우에게 메시지를 전달한다.
 	CAABonderDlg* pParentDlg = NULL;
 	pParentDlg = (CAABonderDlg*)(GetParent());
 	if ( pParentDlg != NULL )
@@ -229,7 +230,7 @@ void CCCDSFRDlg::OnShowWindow(BOOL bShow, UINT nStatus)
 
 		for (int i=0; i<4; i++)
 		{
-			m_rcRoiBox[i] = model.sfrElem.m_CircleRoi[i]; 
+			m_rcRoiBox[i] = model.sfrElem.m_CircleRoi[i];
 		}
 
 		#ifdef ON_LINE_VISION
@@ -292,7 +293,7 @@ void CCCDSFRDlg::ComboxSet()
 	comBox_Index = 0;
 	curSfrPosX = model.m_MTF_ROI_Pos[comBox_Index].x;
 	curSfrPosY = model.m_MTF_ROI_Pos[comBox_Index].y;
-	
+
 	//m_font.CreateFont(fontSize,0,0,0,FW_NORMAL,0,0,0,DEFAULT_CHARSET, 0, 0, 0,VARIABLE_PITCH | FF_ROMAN, _T("맑은 고딕"));
 	Combox_SFRIndex.SetItemHeight(-1,size);
 	//Combox_SFRIndex.SetFont(&m_font);
@@ -302,7 +303,7 @@ void CCCDSFRDlg::ComboxSet()
 		Combox_SFRIndex.AddString(str);
 		Combox_SFRIndex.SetItemHeight(i,size);
 	}
-	
+
 	Combox_SFRIndex.SetCurSel(0);
 	m_SFR_X.SetBkColor(M_COLOR_WHITE);
 	m_SFR_Y.SetBkColor(M_COLOR_WHITE);
@@ -343,11 +344,11 @@ void CCCDSFRDlg::drawRectSFR(int iRectNo /*=999*/)
 
 	for (int i = 0; i < model.mGlobalChartCount; i++)//for (int i=0 ; i < LAST_MARK_CNT ; i++)
 	{
-		m_rcFixedBox[i].left	= m_iOffsetX_SFR[i]; 
+		m_rcFixedBox[i].left	= m_iOffsetX_SFR[i];
 		m_rcFixedBox[i].top		= m_iOffsetY_SFR[i];
 		m_rcFixedBox[i].right	= m_rcFixedBox[i].left + m_iSizeX_SFR[i];
 		m_rcFixedBox[i].bottom	= m_rcFixedBox[i].top + m_iSizeY_SFR[i];
-	
+
 //////////////////////////////////////////////////////////////////////////////////////////
 
 		if (i != 0 && i > model.mGlobalChartCount)//LAST_MARK_CNT)
@@ -356,11 +357,11 @@ void CCCDSFRDlg::drawRectSFR(int iRectNo /*=999*/)
 		}
 //////////////////////////////////////////////////////////////////////////////////////////
 
-		if (iRectNo == i) 
+		if (iRectNo == i)
 		{
 			vision.boxlist[CCD].addList(m_rcFixedBox[i], PS_SOLID, M_COLOR_MAGENTA);
 		}
-		else 
+		else
 		{
 			vision.boxlist[CCD].addList(m_rcFixedBox[i], PS_SOLID, M_COLOR_BLUE);
 		}
@@ -384,7 +385,7 @@ void CCCDSFRDlg::drawRectSFR(int iRectNo /*=999*/)
 		}
 		sprintf_s(szTmp, "%d", i);
 		vision.textlist[CCD].addList(m_rcRoiBox[i].left + 10, m_rcRoiBox[i].top + 10, szTmp, M_COLOR_MAGENTA, 15, 10, "Arial");
-	} 
+	}
 
 	//int y1;
 	//int y2;
@@ -440,7 +441,7 @@ void CCCDSFRDlg::drawRectSFR(int iRectNo /*=999*/)
 	//vision.linelist[CCD].addList(0, 100, 1820, 100, PS_SOLID, M_COLOR_YELLOW);
 	//vision.linelist[CCD].addList(0, 840, 1820, 840, PS_SOLID, M_COLOR_YELLOW);
 
-	vision.drawOverlay(CCD, true); 
+	vision.drawOverlay(CCD, true);
 
 //	drawROI();
 }
@@ -454,7 +455,7 @@ void CCCDSFRDlg::drawRectFOV(int iRectNo /*=999*/)
     int i;
     int ntxtNum = 0;
     char szTmp[256];
-    
+
     vision.clearOverlay(CCD);
     for (int i = 0; i<MAX_FOV_COUNT; i++)
     {
@@ -699,7 +700,7 @@ void CCCDSFRDlg::OnBnClickedButtonBoxUp()
         {
             MoveRectFov(MOVE_SIZE, MOVE_UP, m_iMoveSpeed);
         }
-       
+
     }
     else if (vision.m_SnrSetMode == true)
     {
@@ -728,10 +729,10 @@ void CCCDSFRDlg::OnBnClickedButtonBoxUp()
         }
         drawRectSFR(m_iCurNo_SFR);
     }
-	
 
-	
-	
+
+
+
 	vision.drawOverlay(CCD);
 
 	pFrame->m_rBox = m_rcFixedBox[m_iCurNo_SFR];
@@ -828,10 +829,10 @@ void CCCDSFRDlg::OnBnClickedButtonBoxLeft()
         }
         drawRectSFR(m_iCurNo_SFR);
     }
-	
 
-	
-	
+
+
+
 	vision.drawOverlay(CCD);
 
 	pFrame->m_rBox = m_rcFixedBox[m_iCurNo_SFR];
@@ -878,8 +879,8 @@ void CCCDSFRDlg::OnBnClickedButtonBoxRight()
         drawRectSFR(m_iCurNo_SFR);
     }
     //
-	
-	
+
+
 	vision.drawOverlay(CCD);
     //
 	pFrame->m_rBox = m_rcFixedBox[m_iCurNo_SFR];
@@ -996,7 +997,7 @@ int CCCDSFRDlg::GetSelectedFOVNo(CPoint point)
     //
     for (i = 0; i < MAX_FOV_COUNT; i++)
     {
-        
+
         if (PtInRect(m_clRectDrawFov[i], clPtPos) == TRUE)
         {
             nSelectNo = i;
@@ -1019,7 +1020,7 @@ void CCCDSFRDlg::OnBnClickedButtonSfrTest()
 	CDPoint findP[5];
 	SYSTEMTIME sysTime;
 
-	
+
 	vision.clearOverlay(CCD);
 	::GetLocalTime(&sysTime);
 
@@ -1035,7 +1036,7 @@ void CCCDSFRDlg::OnBnClickedButtonSfrTest()
 	Task.m_iMin		= sysTime.wMinute;
 	Task.m_iSec		= sysTime.wSecond;
 
-	
+
 	//==================================================================
 
 	MandoInspLog.func_InitData();
@@ -1052,7 +1053,7 @@ void CCCDSFRDlg::OnBnClickedButtonSfrTest()
 	theApp.MainDlg->autodispDlg->DrawGraph(0);
 #endif
 
-	
+
 	theApp.MainDlg->_getMTF(SFR_MANUAL);
 
 	Task.bInsCenter = true;
@@ -1074,7 +1075,7 @@ void CCCDSFRDlg::OnBnClickedButtonSfrTest()
 	if ( m_apGraphWnd[0] != NULL )
 	{
 		if ( m_apGraphWnd[0]->GetCurrentCursorSize() <= 0 )
-		{			
+		{
 			m_apGraphWnd[0]->AddCursorInDataIndex(0, false, m_aiIndex_Overlap_Cursor[0]);
 			m_apGraphWnd[0]->SetCursorValueVisible(0, false, false, false);
 		}
@@ -1094,7 +1095,7 @@ void CCCDSFRDlg::MoveCursor_Left_Graph(int iIndex_Plot)
 	if ( m_apGraphWnd[iIndex_Plot] != NULL )
 	{
 		if ( m_apGraphWnd[iIndex_Plot]->GetCurrentCursorSize() > 0 )
-		{			
+		{
 			m_apGraphWnd[iIndex_Plot]->MoveCursor(0, false, false, m_aiIndex_Overlap_Cursor[iIndex_Plot]);
 			m_apGraphWnd[iIndex_Plot]->Invalidate();
 		}
@@ -1112,7 +1113,7 @@ void CCCDSFRDlg::MoveCursor_Right_Graph(int iIndex_Plot)
 	if ( m_apGraphWnd[iIndex_Plot] != NULL )
 	{
 		if ( m_apGraphWnd[iIndex_Plot]->GetCurrentCursorSize() > 0 )
-		{			
+		{
 			m_apGraphWnd[iIndex_Plot]->MoveCursor(0, true, false, m_aiIndex_Overlap_Cursor[iIndex_Plot]);
 			m_apGraphWnd[iIndex_Plot]->Invalidate();
 		}
@@ -1130,7 +1131,7 @@ LRESULT CCCDSFRDlg::OnCursorEventMsgInPlot(WPARAM wParam, LPARAM lParam)
 		return 0;
 	}
 
-	int iPlotIndex    = pCursorInfo->iPlotIndex;	
+	int iPlotIndex    = pCursorInfo->iPlotIndex;
 	int iOverlapIndex = pCursorInfo->iOverlapIndex;
 	int iDataIndex    = pCursorInfo->iDataIndex;
 	int iCursorIndex  = pCursorInfo->iCursorIndex;
@@ -1146,7 +1147,7 @@ LRESULT CCCDSFRDlg::OnCursorEventMsgInPlot(WPARAM wParam, LPARAM lParam)
 
 //! 현재 그래프의 커서값을 Edit 컨트롤에 표시
 //! 그래프 커서는 해당 그래프에 종속되지만, 현재는 그래프 데이터의 X축 간격이 동일하다.
-//! 즉, 해당 그래프의 커서 데이터의 index에 해당하는 다른 그래프의 데이터를 표시하면 된다. 
+//! 즉, 해당 그래프의 커서 데이터의 index에 해당하는 다른 그래프의 데이터를 표시하면 된다.
 int CCCDSFRDlg::SetCursorValue(int iIndex_Plot, int iIndex_Overlap, int iDataIndex, int iCursorIndex)
 {
 	if ( iIndex_Plot < 0 || iIndex_Plot >= iBufSize_Graph_2D )
@@ -1173,8 +1174,8 @@ int CCCDSFRDlg::SetCursorValue(int iIndex_Plot, int iIndex_Overlap, int iDataInd
 	strGraph2D_Y_Axis_Info strAxisYInfo;	//! Y축
 
 	for (i = 0; i < iBufSize_Graph_Overlap; i++ )
-	{		
-		m_apGraphWnd[iIndex_Plot]->GetResourceYInfo(strAxisYInfo, i);		
+	{
+		m_apGraphWnd[iIndex_Plot]->GetResourceYInfo(strAxisYInfo, i);
 
 		if ( strAxisYInfo.bShowGraph == false )
 		{
@@ -1182,7 +1183,7 @@ int CCCDSFRDlg::SetCursorValue(int iIndex_Plot, int iIndex_Overlap, int iDataInd
 			abRet[1] = false;
 		}
 		else
-		{			
+		{
 			abRet[0] = m_apGraphWnd[iIndex_Plot]->GetPlotDataX(adDataX[i], iDataIndex, i);
 			if ( abRet[0] == true )
 			{
@@ -1202,7 +1203,7 @@ int CCCDSFRDlg::SetCursorValue(int iIndex_Plot, int iIndex_Overlap, int iDataInd
 			{
 				asDataY[i] = _T("-");
 			}
-		}		
+		}
 
 		if ( (abRet[0] == true) && (abRet[1] == true) )
 		{
@@ -1240,10 +1241,10 @@ int CCCDSFRDlg::SetCursorValue(int iIndex_Plot, int iIndex_Overlap, int iDataInd
 }
 
 //! 체크 박스를 이용하여 그래프를 눈에 보이거나 숨긴다.
-//! 이 때, 그래프 커서 관련 작업을 같이 진행한다. 
+//! 이 때, 그래프 커서 관련 작업을 같이 진행한다.
 //!		1) 그래프 커서는 5개의 그래프 중 1개의 그래프에 종속된다.
 //!		2) 그래프를 눈에 보이지 않게 하면, 해당 그래프의 커서도 같이 눈에 보이지 않게 된다.
-//!		3) 눈에 보이지 않게 되는 커서는 삭제하고, 눈에 보이는 그래프에 같은 위치에 그래프 커서를 추가한다. 
+//!		3) 눈에 보이지 않게 되는 커서는 삭제하고, 눈에 보이는 그래프에 같은 위치에 그래프 커서를 추가한다.
 void CCCDSFRDlg::Proc_GraphVisible(int iIndex_Plot, int iIndex_Overlap)
 {
 	if ( iIndex_Plot < 0 || iIndex_Plot >= iBufSize_Graph_2D )
@@ -1255,7 +1256,7 @@ void CCCDSFRDlg::Proc_GraphVisible(int iIndex_Plot, int iIndex_Overlap)
 		return;
 	}
 
-	bool bFlag_Visible_Old = m_abFlag_Visible[iIndex_Plot][iIndex_Overlap];	
+	bool bFlag_Visible_Old = m_abFlag_Visible[iIndex_Plot][iIndex_Overlap];
 	bool bFlag_Visible = false;
 
 	int iCount_Visible = m_aiCount_Visible[iIndex_Plot];
@@ -1279,7 +1280,7 @@ void CCCDSFRDlg::Proc_GraphVisible(int iIndex_Plot, int iIndex_Overlap)
 	}
 	else
 	{
-		bRet = SetGraphVisible(iIndex_Plot, iIndex_Overlap, bFlag_Visible);		
+		bRet = SetGraphVisible(iIndex_Plot, iIndex_Overlap, bFlag_Visible);
 	}
 
 	if ( bRet == true )
@@ -1554,7 +1555,7 @@ bool CCCDSFRDlg::MakeGraphWnd()
 				break;
 			}//! switch(j)
 
-			//! 그래프에서 Y축 Range는 그래프 데이터가 튀지 않는 한에는 '0 ~ 1'로 고정한다. 
+			//! 그래프에서 Y축 Range는 그래프 데이터가 튀지 않는 한에는 '0 ~ 1'로 고정한다.
 			strAxisYInfo.strAxisInfo.eAutoRangeReservedMax = E_GRAPH2D_AUTO_RANGE_RESERVED_CONSIDER;
 			strAxisYInfo.strAxisInfo.eAutoRangeReservedMin = E_GRAPH2D_AUTO_RANGE_RESERVED_CONSIDER;
 			strAxisYInfo.strAxisInfo.eMarginType = E_GRAPH2D_RANGE_MARGIN_NONE;
@@ -1575,16 +1576,16 @@ bool CCCDSFRDlg::MakeGraphWnd()
 		m_apGraphWnd[i]->GetResourceInfo(strResourceInfo);
 		strResourceInfo.iAxisThickness						= 1;
 		strResourceInfo.clrEntireBackGround					= RGB(231, 231, 231);	//! 그래프 바탕 색상
-		strResourceInfo.strAxisInfoX.iCursorTextPrecision	= 0;		
+		strResourceInfo.strAxisInfoX.iCursorTextPrecision	= 0;
 		strResourceInfo.strAxisInfoX.eGridTextType			= E_GRAPH2D_GRID_DOUBLE;//E_GRAPH2D_GRID_INTEGER;
 		strResourceInfo.strAxisInfoX.iGridTextPrecision		= 3;//0;
 		strResourceInfo.strMainTitleInfo.bShow				= true;
-		strResourceInfo.strMainTitleInfo.eAlign				= E_GRAPH2D_TITLE_ALIGN_CENTER;		
+		strResourceInfo.strMainTitleInfo.eAlign				= E_GRAPH2D_TITLE_ALIGN_CENTER;
 		m_apGraphWnd[i]->SetResourceInfo(strResourceInfo);
 
 		//! <------------------------------------------------------------
 		//! X축 특정값 표시선 추가, X축에 수직선
-		//! 추가되는 순서에 주의한다. 
+		//! 추가되는 순서에 주의한다.
 		strValueLineXInfo strXLineInfo;
 
 		strXLineInfo.InitInfo();
@@ -1621,7 +1622,7 @@ bool CCCDSFRDlg::MakeGraphWnd()
 		m_apGraphWnd[i]->SetResourceInfo(strResourceInfo);
 
 		//! 메시지를 받을 핸들 설정
-		m_apGraphWnd[i]->m_hMsgHandle = this->m_hWnd;		
+		m_apGraphWnd[i]->m_hMsgHandle = this->m_hWnd;
 	}
 
 	return true;
@@ -1643,7 +1644,7 @@ void CCCDSFRDlg::ReleaseGraphWnd()
 	}
 }
 
-//! 그래프에 데이터를 입력한다. 
+//! 그래프에 데이터를 입력한다.
 int CCCDSFRDlg::DrawGraph(int iIndex_Plot)
 {
 	if ( iIndex_Plot < 0 || iIndex_Plot >= iBufSize_Graph_2D )
@@ -1660,9 +1661,9 @@ int CCCDSFRDlg::DrawGraph(int iIndex_Plot)
 	strGraph2D_Y_Axis_Info strAxisYInfo;	//! Y축
 	strValueLineXInfo      strXLineInfo;	//! X축
 
-	//! 1) 그래프에 데이터를 입력한다. 
-	//! 2) 만약, 커서 (Mouse로 조작 가능한 그래프 데이터 표시 기능)가 없으면 추가한다. 
-	//! 3) 그래프를 다시 그린다. 
+	//! 1) 그래프에 데이터를 입력한다.
+	//! 2) 만약, 커서 (Mouse로 조작 가능한 그래프 데이터 표시 기능)가 없으면 추가한다.
+	//! 3) 그래프를 다시 그린다.
 
 	if ( m_apGraphWnd[iIndex_Plot] != NULL )
 	{
@@ -1783,7 +1784,7 @@ int CCCDSFRDlg::DrawGraph(int iIndex_Plot)
 			}
 			//! <-----------------------------------------------------------------------------------------------------------------------------------------
 		}
-		else 
+		else
 		{
 			for ( j = 0; j < iBufSize_Graph_Overlap; j++ )
 			{
@@ -1966,7 +1967,7 @@ void CCCDSFRDlg::OnBnClickedButtonClear()
 	Height = gMIUDevice.imageItp->height;
 #endif
 
-	
+
 	vision.MiuBufferUpdate();
 	Task.getROI();
 
@@ -2011,9 +2012,9 @@ void CCCDSFRDlg::OnBnClickedButtonClear()
 	m_iOffsetY_SFR[8] = (int)(Height / 1.25);
 
 
-	
 
-	
+
+
 
 	m_iOffsetX_SFR[9] = (int)(width / 1.15);
 	m_iOffsetY_SFR[9] = (int)(Height / 1.27);
@@ -2023,13 +2024,13 @@ void CCCDSFRDlg::OnBnClickedButtonClear()
 
 	 	m_iOffsetX_SFR[11] = (int)(width / 1.36);
 	 	m_iOffsetY_SFR[11] = (int)(Height/ 1.50);
-	 
+
 	 	m_iOffsetX_SFR[12] = (int)(width / 2.19);
 	 	m_iOffsetY_SFR[12] = (int)(Height/ 1.23);
-	 
+
 	 	m_iOffsetX_SFR[13] = (int)(width / 5.61);
 	 	m_iOffsetY_SFR[13] = (int)(Height/ 1.51);
-	 
+
 	 	m_iOffsetX_SFR[14] = (int)(width / 11.1);
 	 	m_iOffsetY_SFR[14] = (int)(Height/ 2.41);
 
@@ -2049,7 +2050,7 @@ void CCCDSFRDlg::OnBnClickedButtonClear()
     m_rcRoiBox[0].top = (int)(gMIUDevice.nHeight*0.15);
 	m_rcRoiBox[0].right = m_rcRoiBox[0].left + (width / 11) ;// (int)(gMIUDevice.nWidth*0.34);
 	m_rcRoiBox[0].bottom = m_rcRoiBox[0].top + (Height / 7);// (int)(gMIUDevice.nHeight*0.18);
-	 
+
     m_rcRoiBox[1].left = (int)(gMIUDevice.nWidth*0.54);
     m_rcRoiBox[1].top = (int)(gMIUDevice.nHeight*0.15);
     m_rcRoiBox[1].right = m_rcRoiBox[1].left + (width / 11);//(int)(gMIUDevice.nWidth*0.73);
@@ -2250,10 +2251,10 @@ void CCCDSFRDlg::OnBnClickedButtonRegistEdit()
 	int iTemp=0;
 	for (int i = 0; i<model.mGlobalChartCount; i++)//for (int i=0 ; i<LAST_MARK_CNT ; i++)
 	{
-		/*if(i!=0 && i>LAST_MARK_CNT)  
+		/*if(i!=0 && i>LAST_MARK_CNT)
 			continue;*/
 
-		
+
 		if(m_rcFixedBox[i].right < m_rcFixedBox[i].left)
 		{
 			iTemp=m_rcFixedBox[i].right;
@@ -2281,7 +2282,7 @@ void CCCDSFRDlg::OnBnClickedButtonRegistEdit()
 
 		sprintf_s(szTmp, "%d", i);
 		vision.textlist[3].addList(model.sfrElem.m_iOffsetX[i] + 10, model.sfrElem.m_iOffsetY[i] + 10, szTmp, M_COLOR_RED, 15, 10, "Arial");
-		
+
 		if(i==0 && false)//i==0  center만 저장
 		{
 			MpatFree(vision.ChartCenterPatternImage);
@@ -2302,8 +2303,8 @@ void CCCDSFRDlg::OnBnClickedButtonRegistEdit()
 				//strPatDir.Format("%s\\Model\\%s\\CHART_Mark_%d-Mask.pat", DATA_DIR, model.mCurModelName,  i);
 				strPatDir.Format("%s\\%s\\Data\\Mark\\CHART_Mark_%d-Mask.pat", AA_MODEL_LOAD_DIR, model.mCurModelName, i);
 				//
-				MpatSave(strPatDir.GetBuffer(999), vision.ChartCenterPatternImage);			
-				
+				MpatSave(strPatDir.GetBuffer(999), vision.ChartCenterPatternImage);
+
 				//strPatDir.Format("%s\\Model\\%s\\CHART_Mark_%d-Mask.bmp", DATA_DIR, model.mCurModelName,  i);
 				strPatDir.Format("%s\\%s\\Data\\Mark\\CHART_Mark_%d-Mask.bmp", AA_MODEL_LOAD_DIR, model.mCurModelName, i);
 				MbufSave(strPatDir.GetBuffer(999), vision.MilTempImage);
@@ -2311,7 +2312,7 @@ void CCCDSFRDlg::OnBnClickedButtonRegistEdit()
 			}
 		}
 
-		
+
 	}
 
 	for (int i=0 ; i<4 ; i++)
@@ -2358,11 +2359,11 @@ void CCCDSFRDlg::OnBnClickedPatternRegist()
 		delayMsg(sLangChange, 1000, M_COLOR_RED);
 		return;
 	}
-		
+
 	CDPoint findP;
 	int pitch = 0;
 	int Height = 0;
-	
+
 
 #ifdef	USE_MIL_BAYER_CONVERSION
 	int sizeX = MbufInquire(vision.MilProcImageChild[4], M_SIZE_X, NULL);
@@ -2434,7 +2435,7 @@ void CCCDSFRDlg::OnBnClickedPatternRegist()
 
 		//저장
 
-		
+
 		strPatDir.Format("%s\\Model\\%s\\CHART_Mark_%d-Mask.pat", DATA_DIR, model.mCurModelName, i);
 		MpatSave(strPatDir.GetBuffer(999), vision.ChartCenterPatternImage);	//패턴등록
 		MpatRestore(vision.MilSystem, strPatDir.GetBuffer(999), &vision.FieldPatternImage[i]);
@@ -2444,8 +2445,8 @@ void CCCDSFRDlg::OnBnClickedPatternRegist()
 		MbufSave(strPatDir.GetBuffer(999), vision.MilTempImage);
 		//MpatRestore(vision.MilSystem, strPatDir.GetBuffer(999), &vision.FieldPatternImage[i]);		//221107
 #endif
-		 
-		
+
+
 
 	}
 	//strPatDir.Format("%s\\Model\\%s\\CHART_Mark_%d-Mask.pat", DATA_DIR, model.mCurModelName, 0);
@@ -2470,7 +2471,7 @@ void CCCDSFRDlg::OnBnClickedPatternFind()
 	double dCenterPosY = 0.0;
 	double dAngle = 0.0;
 	double dRate = 0.0;
-	
+
 
 	vision.clearOverlay(CCD);
 
@@ -2480,7 +2481,7 @@ void CCCDSFRDlg::OnBnClickedPatternFind()
 	{
 		strPatDir.Format("%s\\%s\\Data\\Mark\\CHART_Mark_%d-Mask.pat", AA_MODEL_LOAD_DIR, model.mCurModelName,  i);
 		MpatRestore(vision.MilSystem, strPatDir.GetBuffer(999), &vision.FieldPatternImage[i]);
-		 
+
 		if(FieldPatternMatching(i,  dCenterPosX,  dCenterPosY,  dAngle,  dRate))
 		{
 			vision.boxlist[CCD].addList(dCenterPosX-model.m_FieldPattern_Size[i].x/2,dCenterPosY-model.m_FieldPattern_Size[i].y/2,dCenterPosX+model.m_FieldPattern_Size[i].x/2,dCenterPosY+model.m_FieldPattern_Size[i].y/2, PS_SOLID, M_COLOR_RED);
@@ -2581,7 +2582,7 @@ void CCCDSFRDlg::OnBnClickedPatternView()
 
 
 void CCCDSFRDlg::OnBnClickedDistortionPos()
-{ 
+{
 
 
 }
@@ -2694,7 +2695,7 @@ void CCCDSFRDlg::OnBnClickedButtonImgSave2()
 
 		delete fileSaveDialog;
 	}
-	
+
 }
 
 
@@ -2807,8 +2808,8 @@ void CCCDSFRDlg::OnStnClickedEditSfrY()
 void CCCDSFRDlg::OnBnClickedBtnSfrposSave()
 {
 	CString sEditData;
-	
-	
+
+
 	GetDlgItemText(IDC_EDIT_SFR_X, sEditData);
 	model.m_MTF_ROI_Pos[comBox_Index].x	= atoi(sEditData);
 	GetDlgItemText(IDC_EDIT_SFR_Y, sEditData);
@@ -2886,7 +2887,7 @@ void CCCDSFRDlg::UartSet()
 	GetDlgItem(IDC_UART_SAVE)->ShowWindow(SW_HIDE);
 	GetDlgItem(IDC_UART_CLOSE)->ShowWindow(SW_HIDE);
 	GetDlgItem(IDC_UART_SEND)->ShowWindow(SW_HIDE);
-	
+
 
 }
 
@@ -2946,7 +2947,7 @@ void CCCDSFRDlg::OnBnClickedButtonRawLoad()
 
             //unsigned char* pBuff = (unsigned char*)malloc(g_clLaonGrabberWrapper[m_nUnit].m_stMIUDevice.nFrameImageSize/*g_clModelData[m_nUnit].m_nWidth * g_clModelData[m_nUnit].m_nHeight * 2*/);
             //memset(pBuff, 0x00, g_clLaonGrabberWrapper[m_nUnit].m_stMIUDevice.nFrameImageSize/*(g_clModelData[m_nUnit].m_nWidth * g_clModelData[m_nUnit].m_nHeight * 2)*/);
-            
+
             if (m_pImgBuff != NULL)
             {
                 delete m_pImgBuff;
@@ -2969,7 +2970,7 @@ void CCCDSFRDlg::OnBnClickedButtonRawLoad()
             ReadFile.Close();
 
             //
-            /// 
+            ///
             //
             CCARawImageLoad((byte*)m_pImgBuff, MID_6500K_RAW);
         }
@@ -3066,7 +3067,7 @@ void CCCDSFRDlg::CCARawImageLoad(BYTE* LoadImg, int index , bool autoRun)
     tspec.eDataFormat = gMIUDevice.dTDATASPEC_n.eDataFormat;
 	tspec.eSensorType =  gMIUDevice.dTDATASPEC_n.eSensorType;
 	tspec.eDemosaicMethod = gMIUDevice.dTDATASPEC_n.eDemosaicMethod;
-	
+
 	int rSize = MIU.m_pBoard->GetFrameRawSize();
     memcpy(MIU.m_pFrameRawBuffer, LoadImg, rSize);
 
@@ -3090,7 +3091,7 @@ void CCCDSFRDlg::CCARawImageLoad(BYTE* LoadImg, int index , bool autoRun)
 		imgName.Format("ChartSecond");
 		memcpy(MIU.vChart_Second_Buffet, LoadImg, MIU.m_pBoard->GetFrameRawSize());
 	}
-	
+
     else {
         imgName.Format("imgDark");
         memcpy(MIU.vDefectLowBuffer, LoadImg, MIU.m_pBoard->GetFrameRawSize());
@@ -3159,7 +3160,7 @@ void CCCDSFRDlg::OnBnClickedButton6500kRawLoad()
             ReadFile.Close();
 
             //
-            /// 
+            ///
             //
             CCARawImageLoad((byte*)m_pImgBuff, MID_6500K_RAW);
         }
@@ -3203,7 +3204,7 @@ void CCCDSFRDlg::OnBnClickedButton2800kRawLoad()
             ReadFile.Close();
 
             //
-            /// 
+            ///
             //
             CCARawImageLoad((byte*)m_pImgBuff, MID_2800K_RAW);
         }
@@ -3247,7 +3248,7 @@ void CCCDSFRDlg::OnBnClickedButtonDarkRawLoad()
             ReadFile.Close();
 
             //
-            /// 
+            ///
             //
             CCARawImageLoad((byte*)m_pImgBuff, LOW_LEVEL_RAW);
         }
@@ -3272,8 +3273,8 @@ void CCCDSFRDlg::OnBnClickedButtonCcdFovMarkRegist()
 
     RegistFovMark();
     vision.drawOverlay(CCD);
-     
-} 
+
+}
 
 
 void CCCDSFRDlg::OnBnClickedButtonCcdFovMarkView()
@@ -3384,7 +3385,7 @@ void CCCDSFRDlg::RegistFovMark()
     for (i = 0; i < markNumber; i++)
     {
         //if (i > 2 && i < 6)continue;//가운데 3개 제외
-                                   
+
         vision.boxlist[CCD].addList(m_clRectDrawFov[i], PS_SOLID, M_COLOR_BLUE);
     }
     theApp.MainDlg->putListLog("[SAVE] FOV 마크 위치 저장");
@@ -3442,7 +3443,7 @@ void CCCDSFRDlg::OnBnClickedButtonCcdSnrRoiView()
     {
         drawRectSFR(999);
     }
-    
+
 }
 
 
@@ -3494,7 +3495,7 @@ void CCCDSFRDlg::OnBnClickedButtonChartSecondRawLoad()
 			ReadFile.Close();
 
 			//
-			/// 
+			///
 			//
 			CCARawImageLoad((byte*)m_pImgBuff, CHART_SECOND_RAW);
 		}
@@ -3538,7 +3539,7 @@ void CCCDSFRDlg::OnBnClickedButtonChartFirstRawLoad()
 			ReadFile.Close();
 
 			//
-			/// 
+			///
 			//
 			CCARawImageLoad((byte*)m_pImgBuff, CHART_RAW);
 		}
@@ -3583,7 +3584,7 @@ void CCCDSFRDlg::drawFieldCircleView()
 {
 	int nWidth = gMIUDevice.nWidth;
 	int nHeight = gMIUDevice.nHeight;
-	
+
 	int cx = nWidth / 2;
 	int cy = nHeight / 2;
 
@@ -3668,8 +3669,34 @@ void CCCDSFRDlg::OnBnClickedPatternView2()
 	if (bCircleView)
 	{
 		drawFieldCircleView();
-		
+
 	}
 	vision.drawOverlay(CCD);
 #endif
+}
+
+
+void CCCDSFRDlg::OnBnClickedPatternCircle()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	if (Task.AutoFlag == 1)
+	{
+		sLangChange.LoadStringA(IDS_STRING1368);	//자동 운전 중 입니다.
+		delayMsg(sLangChange, 1000, M_COLOR_RED);
+		return;
+	}
+
+	CString sLog;
+	if (ChartCenterPatternMatching())
+	{
+		Task.m_dShift_IMG_X = theApp.MainDlg->ChartCenterOffsetX*(model.m_dSize_CCD_Cell / 1000.0f)*1.0f;
+		Task.m_dShift_IMG_Y = theApp.MainDlg->ChartCenterOffsetY*(model.m_dSize_CCD_Cell / 1000.0f)*1.0f;
+		sLog.Format("x:%.3lf , y:%.3lf", Task.m_dShift_IMG_X, Task.m_dShift_IMG_Y);
+	}
+	else
+	{
+		sLog.Format("CENTER FIND FAIL");
+	}
+
+	theApp.MainDlg->putListLog(sLog);
 }

@@ -331,7 +331,9 @@ public:
 	int freeRun();
 
 
-	double ChartCenterOffsetX, ChartCenterOffsetY;
+	double ChartCenterOffsetX;
+	double ChartCenterOffsetY;
+	double ChartCenterOffsetTh;
 
 
 

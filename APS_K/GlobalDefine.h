@@ -23,7 +23,7 @@
 const int M2_OX01H1B = 200900;		//윤경목 선임 SFR, RI, 이물
 const int M2_VB56G4A = 201000;		//윤경목 선임 SFR, RI, 이물
 
-const int M1_TANGERING_5M = 200800;		//김동훈 책임, 
+const int M1_TANGERING_5M = 200800;		//김동훈 책임,
 const int M2_MBOX081D_8M = 200700;		// 최종철 선임, OC, SFR, 이물, Rotation, RI, Fov, Distortion
 
 
@@ -39,7 +39,8 @@ const int M1_HEATING_GEN2 = 10050;		//240721 렌즈에 꼬리 ,강민우선임 ,차트 9개 0
 
 static int LGIT_MODEL_INDEX = M2_OX01H1B;
 //-----------------------------------------------------------------------------------------------------------------------------------
-#define					VER_STR		"250326_2"			//완제품 align XY 방향 부호 반대
+#define					VER_STR		"250327_1"			//레이져 변위 완제품, 렌즈 구동 방향 다름 PCB AA 일때만 렌즈, 완제품 if 문
+//#define					VER_STR		"250326_2"			//완제품 align XY 방향 부호 반대
 //#define					VER_STR		"250326_1"			// _checkMaxSfrPos ->  m_iCnt_Step_AA_Total 임시 값 -10
 //#define					VER_STR		"250325_3"			//PCB AA
 //#define					VER_STR		"250325_2"			//
@@ -47,12 +48,12 @@ static int LGIT_MODEL_INDEX = M2_OX01H1B;
 //#define					VER_STR		"250324_2"			//IR CHART, CCD OPEN
 //#define					VER_STR		"250324_1"			//1호기 원형마크 없는 텐저링 모델 수정중 lee
 //#define					VER_STR		"250320_1"			// win7, Mil9 재설치 Okey? Okey Okey
-//#define					VER_STR		"250318_1"			// CCD OPEN 
+//#define					VER_STR		"250318_1"			// CCD OPEN
 //#define					VER_STR		"250317_1"			// 1호기 Tengring
-//#define					VER_STR		"250314_1"			// AA,EOL 
-//#define					VER_STR		"250313_2"			// SetFOVOffset(HFOVOffset, VFOVOffset, DFOVOffset) -> 오류 
-//#define					VER_STR		"250313_1"			// SetFOVOffset(HFOVOffset, VFOVOffset, DFOVOffset) UI SfrSpec 그리드로 
-//#define					VER_STR		"250312_4"			//_findCirclePos 원 찾음 Fov 검사 =  실패 
+//#define					VER_STR		"250314_1"			// AA,EOL
+//#define					VER_STR		"250313_2"			// SetFOVOffset(HFOVOffset, VFOVOffset, DFOVOffset) -> 오류
+//#define					VER_STR		"250313_1"			// SetFOVOffset(HFOVOffset, VFOVOffset, DFOVOffset) UI SfrSpec 그리드로
+//#define					VER_STR		"250312_4"			//_findCirclePos 원 찾음 Fov 검사 =  실패
 //#define					VER_STR		"250312_2"			//원점, 영상 확인
 //#define					VER_STR		"250311_1"			//DLL 변경
 //#define					VER_STR		"250307_1"			//DLL 변경
@@ -72,7 +73,7 @@ static int LGIT_MODEL_INDEX = M2_OX01H1B;
 //#define					VER_STR		"241017_1"					///// M2_VB1940_5M모델 LensVacuumOn 사용 , aps 직접 제작 , _findCirclePos 로 다시 변경
 
 //#define					VER_STR		"240910_1"			/// M2_OV9284_5M모델 LensVacuumOn 사용
-//#define					VER_STR		"240902_1"			//M2_FF_MODULE 모델 이물검사추가	
+//#define					VER_STR		"240902_1"			//M2_FF_MODULE 모델 이물검사추가
 //#define					VER_STR		"240819_1"				//2호기 start버튼 접점 반대로 변경
 //#define					VER_STR		"240731_1"			//원형마크 찾는부분 원복
 //#define					VER_STR		"240730_1"			//수동 본딩위치 자동구분
@@ -83,14 +84,14 @@ static int LGIT_MODEL_INDEX = M2_OX01H1B;
 //#define					VER_STR		"240725_1"			//LOG THREAD 추가
 //그래프 부분 Z축도 올리고 그래프 화면도 초기화해야된다.
 //#define					VER_STR		"2400724_2"
-//#define					VER_STR		"2400724_1"			//1,2,호기 합침 
+//#define					VER_STR		"2400724_1"			//1,2,호기 합침
 //#define					VER_STR		"2400723_6"			//heating DEMOSAICMETHOD_GRADIENT_G_ONLY
 //#define					VER_STR		"2400723_5"			//pcb x,y 위치 확인 offset -로 변경
 //#define					VER_STR		"2400723_4"			//th보정추가
 //#define					VER_STR		"2400723_1"			//본딩 하강전 꼬리 언그립
 //#define					VER_STR		"2400722_1"				//M1_RFPCB_5M 모델로 LGIT_GRABBER_20240715_01_v2.2.3 dll변경 , bmpImageSaveFn 추가
 //_OpencvFindCirclePos 추가
-//#define					VER_STR		"2400719_1"				//1호기 이물조명은 src 장비 프론티어 옆으로 얇은 컨트롤러 추가 , 1호기 tail 그립 동작 io 추가	
+//#define					VER_STR		"2400719_1"				//1호기 이물조명은 src 장비 프론티어 옆으로 얇은 컨트롤러 추가 , 1호기 tail 그립 동작 io 추가
 //
 //
 //
@@ -98,22 +99,22 @@ static int LGIT_MODEL_INDEX = M2_OX01H1B;
 //
 //
 //210712
-#define  M_TRINITY						900					//LENS AA , X자형 차트에 패턴 9개/20포인트	
+#define  M_TRINITY						900					//LENS AA , X자형 차트에 패턴 9개/20포인트
 //220414
-#define  M_AF_CM						1000					//PCB AA , IR차트, X자형 차트에 패턴 9개/20포인트	
+#define  M_AF_CM						1000					//PCB AA , IR차트, X자형 차트에 패턴 9개/20포인트
 //220511
 #define  M_GEN2							2000					//모비스 MODERAT랑 동일 ROI MTF 측정 기준은 Ny/2 이므로0.25cycles/pixel 기준 입니다.
 //220915
 #define  M_COB_8M						3000				//M_GEN2 와 완전동일 기적으로만 달라짐
 
 #define  M_TRINITY_WIDE					3200					//LENS AA , X자형 차트에 패턴 개별 CL 렌즈 X자형 5개 패턴  83도 , 180도
-#define  M_MPC							3300					//LENS AA , X자형 차트에 패턴 개별 CL 렌즈 X자형 5개 패턴  83도 , 180도 
+#define  M_MPC							3300					//LENS AA , X자형 차트에 패턴 개별 CL 렌즈 X자형 5개 패턴  83도 , 180도
 
 
-#define ____MODEL_NAME					-999999		//M2_RFPCB_5M			
+#define ____MODEL_NAME					-999999		//M2_RFPCB_5M
 //모델명 선택후 빌드하세요~
 #define		FURONTEER_OC				//1호기 이물조명 없어서 백두에서 퓨론티어로 컨트롤러오 변경
-//======================================================================= Lens_Motor_Move  
+//======================================================================= Lens_Motor_Move
 //
 
 
@@ -212,7 +213,7 @@ static CString sLangChange;
 
 enum MOTOR_SPEED { SPEED_AUTO_H = 0, SPEED_AUTO_L, SPEED_MANUAL };				//!! 모터 구동 속도
 enum MODE_TYPE { MODE_STOP = 0, MODE_READY, MODE_AUTO, MODE_PAUSE, MODE_ERR };	//!! 모드 상태 변수 0=정지상태, 1=운전준비상태, 2=자동운전상태, 3=일시정지상태
-enum HOME_READY_TYPE { TYPE_HOME = 0, TYPE_READY, TYPE_HOME_READY };					//!! 원점 상태 변수 
+enum HOME_READY_TYPE { TYPE_HOME = 0, TYPE_READY, TYPE_HOME_READY };					//!! 원점 상태 변수
 
 #define		MAX_CAM_NO		4
 #define		MAX_MARK		3
@@ -227,14 +228,14 @@ enum SFR_ROI { CT = 0, CB, CL, CR, TL, TB, BR, BT, LB, LR, RT, RL, SFR_ROI_CNT }
 #define SOCKET_AA1			"192.168.3.1"
 #define SOCKET_AA2			"192.168.3.2"
 
-#define SFR_COMP_MAX		// SFR계산 시 평균값, 최대치 중 선택.  정의시 최대치 
+#define SFR_COMP_MAX		// SFR계산 시 평균값, 최대치 중 선택.  정의시 최대치
 
 #define J_RCCC	0
 #define J_CRCC	1
 #define J_CCRC	2
 #define J_CCCR	3
 
-#define R_RESULT_PASS					0	//양품 
+#define R_RESULT_PASS					0	//양품
 #define R_RESULT_FAIL					1	//불량
 #define R_FAIL_NOISE					2
 #define R_FAIL_BLACK_SPOT				3
@@ -246,7 +247,7 @@ enum SFR_ROI { CT = 0, CB, CL, CR, TL, TB, BR, BT, LB, LR, RT, RL, SFR_ROI_CNT }
 #define		USE_GEOMETRIC
 #define     USE_MIL_BAYER_CONVERSION
 
-#define _DEF_MAX_BLOBS		200  
+#define _DEF_MAX_BLOBS		200
 
 #define		CHART_CENTER_MARK	1000
 
@@ -290,8 +291,8 @@ enum	RS_232_COMM {
 #define		CAM_SIZE_X			1280						// CIS 카메라 영상 크기..
 #define		CAM_SIZE_Y			960
 #else
-#define		CAM_SIZE_X			1280						// CIS 카메라 영상 크기..	
-#define		CAM_SIZE_Y			1024						//							
+#define		CAM_SIZE_X			1280						// CIS 카메라 영상 크기..
+#define		CAM_SIZE_Y			1024						//
 #endif
 
 #if 1
@@ -306,8 +307,8 @@ enum	RS_232_COMM {
 
 #define		SMALL_CAM_SIZE_X	(CAM_SIZE_X/3+100)			// 영상 화면 Display..
 #define		SMALL_CAM_SIZE_Y	(CAM_SIZE_Y/3+100)
-#define		SMALL_CCD_SIZE_X	(CAM_SIZE_X/3+225)			
-#define		SMALL_CCD_SIZE_Y	(CAM_SIZE_Y/3+150)			
+#define		SMALL_CCD_SIZE_X	(CAM_SIZE_X/3+225)
+#define		SMALL_CCD_SIZE_Y	(CAM_SIZE_Y/3+150)
 
 #endif
 
@@ -356,32 +357,32 @@ enum MTF_INSP_MODE { MTF_17P = 0, MTF_24P };
 #define		SFR_ROI_HORIZONTAL			1//2
 
 // Cneter SFR 검사 Box 번호..
-#define		SFR_CENTER_UP					0	
-#define		SFR_CENTER_DOWN					1	
+#define		SFR_CENTER_UP					0
+#define		SFR_CENTER_DOWN					1
 #define		SFR_CENTER_LEFT					2
 #define		SFR_CENTER_RIGHT				3
 #define		SFR_CENTER_END					3
 
-#define		SFR_05_LEFT_UP_H				4	
-#define		SFR_05_LEFT_UP_V				5	
+#define		SFR_05_LEFT_UP_H				4
+#define		SFR_05_LEFT_UP_V				5
 
 #define		SFR_05_RIGHT_UP_H				6
 #define		SFR_05_RIGHT_UP_V				7
 
-#define		SFR_05_LEFT_DOWN_H				8	
-#define		SFR_05_LEFT_DOWN_V				9	
+#define		SFR_05_LEFT_DOWN_H				8
+#define		SFR_05_LEFT_DOWN_V				9
 
 #define		SFR_05_RIGHT_DOWN_H				10
 #define		SFR_05_RIGHT_DOWN_V				11
 //--------------------------------------------------------else
-#define		SFR_07_LEFT_UP_H				12	
-#define		SFR_07_LEFT_UP_V				13	
+#define		SFR_07_LEFT_UP_H				12
+#define		SFR_07_LEFT_UP_V				13
 
 #define		SFR_07_RIGHT_UP_H				14
 #define		SFR_07_RIGHT_UP_V				15
 
-#define		SFR_07_LEFT_DOWN_H				16	
-#define		SFR_07_LEFT_DOWN_V				17	
+#define		SFR_07_LEFT_DOWN_H				16
+#define		SFR_07_LEFT_DOWN_V				17
 
 #define		SFR_07_RIGHT_DOWN_H				18
 #define		SFR_07_RIGHT_DOWN_V				19
@@ -398,13 +399,13 @@ enum MTF_INSP_MODE { MTF_17P = 0, MTF_24P };
 #define		SFR_50_07						6
 #define		SFR_50_08						7
 
-// 0.7 필드 코너부 SFR 검사 Box 번호..		
+// 0.7 필드 코너부 SFR 검사 Box 번호..
 #define		SFR_70_09						8
 #define		SFR_70_10						9
 #define		SFR_70_11						10
 #define		SFR_70_12						11
 
-// 0.7 필드 코너부 SFR 검사 Box 번호..						
+// 0.7 필드 코너부 SFR 검사 Box 번호..
 #define		SFR_LEFT_UP_INDEX				16		// 황준혁  최종 검사관련된 내용 연계되어 있음
 #define		SFR_LEFT_UP_INDEX_2				17
 
@@ -476,7 +477,7 @@ enum EPOXY_MODEL { CRICLE_EPOXY, RECT_EPOXY, POLYGON_EPOXY, POINT_EPOXY};
 #define	MAX_MODEL_CNT			1000
 
 
-enum	MOTOR_POS 
+enum	MOTOR_POS
 {
 	Wait_Pos, Loading_Pos, Holder_Pos, Dispense_Pos, Lens_Pos,
 	Laser_Pcb_Pos, Laser_Lens_Pos, Align_Pos, Bonding_Pos, Dark_Pos, Defect_Pos, OC_6500K_Pos, OC_2800K_Pos,
@@ -496,7 +497,7 @@ static char MotorPosName[MAX_POS_NO][50] = { "Wait Pos",	"Loading Pos",	"Holder 
 
 enum	MTF_POS { MTF_Center, MTF_left_upper, MTF_right_upper, MTF_left_bottom, MTF_right_bottom, MAX_MTF_NO };
 //static TCHAR* SFR_ROI_NAME[] =
-//{ _T("[SFR] Roi-0"),					
+//{ _T("[SFR] Roi-0"),
 //
 //
 //};

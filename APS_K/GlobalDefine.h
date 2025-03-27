@@ -16,7 +16,7 @@
 #define	MACHINE_1ST				110
 #define MACHINE______2ST		304
 //
-#define	__MACHINE_MODEL			MACHINE______2ST
+#define	__MACHINE_MODEL			MACHINE_1ST
 
 
 
@@ -37,9 +37,10 @@ const int M1_HEATING_GEN2 = 10050;		//240721 렌즈에 꼬리 ,강민우선임 ,차트 9개 0
 
 
 
-static int LGIT_MODEL_INDEX = M2_OX01H1B;
+static int LGIT_MODEL_INDEX = M1_TANGERING_5M;
 //-----------------------------------------------------------------------------------------------------------------------------------
-#define					VER_STR		"250327_1"			//레이져 변위 완제품, 렌즈 구동 방향 다름 PCB AA 일때만 렌즈, 완제품 if 문
+#define					VER_STR		"250327_1"				//1호기 유스테크 이물광원 1채널 추가 OcLight_Dms50v52
+//#define					VER_STR		"250327_1"			//레이져 변위 완제품, 렌즈 구동 방향 다름 PCB AA 일때만 렌즈, 완제품 if 문
 //#define					VER_STR		"250326_2"			//완제품 align XY 방향 부호 반대
 //#define					VER_STR		"250326_1"			// _checkMaxSfrPos ->  m_iCnt_Step_AA_Total 임시 값 -10
 //#define					VER_STR		"250325_3"			//PCB AA
@@ -113,7 +114,8 @@ static int LGIT_MODEL_INDEX = M2_OX01H1B;
 
 #define ____MODEL_NAME					-999999		//M2_RFPCB_5M
 //모델명 선택후 빌드하세요~
-#define		FURONTEER_OC				//1호기 이물조명 없어서 백두에서 퓨론티어로 컨트롤러오 변경
+
+//#define		FURONTEER_OC				//1호기 이물조명 없어서 백두에서 퓨론티어로 컨트롤러오 변경
 //======================================================================= Lens_Motor_Move
 //
 

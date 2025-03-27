@@ -20,6 +20,10 @@ CLightControl LightControlSecond;		//2호기 ir
 CLightControl LightControlthird;
 CLightControl LightControlFourth;
 CLightControl LightControlFifth;
+
+CLightControl OcLight_Dms50v52;		//DMS-50V5-2 1호기 M1_TANGERING_5M 모델 이물 광원 1채널 
+
+
 COcControl	OCControl;
 
 CUVControl UVControl;

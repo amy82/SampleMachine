@@ -641,14 +641,18 @@ void CMotorDlg::dispMotorStatus()
 #else
 	for (int i = Motor_Lens_X; i <= Motor_Lens_TH; i++)
 #endif
-	
 	{
 		iIndex = i - Motor_Lens_X;
 		
-		if((i == Motor_Lens_Xt) || (i== Motor_Lens_Yt) || (i == Motor_PCB_Xt) || (i == Motor_PCB_Yt) || (i == Motor_Lens_TH))	// 스태핑 모터
+		//if ((i == Motor_Lens_Xt) || (i == Motor_Lens_Yt) || (i == Motor_PCB_Xt) || (i == Motor_PCB_Yt) || (i == Motor_Lens_TH))	// 스태핑 모터
+		if(MOTOR_TYPE[i] == STEPING)
+		{
 			motorPos	= motor.GetCommandPos_Disp(i);
-		else
+		}
+		else 
+		{
 			motorPos	= motor.GetEncoderPos_Disp(i);
+		}
 
 		_stprintf_s(szLog, SIZE_OF_1K, _T("%.03f"), motorPos);
 		m_clGridTeachingLens.SetItemText(LensRow-1, iIndex+1, szLog);//12  20180104_2

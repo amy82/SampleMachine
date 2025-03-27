@@ -3865,7 +3865,15 @@ int	CPcbProcess1::func_MandoFinalSFR(int iStep)
 #ifdef FURONTEER_OC
 			OCControl.SendLightLxStep(model.m_iLedValue[LEDDATA_6500K]);
 #else
-			LightControlthird.ctrlLedVolume(LIGHT_OC_6500K, model.m_iLedValue[LEDDATA_6500K]);
+			if (LGIT_MODEL_INDEX == M1_TANGERING_5M)
+			{
+				OcLight_Dms50v52.DMS_50V5_2_Value(1, model.m_iLedValue[LEDDATA_6500K]);
+			}
+			else
+			{
+				LightControlthird.ctrlLedVolume(LIGHT_OC_6500K, model.m_iLedValue[LEDDATA_6500K]);
+			}
+			
 #endif
 
 		}
@@ -5789,9 +5797,16 @@ int	CPcbProcess1::Complete_FinalInsp(int iStep)
 #ifdef FURONTEER_OC
 			OCControl.SendLightLxStep(model.m_iLedValue[LEDDATA_6500K]);
 #else
-			LightControlthird.ctrlLedVolume(LIGHT_OC_6500K, model.m_iLedValue[LEDDATA_6500K]);
+			if (LGIT_MODEL_INDEX == M1_TANGERING_5M)
+			{
+				OcLight_Dms50v52.DMS_50V5_2_Value(1, model.m_iLedValue[LEDDATA_6500K]);
+			}
+			else
+			{
+				LightControlthird.ctrlLedVolume(LIGHT_OC_6500K, model.m_iLedValue[LEDDATA_6500K]);
+			}
+			
 #endif
-			//LightControlthird.ctrlLedVolume(LIGHT_OC_6500K, model.m_iLedValue[LEDDATA_6500K]);
 		}
 
 		iRtnFunction = 123600;

@@ -86,6 +86,7 @@ extern CLightControl LightControlSecond;
 extern CLightControl LightControlthird;
 extern CLightControl LightControlFourth;
 extern CLightControl LightControlFifth;
+extern CLightControl OcLight_Dms50v52;
 extern COcControl	OCControl;
 extern CUVControl UVControl;
 extern bool	g_bReady_UV;
